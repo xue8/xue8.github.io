@@ -6,20 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://ddnd.cn">
-  <title>tags | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
+  <title>MVC模式与三层架构关系 | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
-<meta name="keywords" content="Java,xue8,薛8,DDND,程序员,">
-<meta property="og:type" content="website">
-<meta property="og:title" content="tags">
-<meta property="og:url" content="http://ddnd.cn/tags/index.html">
+  <meta name="description" content="前言对于许多新手都不明白MVC模式和三层架构的关系，本人也是，特地整合了网上的一些文章对MVC模式和三层架构的关系进行介绍，希望对大家有帮助。 关于三层架构在软件体系架构设计中，分层式结构是最常见，也是最重要的一种结构。微软推荐的分层式结构一般分为三层，从下至上分别为：数据访问层、业务逻辑层（又或称为领域层）、表示层。">
+<meta name="keywords" content="MVC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MVC模式与三层架构关系">
+<meta property="og:url" content="http://ddnd.cn/2018/11/14/Technique-Mvc-3ta/index.html">
 <meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
-<meta property="og:description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
+<meta property="og:description" content="前言对于许多新手都不明白MVC模式和三层架构的关系，本人也是，特地整合了网上的一些文章对MVC模式和三层架构的关系进行介绍，希望对大家有帮助。 关于三层架构在软件体系架构设计中，分层式结构是最常见，也是最重要的一种结构。微软推荐的分层式结构一般分为三层，从下至上分别为：数据访问层、业务逻辑层（又或称为领域层）、表示层。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-25T04:59:04.119Z">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720dca8596d4c4?w=633&h=417&f=png&s=23970">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720dca85e74ffa?w=490&h=299&f=png&s=68735">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720dca85d739c1?w=279&h=168&f=png&s=8999">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720dca85bf4a98?w=986&h=345&f=png&s=317075">
+<meta property="og:updated_time" content="2018-11-25T07:57:13.632Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tags">
-<meta name="twitter:description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
+<meta name="twitter:title" content="MVC模式与三层架构关系">
+<meta name="twitter:description" content="前言对于许多新手都不明白MVC模式和三层架构的关系，本人也是，特地整合了网上的一些文章对MVC模式和三层架构的关系进行介绍，希望对大家有帮助。 关于三层架构在软件体系架构设计中，分层式结构是最常见，也是最重要的一种结构。微软推荐的分层式结构一般分为三层，从下至上分别为：数据访问层、业务逻辑层（又或称为领域层）、表示层。">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720dca8596d4c4?w=633&h=417&f=png&s=23970">
   
     <link rel="alternative" href="/atom.xml" title="薛8的个人网站 - xue8&#39;s Blog - DDND.CN" type="application/atom+xml">
   
@@ -157,27 +162,40 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="page-" class="article article-type-page " itemscope="" itemprop="blogPost">
+            <article id="post-Technique-Mvc-3ta" class="article article-type-post " itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      tags
+      MVC模式与三层架构关系
     </h1>
   
 
         
-        <a href="/tags/index.html" class="archive-article-date">
-  	<time datetime="2018-11-25T04:58:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-25</time>
+        <a href="/2018/11/14/Technique-Mvc-3ta/" class="archive-article-date">
+  	<time datetime="2018-11-14T07:55:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-14</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>对于许多新手都不明白<strong>MVC模式</strong>和<strong>三层架构</strong>的关系，本人也是，特地整合了网上的一些文章对MVC模式和三层架构的关系进行介绍，希望对大家有帮助。</p>
+<h1 id="关于三层架构"><a href="#关于三层架构" class="headerlink" title="关于三层架构"></a>关于三层架构</h1><p>在软件体系架构设计中，分层式结构是最常见，也是最重要的一种结构。微软推荐的分层式结构一般分为三层，从下至上分别为：数据访问层、业务逻辑层（又或称为领域层）、表示层。<br><a id="more"></a></p>
+<ol>
+<li><strong>表示层（UI）</strong>：通俗讲就是展现给用户的界面，即用户在使用一个系统的时候他的所见所得。 　</li>
+<li><strong>业务逻辑层（BLL）</strong>：针对具体问题的操作，也可以说是对数据层的操作，对数据业务逻辑处理。 </li>
+<li><strong>数据访问层（DAL）</strong>：该层所做事务直接操作数据库，针对数据的增添、删除、修改、查找等。<br><img src="https://user-gold-cdn.xitu.io/2018/11/17/16720dca8596d4c4?w=633&amp;h=417&amp;f=png&amp;s=23970" alt="在这里插入图片描述"><h1 id="关于MVC模式"><a href="#关于MVC模式" class="headerlink" title="关于MVC模式"></a>关于MVC模式</h1><strong>模型-视图-控制器（MVC模式）</strong> 是一种非常经典的软件架构模式，在UI框架和UI设计思路中扮演着非常重要的角色。从设计模式的角度来看，MVC模式是一种复合模式，它将多个设计模式在一种解决方案中结合起来，用来解决许多设计问题。MVC模式把用户界面交互分拆到不同的三种角色中，使应用程序被分成三个核心部件：Model（模型）、View（视图）、Control（控制器）。它们各自处理自己的任务：</li>
+<li>模型：模型持有所有的数据、状态和程序逻辑。模型独立于视图和控制器。</li>
+<li>视图：用来呈现模型。视图通常直接从模型中取得它需要显示的状态与数据。对于相同的信息可以有多个不同的显示形式或视图。</li>
+<li>控制器：位于视图和模型中间，负责接受用户的输入，将输入进行解析并反馈给模型，通常一个视图具有一个控制器。<br><img src="https://user-gold-cdn.xitu.io/2018/11/17/16720dca85e74ffa?w=490&amp;h=299&amp;f=png&amp;s=68735" alt="在这里插入图片描述"><h1 id="两者关系"><a href="#两者关系" class="headerlink" title="两者关系"></a>两者关系</h1>MVC是 Model-View-Controller，严格说这三个加起来以后才是三层架构中的<strong>UI层</strong>，也就是说，MVC把三层架构中的UI层再度进行了分化，分成了控制器、视图、实体三个部分，控制器完成页面逻辑，通过实体来与界面层完成通话；<strong>而C层直接与三层中的BLL进行对话</strong>。MVC可以是三层中的一个表现层框架，属于表现层。三层和MVC可以共存。<br><img src="https://user-gold-cdn.xitu.io/2018/11/17/16720dca85d739c1?w=279&amp;h=168&amp;f=png&amp;s=8999" alt="在这里插入图片描述"><br><img src="https://user-gold-cdn.xitu.io/2018/11/17/16720dca85bf4a98?w=986&amp;h=345&amp;f=png&amp;s=317075" alt="在这里插入图片描述"></li>
+</ol>
+<blockquote>
+<p>欢迎加入JAVA学习群949419296，一起交流！</p>
+</blockquote>
+
       
 
       
@@ -206,7 +224,29 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">MVC</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Technique//" class="article-tag-list-link color5">技术杂谈</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
 
@@ -256,7 +296,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://ddnd.cn/tags/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://ddnd.cn/2018/11/14/Technique-Mvc-3ta/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -268,6 +308,20 @@
 </article>
 
   
+<nav id="article-nav">
+  
+    <a href="/2018/11/17/Java-Interface/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          接口的引用
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -292,7 +346,7 @@
   
 
   
-  <div id="SOHUCS" sid=""></div> 
+  <div id="SOHUCS" sid="Technique-Mvc-3ta"></div> 
 <script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js"></script>
 <script type="text/javascript">
     window.changyan.api.config({
@@ -328,7 +382,7 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

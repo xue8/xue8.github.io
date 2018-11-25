@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://ddnd.cn">
-  <title>tags | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
+  <title>接口的引用 | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
+  <meta name="description" content="最近在学习java的过程中，遇到了一下代码。代码1：123public interface Handler｛  public void Hello();｝ 代码2：12345import Handler;public class OtherParser&amp;#123;  Handler handler;......&amp;#125; 代码1说明了Handler是一个接口了，既接口不能直接实例化，必须经过实现">
 <meta name="keywords" content="Java,xue8,薛8,DDND,程序员,">
-<meta property="og:type" content="website">
-<meta property="og:title" content="tags">
-<meta property="og:url" content="http://ddnd.cn/tags/index.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="接口的引用">
+<meta property="og:url" content="http://ddnd.cn/2018/11/17/Java-Interface/index.html">
 <meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
-<meta property="og:description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
+<meta property="og:description" content="最近在学习java的过程中，遇到了一下代码。代码1：123public interface Handler｛  public void Hello();｝ 代码2：12345import Handler;public class OtherParser&amp;#123;  Handler handler;......&amp;#125; 代码1说明了Handler是一个接口了，既接口不能直接实例化，必须经过实现">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-25T04:59:04.119Z">
+<meta property="og:updated_time" content="2018-11-25T07:47:27.183Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tags">
-<meta name="twitter:description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
+<meta name="twitter:title" content="接口的引用">
+<meta name="twitter:description" content="最近在学习java的过程中，遇到了一下代码。代码1：123public interface Handler｛  public void Hello();｝ 代码2：12345import Handler;public class OtherParser&amp;#123;  Handler handler;......&amp;#125; 代码1说明了Handler是一个接口了，既接口不能直接实例化，必须经过实现">
   
     <link rel="alternative" href="/atom.xml" title="薛8的个人网站 - xue8&#39;s Blog - DDND.CN" type="application/atom+xml">
   
@@ -157,27 +157,32 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="page-" class="article article-type-page " itemscope="" itemprop="blogPost">
+            <article id="post-Java-Interface" class="article article-type-post " itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      tags
+      接口的引用
     </h1>
   
 
         
-        <a href="/tags/index.html" class="archive-article-date">
-  	<time datetime="2018-11-25T04:58:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-25</time>
+        <a href="/2018/11/17/Java-Interface/" class="archive-article-date">
+  	<time datetime="2018-11-17T07:44:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-17</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>最近在学习java的过程中，遇到了一下代码。<br>代码1：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface Handler｛</span><br><span class="line">  public void Hello();</span><br><span class="line">｝</span><br></pre></td></tr></table></figure></p>
+<p>代码2：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import Handler;</span><br><span class="line">public class OtherParser&#123;</span><br><span class="line">  Handler handler;</span><br><span class="line">......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>代码1说明了Handler是一个接口了，既接口不能直接实例化，必须经过实现类继承这个接口之后，实例化实现类。那为啥代码2可以直接声明Handler呢？原因是，代码2只是对Handler接口的引用（在对接口的引用时，采用的是实例化实现该接口的类，前提是你实现这个接口的类已经加上@Component注解，引用这个接口的时候才会自动注入相关的实现类），并不是实例化！</p>
+<p>接口是永远不能被实例化的，而2中只是对接口做引用，并没有被实例化。<br>接口可以看成是高度抽象的抽象类，它描述的事物们所共有的方法（方法签名），也就是规定除了该接口的方法的调用参数与规则，仅仅而已，它的使用必须依赖于实现类。<br>例如：<br><a id="more"></a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> public class MyHandler implements Handler&#123;</span><br><span class="line">  public void Hellp()&#123;</span><br><span class="line">    System.out.println(&quot;my Handler implements&quot;);</span><br><span class="line">  &#125;  </span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<p>而在对接口的引用时，采用的是实例化实现该接口的类<br>Handler handler = new MyHander();</p>
+
       
 
       
@@ -207,6 +212,17 @@
       
       
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Java-Programming//" class="article-tag-list-link color4">Java编程基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
 
@@ -256,7 +272,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://ddnd.cn/tags/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://ddnd.cn/2018/11/17/Java-Interface/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -268,6 +284,25 @@
 </article>
 
   
+<nav id="article-nav">
+  
+    <a href="/2018/11/17/Spring-Bean-Automatic/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Spring自动装配Bean实现hello
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/11/14/Technique-Mvc-3ta/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">MVC模式与三层架构关系</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -292,7 +327,7 @@
   
 
   
-  <div id="SOHUCS" sid=""></div> 
+  <div id="SOHUCS" sid="Java-Interface"></div> 
 <script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js"></script>
 <script type="text/javascript">
     window.changyan.api.config({
@@ -328,7 +363,7 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

@@ -6,20 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://ddnd.cn">
-  <title>tags | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
+  <title>JAVA数据源 | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
+  <meta name="description" content="前言我们在进行数据访问，声明模板和repository之前【JAVA】Spring对JDBC的支持，都需要配置数据源用来连接数据库。数据源又可以分为两大类：直连的数据源 和 连接池的数据源 ，其中连接池的数据源又有多种，接下来就让我们来学习一下这两种数据源。当然在学习之前，我们首先需要知道连接池、数据源、JNDI是什么，分别从当什么角色，有什么作用。 连接池、数据源、JNDI连接池、数据源Java">
 <meta name="keywords" content="Java,xue8,薛8,DDND,程序员,">
-<meta property="og:type" content="website">
-<meta property="og:title" content="tags">
-<meta property="og:url" content="http://ddnd.cn/tags/index.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JAVA数据源">
+<meta property="og:url" content="http://ddnd.cn/2018/11/18/Java-DataSource/index.html">
 <meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
-<meta property="og:description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
+<meta property="og:description" content="前言我们在进行数据访问，声明模板和repository之前【JAVA】Spring对JDBC的支持，都需要配置数据源用来连接数据库。数据源又可以分为两大类：直连的数据源 和 连接池的数据源 ，其中连接池的数据源又有多种，接下来就让我们来学习一下这两种数据源。当然在学习之前，我们首先需要知道连接池、数据源、JNDI是什么，分别从当什么角色，有什么作用。 连接池、数据源、JNDI连接池、数据源Java">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-25T04:59:04.119Z">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/18/16725f1f2310a0a7?w=1155&h=650&f=png&s=36621">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720ddc3f691cb3?w=896&h=430&f=png&s=45745">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720ddc3f73bc88?w=896&h=490&f=png&s=80470">
+<meta property="og:updated_time" content="2018-11-25T08:02:14.304Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tags">
-<meta name="twitter:description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
+<meta name="twitter:title" content="JAVA数据源">
+<meta name="twitter:description" content="前言我们在进行数据访问，声明模板和repository之前【JAVA】Spring对JDBC的支持，都需要配置数据源用来连接数据库。数据源又可以分为两大类：直连的数据源 和 连接池的数据源 ，其中连接池的数据源又有多种，接下来就让我们来学习一下这两种数据源。当然在学习之前，我们首先需要知道连接池、数据源、JNDI是什么，分别从当什么角色，有什么作用。 连接池、数据源、JNDI连接池、数据源Java">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/11/18/16725f1f2310a0a7?w=1155&h=650&f=png&s=36621">
   
     <link rel="alternative" href="/atom.xml" title="薛8的个人网站 - xue8&#39;s Blog - DDND.CN" type="application/atom+xml">
   
@@ -157,27 +161,81 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="page-" class="article article-type-page " itemscope="" itemprop="blogPost">
+            <article id="post-Java-DataSource" class="article article-type-post " itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      tags
+      JAVA数据源
     </h1>
   
 
         
-        <a href="/tags/index.html" class="archive-article-date">
-  	<time datetime="2018-11-25T04:58:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-25</time>
+        <a href="/2018/11/18/Java-DataSource/" class="archive-article-date">
+  	<time datetime="2018-11-18T08:00:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-18</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>我们在进行数据访问，声明模板和repository之前<a href="http://ddnd.cn/2018/11/18/Spring-Jdbc-Support/">【JAVA】Spring对JDBC的支持</a>，都需要配置<strong>数据源</strong>用来连接数据库。数据源又可以分为两大类：<strong><em>直连的数据源</em></strong> 和 <strong><em>连接池的数据源</em></strong> ，其中连接池的数据源又有多种，接下来就让我们来学习一下这两种数据源。当然在学习之前，我们首先需要知道<strong>连接池</strong>、<strong>数据源</strong>、<strong>JNDI</strong>是什么，分别从当什么角色，有什么作用。</p>
+<h1 id="连接池、数据源、JNDI"><a href="#连接池、数据源、JNDI" class="headerlink" title="连接池、数据源、JNDI"></a>连接池、数据源、JNDI</h1><h2 id="连接池、数据源"><a href="#连接池、数据源" class="headerlink" title="连接池、数据源"></a>连接池、数据源</h2><p>Java中的数据源就是连接到数据库的一条<strong>路径</strong>，数据源中并无真正的数据，它仅仅记录的是你连接到<strong>哪个数据库</strong>，以及<strong>如何连接</strong>。<code>DataSource</code>的创建可以有不同的实现。<code>DataSource</code>通常被称为数据源，它包含<strong>连接池</strong> 和<strong>连接池管理</strong> 两部分，习惯上也经常把<code>DataSource</code>称为连接池。<br><a id="more"></a></p>
+<h3 id="连接池思想"><a href="#连接池思想" class="headerlink" title="连接池思想"></a>连接池思想</h3><p>在系统<strong>初始化</strong>的时候，将数据库<strong>连接对象（Connection）</strong> 存储在内存中，当用户需要访问数据库时候，并不是建立一个新的连接，而是从连接池中取出一个已经建立好的空闲连接对象。而连接池负责分配、管理、释放数据库连接对象。注意的是：连接池是由<strong>容器（比如tomcat）</strong> 提供的，同时容器也管理着连接池。</p>
+<h2 id="JNDI"><a href="#JNDI" class="headerlink" title="JNDI"></a>JNDI</h2><p><strong>JNDI（Java Naming and Directory Interface，Java命名和目录接口）</strong>，JNDI是Java平台的一个标准扩展，提供一组接口、类和关于命名空间的概念。<strong><em>其功能通俗的来说，就是提供一个类似全局的map，key保存JNDI的名称，value保存你要放到里面的资源的引用（如Java对象），以后要想要获取value的资源即可通过<code>lookup</code>名称检索</em></strong>。<br>注意：需要区分开JNDI和通过JNDI查找的数据源的概念，不能将JNDI和连接池混为一谈。</p>
+<ul>
+<li>这套API的主要作用在于：它可以将<strong>Java对象</strong>放在一个容器中（支持JNDI的容器例如Tomcat），并且为容器中的Java对象取一个名称，以后程序想要获得Java对象，只要通过名称检索即可。</li>
+<li>其核心API为Context，它代表JNDI容器，其lookup方法为检索容器中对应名称的对象。</li>
+</ul>
+<p><strong>使用JNDI访问Tomcat内置连接池</strong></p>
+<ul>
+<li>将数据库驱动的包复制到Tomcat的安装目录<code>/lib/</code>中，这样Tomcat服务器才能找到数据库驱动</li>
+<li>编写访问JNDI程序，运行在Tomcat内部，所以通常运行在servlet、jsp中</li>
+<li>在Tomcat启动时，自动加载配置文件（<code>context.xml</code>），创建数据库连接池，该连接池由Tomcat管理。<br><img src="https://user-gold-cdn.xitu.io/2018/11/18/16725f1f2310a0a7?w=1155&amp;h=650&amp;f=png&amp;s=36621" alt="在这里插入图片描述"></li>
+</ul>
+<h1 id="直连的数据源"><a href="#直连的数据源" class="headerlink" title="直连的数据源"></a>直连的数据源</h1><p>用户每次请求都需要向数据库<strong>获得连接</strong>，而数据库<strong>创建连接</strong>通常需要消耗相对较大的资源，创建的时间也较长。<br><img src="https://user-gold-cdn.xitu.io/2018/11/17/16720ddc3f691cb3?w=896&amp;h=430&amp;f=png&amp;s=45745" alt="在这里插入图片描述"></p>
+<h1 id="连接池的数据源"><a href="#连接池的数据源" class="headerlink" title="连接池的数据源"></a>连接池的数据源</h1><h2 id="连接池的思想"><a href="#连接池的思想" class="headerlink" title="连接池的思想"></a>连接池的思想</h2><p>数据库连接是一种关键的有限的昂贵的资源，如果每次访问数据库的时候，都需要进行数据库连接，那么势必会造成<strong>性能低下</strong>；同时，如果用户失误忘记释放数据库连接，会导致<strong>资源的浪费</strong>等。而数据库连接池就是刚好可以解决这些问题，通过管理连接池中的多个<strong>连接对象（Connection）</strong>，实现连接对象（connection）重复利用，从而大大提高了数据库连接方面的性能。<br><img src="https://user-gold-cdn.xitu.io/2018/11/17/16720ddc3f73bc88?w=896&amp;h=490&amp;f=png&amp;s=80470" alt="在这里插入图片描述"></p>
+<h2 id="常用的数据库连接池"><a href="#常用的数据库连接池" class="headerlink" title="常用的数据库连接池"></a>常用的数据库连接池</h2><h3 id="Tomcat内置的连接池（Tomcat-Dbcp）"><a href="#Tomcat内置的连接池（Tomcat-Dbcp）" class="headerlink" title="Tomcat内置的连接池（Tomcat Dbcp）"></a>Tomcat内置的连接池（Tomcat Dbcp）</h3><p>Tomcat在7.0以前的版本都是使用<strong>commons-dbcp</strong>作为连接池的实现，但是由于commons-dbcp饱受诟病。因此很多人会选择一些第三方的连接池组件，例如c3p0，bonecp等。为此，Tomcat从7.0开始引入了一个新的模块：Tomcat Jdbc Pool（Tomcat Dbcp）。<a href="https://tomcat.apache.org/tomcat-7.0-doc/jdbc-pool.html" target="_blank" rel="noopener">关于更多请看这里</a><br><strong>连接池的配置</strong>：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;Context&gt;</span><br><span class="line">     &lt;Resource name=&quot;jdbc/login_register&quot; auth=&quot;Container&quot; type=&quot;javax.sql.DataSource&quot;</span><br><span class="line">           maxActive=&quot;100&quot; maxIdle=&quot;30&quot; maxWait=&quot;10000&quot;</span><br><span class="line">           username=&quot;root&quot; password=&quot;root&quot; driverClassName=&quot;com.mysql.jdbc.Driver&quot;</span><br><span class="line">           url=&quot;jdbc:mysql://localhost:3306/db_user&quot;/&gt;</span><br><span class="line">           factory=&quot;org.apache.tomcat.jdbc.pool.DataSourceFactory&quot;</span><br><span class="line">&lt;/Context&gt;</span><br></pre></td></tr></table></figure></p>
+<p><strong>属性的说明</strong>：</p>
+<ul>
+<li>Resource：声明这个是<strong>资源</strong></li>
+<li>name=指定Resource（资源）的<strong>JNDI名称</strong></li>
+<li>auth=指定管理Resource的Manager(Container由容器创建和管理，Application由Web应用创建和管理) </li>
+<li>factory：必需的属性，其值应为 <code>org.apache.tomcat.jdbc.pool.DataSourceFactory</code></li>
+<li>type=指定Resource的java类（<strong>即指定JNDI能拿到的是什么类型的数据，<code>javax.sql.DataSource</code>这里指定为连接池对象</strong>）。类型应为 javax.sql.DataSource 或 javax.sql.XADataSource。根据类型，将创org.apache.tomcat.jdbc.pool.DataSource 或 org.apache.tomcat.jdbc.pool.XADataSource。</li>
+<li>maxActive=指定连接池中处于活动状态的数据库连接的最大数量</li>
+<li>maxIdle=指定连接池中处于空闲状态的数据库的最大数量</li>
+<li>maxWait=指定连接池中连接处于空闲的最长时间，超过这个时间会提示异常，取值为-1，表示可以无限期等待，单位为毫秒（ms）</li>
+</ul>
+<p>我们需要注意的属性是<code>factory=&quot;org.apache.tomcat.jdbc.pool.DataSourceFactory&quot;</code><br>如果你没有声明以上的属性，当<strong>Tomcat</strong>读到<code>type=&quot;javax.sql.DataSource&quot;</code>属性时也会<strong>自动</strong>安装<strong>DBCP</strong>，除非你指定不同的factory。</p>
+<p>  <strong>连接池的获取</strong>：<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">  public class DBUtil &#123;</span><br><span class="line">    public static Connection getConnection()&#123;</span><br><span class="line">        Connection conn = null;</span><br><span class="line">        try &#123;</span><br><span class="line">            Context c = new InitialContext();</span><br><span class="line">            DataSource dataSource = (DataSource) c.lookup(&quot;java:/comp/env/jdbc/login_register&quot;);//这里的jdbc/login_register和篇配置文件中的name属性一致</span><br><span class="line">            conn = dataSource.getConnection();</span><br><span class="line">            return conn;</span><br><span class="line">        &#125; catch (SQLException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; catch (NamingException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return conn;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>  <code>lookup</code>方法用于查找指定JNDI名称的连接池，<code>java:/comp/env/jdbc/login_registe</code>的<code>jdbc/login_registe</code>和配置文件中JNDI的名称相对应。这样既可查找到数据库连接池，也就能获得到连接对象了。当然，连接池的获取方式不只一种，比如还有通过配置文件来获取的，感兴趣的可以查阅资料。</p>
+<p>  <strong>大概流程是这样的：</strong></p>
+<ul>
+<li>通过配置文件<code>Resource</code>声明资源为<strong>连接池</strong>类型（<code>javax.sql.DataSource</code>）的<strong>对象</strong></li>
+<li>加载连接池factory，<code>org.apache.tomcat.jdbc.pool.DataSourceFactory</code></li>
+<li>通过JNDI找到连接池资源</li>
+</ul>
+<p>通过这个例子我们看到了JNDI的作用，JNDI你可以理解成一个水池的门牌,连接池就相当于这个水池，应用要取到要访问数据库时,通过找到JNDI，然后再通过连接池和数据库所建立的连接来访问。</p>
+<h3 id="C3P0连接池"><a href="#C3P0连接池" class="headerlink" title="C3P0连接池"></a>C3P0连接池</h3><p>C3P0是一个开源的JDBC连接池，它实现了数据源和JNDI绑定，支持JDBC3规范和JDBC2的标准扩展。C3P0是异步操作的，缓慢的JDBC操作通过帮助进程完成。扩展这些操作可以有效的提升性能。C3P0是改写的<code>javax.sql.DataSource</code>。</p>
+<p><strong>连接池的配置</strong><br>配置文件：c3p0-config.xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;c3p0-config&gt;</span><br><span class="line">  &lt;default-config&gt;</span><br><span class="line">//默认是mysql数据库</span><br><span class="line">     &lt;property name=&quot;driverClass&quot;&gt;com.mysql.jdbc.Driver&lt;/property&gt; </span><br><span class="line">     &lt;property name=&quot;jdbcUrl&quot;&gt;jdbc:mysql:///项目名?useUnicode=true&amp;amp;characterEncoding=utf8&lt;/property&gt; </span><br><span class="line">     &lt;property name=&quot;user&quot;&gt;数据库用户名&lt;/property&gt; </span><br><span class="line">     &lt;property name=&quot;password&quot;&gt;数据库密码&lt;/property&gt; </span><br><span class="line">     &lt;property name=&quot;initialPoolSize&quot;&gt;5&lt;/property&gt; </span><br><span class="line">     &lt;property name=&quot;maxPoolSize&quot;&gt;10&lt;/property&gt; </span><br><span class="line">  &lt;/default-config&gt;</span><br><span class="line">//也可以用oracle数据库</span><br><span class="line">  &lt;named-config name=&quot;oracleConfig&quot;&gt;</span><br><span class="line">    &lt;property name=&quot;driverClass&quot;&gt;com.mysql.jdbc.Driver&lt;/property&gt; </span><br><span class="line">     &lt;property name=&quot;jdbcUrl&quot;&gt;jdbc:mysql:///项目名&lt;/property&gt; </span><br><span class="line">     &lt;property name=&quot;user&quot;&gt;数据库用户名&lt;/property&gt; </span><br><span class="line">     &lt;property name=&quot;password&quot;&gt;数据库密码&lt;/property&gt; </span><br><span class="line">     &lt;property name=&quot;initialPoolSize&quot;&gt;5&lt;/property&gt; </span><br><span class="line">     &lt;property name=&quot;maxPoolSize&quot;&gt;10&lt;/property&gt; </span><br><span class="line">   &lt;/named-config&gt;</span><br><span class="line">&lt;/c3p0-config&gt;</span><br></pre></td></tr></table></figure></p>
+<p><strong>连接池的获取</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> // 创建c3p0连接池核心工具类</span><br><span class="line">// 自动加载src下c3p0的配置文件【c3p0-config.xml】</span><br><span class="line">ComboPooledDataSource dataSource = new ComboPooledDataSource();// 使用默认的配置</span><br><span class="line">PreparedStatement pstmt = null;</span><br><span class="line">// 获取连接</span><br><span class="line">Connection con = dataSource.getConnection();</span><br><span class="line">//执行sql语句</span><br><span class="line">String sql=&quot;sql语句&quot;</span><br><span class="line">//执行</span><br><span class="line">pstmt.executeUpdate();</span><br><span class="line">//关闭连接</span><br><span class="line">pstmt.close();</span><br><span class="line">con.close();</span><br></pre></td></tr></table></figure></p>
+<p>注意：创建C3P0的连接池时候还可以在（）加上名称，连接指定配置文件中的连接池。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ComboPooledDataSource dataSource = </span><br><span class="line">      new ComboPooledDataSource(&quot;oracleConfig&quot;);</span><br></pre></td></tr></table></figure></p>
+<p><strong>当然数据库连接池除了以上的配置、获取方式外，还有别的方式，例如用JNDI配置和获取的</strong>。</p>
+<p><strong>连接池配置</strong><br><strong>在tomcat的context.xml里的<context>标签添加<resource>标签</resource></context></strong>：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;Resource name=&quot;jdbc/TestDB&quot; </span><br><span class="line">	        auth=&quot;Container&quot; </span><br><span class="line">	       factory=&quot;org.apache.naming.factory.BeanFactory&quot;</span><br><span class="line">	       type=&quot;com.mchange.v2.c3p0.ComboPooledDataSource&quot;</span><br><span class="line">	       driverClass=&quot;oracle.jdbc.driver.OracleDriver&quot;</span><br><span class="line">           jdbcUrl=&quot;jdbc:oracle:thin:@localhost:1521:XE&quot;</span><br><span class="line">           user=&quot;orcl&quot;</span><br><span class="line">           password=&quot;newsnews&quot;/&gt;</span><br></pre></td></tr></table></figure></p>
+<p>不同数据源的 driverClass，jdbcUrl等 属性不同，依照连接池自身的属性配置，这里是使用的c3p0数据源，若使用其他数据源要修改属性。<code>jdbc/TestDB</code>为JNDI名称。</p>
+<p><strong>在项目的web.xml添加</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;resource-ref&gt;</span><br><span class="line">    &lt;description&gt;DB Connection&lt;/description&gt;</span><br><span class="line">    &lt;res-ref-name&gt;jdbc/TestDB&lt;/res-ref-name&gt;</span><br><span class="line">    &lt;res-type&gt;javax.sql.DataSource&lt;/res-type&gt;</span><br><span class="line">    &lt;res-auth&gt;Container&lt;/res-auth&gt;</span><br><span class="line"> &lt;/resource-ref&gt;</span><br></pre></td></tr></table></figure></p>
+<p>res-ref-name引入context.xml里配置的Resource,res-type都设置为javax.sql.DataSource。</p>
+<p><strong>在spring的applicationContext.xml配置里添加</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;dataSource&quot; class=&quot;org.springframework.jndi.JndiObjectFactoryBean&quot;&gt;</span><br><span class="line">		&lt;property name=&quot;jndiName&quot; value=&quot;java:/comp/env/jdbc/TestDB&quot; /&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="DBCP连接池"><a href="#DBCP连接池" class="headerlink" title="DBCP连接池"></a>DBCP连接池</h3><p><strong>DBCP（Database Connection Pool）</strong> 是一个依赖Jakarta commons-pool对象池机制的数据库连接池，Tomcat的数据源使用的就是DBCP。</p>
+<p><strong>连接池配置</strong><br>dbcpconfig.properties文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">driverClassName=com.mysql.jdbc.Driver</span><br><span class="line">url=jdbc:mysql://localhost:3306/db_user</span><br><span class="line">username=root</span><br><span class="line">password=root</span><br><span class="line">initialSize=10</span><br><span class="line">maxActive=50</span><br><span class="line">maxIdle=20</span><br><span class="line">minIdle=5</span><br><span class="line">maxWait=60000</span><br><span class="line">connectionProperties=useUnicode=true;characterEncoding=utf8</span><br><span class="line">defaultAutoCommit=true</span><br><span class="line">defaultReadOnly=</span><br><span class="line">defaultTransactionIsolation=REPEATABLE_READ</span><br></pre></td></tr></table></figure></p>
+<p><strong>连接池获取</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public class DBUtil &#123;</span><br><span class="line">    public static Connection getConnection()&#123;</span><br><span class="line">        Connection conn = null;</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line">            conn = getDataSource().getConnection();</span><br><span class="line">        &#125; catch (SQLException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return conn;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private static DataSource getDataSource()&#123;</span><br><span class="line">        DataSource dataSource=null;</span><br><span class="line">        Properties p = new Properties();</span><br><span class="line">        try &#123;</span><br><span class="line">            p.load(DBUtil.class.getClassLoader().getResourceAsStream(&quot;dbcpconfig.properties&quot;));</span><br><span class="line">            dataSource = BasicDataSourceFactory.createDataSource(p);</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            throw new RuntimeException(&quot;获取DataSource对象失败&quot;);</span><br><span class="line">        &#125; </span><br><span class="line">        return dataSource;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="自定义连接池"><a href="#自定义连接池" class="headerlink" title="自定义连接池"></a>自定义连接池</h3><p>编写连接池需要实现<code>javax.sql.DataSource</code>接口，具体可以网上查阅相关资料。</p>
+<h3 id="其他连接池"><a href="#其他连接池" class="headerlink" title="其他连接池"></a>其他连接池</h3><p>还有更多的连接池例如：Proxool、BoneCP、HikariCP、阿里druid等可以自行查阅资料。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>以上，介绍了几种常用的数据源连接池；这几种连接池在使用过程，即支持硬编码的方式，也支持配置文件的配置方式；在正式实用的时候，应该尽量使用配置的方式，便于维护和管理。硬编码的方式，可以做为测试使用。同时，spring框架，通过他自己的方式集成上述几种数据源，理论上来说，都支持。各个数据源连接池都有一些公有的属性，因为他们都是从javax.sql.datasource继 承而来，而且都有最大连接数，初始化连接数等概念。同时，他们又分别有各自不同的属性，做了扩展。这里只是简单的介绍，在实际使用中，想要实现高性能的数 据库连接池管理，还需要深入研究每种方式的连接属性配置；例如：根据实际需要，设置合适的最小连接数和最大连接数，等待时间等。</p>
+
       
 
       
@@ -207,6 +265,17 @@
       
       
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Java-Programming//" class="article-tag-list-link color4">Java编程基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
 
@@ -256,7 +325,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://ddnd.cn/tags/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://ddnd.cn/2018/11/18/Java-DataSource/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -268,6 +337,25 @@
 </article>
 
   
+<nav id="article-nav">
+  
+    <a href="/2018/11/19/Spring-Jdbc-CRUD/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Srping和传统JDBC实现数据库操作
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/11/18/Spring-Jdbc-Support/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Spring对JDBC的支持</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -292,7 +380,7 @@
   
 
   
-  <div id="SOHUCS" sid=""></div> 
+  <div id="SOHUCS" sid="Java-DataSource"></div> 
 <script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js"></script>
 <script type="text/javascript">
     window.changyan.api.config({
@@ -328,7 +416,7 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

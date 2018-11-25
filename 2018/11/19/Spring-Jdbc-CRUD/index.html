@@ -6,20 +6,29 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://ddnd.cn">
-  <title>tags | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
+  <title>Srping和传统JDBC实现数据库操作 | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
-<meta name="keywords" content="Java,xue8,薛8,DDND,程序员,">
-<meta property="og:type" content="website">
-<meta property="og:title" content="tags">
-<meta property="og:url" content="http://ddnd.cn/tags/index.html">
+  <meta name="description" content="前言学习完了Spring对JDBC的支持和【JAVA】JAVA数据源之后，那我们就可以进行数据库的操作了。 创建数据库首先创建我们的数据库（这里我使用的是Mysql），为了演示方便，我这里简单的创建一个spring数据库，然后数据库有一个user用户表：  创建一个名为spring的数据库。 创建一个名为user的数据表，表包括id、email、name、password四个字段。1234567C">
+<meta name="keywords" content="Jdbc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Srping和传统JDBC实现数据库操作">
+<meta property="og:url" content="http://ddnd.cn/2018/11/19/Spring-Jdbc-CRUD/index.html">
 <meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
-<meta property="og:description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
+<meta property="og:description" content="前言学习完了Spring对JDBC的支持和【JAVA】JAVA数据源之后，那我们就可以进行数据库的操作了。 创建数据库首先创建我们的数据库（这里我使用的是Mysql），为了演示方便，我这里简单的创建一个spring数据库，然后数据库有一个user用户表：  创建一个名为spring的数据库。 创建一个名为user的数据表，表包括id、email、name、password四个字段。1234567C">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-25T04:59:04.119Z">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720d71b52d10e4?w=645&h=469&f=png&s=51367">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720d71b533fc07">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720d71b6573640?w=1270&h=677&f=png&s=92459">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720d71b5bcbf45?w=1781&h=738&f=png&s=203125">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720d71b7cc7f72?w=1708&h=627&f=png&s=196146">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720d71b9d7ab20?w=1407&h=728&f=png&s=135454">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720d71e6636956?w=1553&h=762&f=png&s=184494">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720d71ebceb2ef?w=409&h=156&f=png&s=11100">
+<meta property="og:updated_time" content="2018-11-25T08:06:20.964Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tags">
-<meta name="twitter:description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
+<meta name="twitter:title" content="Srping和传统JDBC实现数据库操作">
+<meta name="twitter:description" content="前言学习完了Spring对JDBC的支持和【JAVA】JAVA数据源之后，那我们就可以进行数据库的操作了。 创建数据库首先创建我们的数据库（这里我使用的是Mysql），为了演示方便，我这里简单的创建一个spring数据库，然后数据库有一个user用户表：  创建一个名为spring的数据库。 创建一个名为user的数据表，表包括id、email、name、password四个字段。1234567C">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720d71b52d10e4?w=645&h=469&f=png&s=51367">
   
     <link rel="alternative" href="/atom.xml" title="薛8的个人网站 - xue8&#39;s Blog - DDND.CN" type="application/atom+xml">
   
@@ -157,27 +166,54 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="page-" class="article article-type-page " itemscope="" itemprop="blogPost">
+            <article id="post-Spring-Jdbc-CRUD" class="article article-type-post " itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      tags
+      Srping和传统JDBC实现数据库操作
     </h1>
   
 
         
-        <a href="/tags/index.html" class="archive-article-date">
-  	<time datetime="2018-11-25T04:58:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-25</time>
+        <a href="/2018/11/19/Spring-Jdbc-CRUD/" class="archive-article-date">
+  	<time datetime="2018-11-19T04:04:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-19</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>学习完了<a href="http://ddnd.cn/2018/11/18/Spring-Jdbc-Support/">Spring对JDBC的支持</a>和<a href="https://blog.csdn.net/xueba8/article/details/84107204" target="_blank" rel="noopener">【JAVA】JAVA数据源</a>之后，那我们就可以进行数据库的操作了。</p>
+<h1 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h1><p>首先创建我们的数据库（这里我使用的是Mysql），为了演示方便，我这里简单的创建一个spring数据库，然后数据库有一个user用户表：</p>
+<ol>
+<li>创建一个名为<code>spring</code>的数据库。</li>
+<li>创建一个名为user的数据表，表包括id、email、name、password四个字段。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `user` (</span><br><span class="line">  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,</span><br><span class="line">  `email` varchar(255) DEFAULT NULL,</span><br><span class="line">  `name` varchar(255) DEFAULT NULL,</span><br><span class="line">  `password` varchar(255) DEFAULT NULL,</span><br><span class="line">  PRIMARY KEY (`id`)</span><br><span class="line">) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<a id="more"></a>
+<p><img src="https://user-gold-cdn.xitu.io/2018/11/17/16720d71b52d10e4?w=645&amp;h=469&amp;f=png&amp;s=51367" alt="在这里插入图片描述"></p>
+<h1 id="创建实体类"><a href="#创建实体类" class="headerlink" title="创建实体类"></a>创建实体类</h1><p>创建一个<strong>实体类</strong>和数据库的表相对应（模型用来储存要操作的数据）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">package cn.zhenta.www.service.impl.Entity;</span><br><span class="line"></span><br><span class="line">public class User &#123;</span><br><span class="line">    int id;</span><br><span class="line">    String email;</span><br><span class="line">    String name;</span><br><span class="line">    String password;</span><br><span class="line"></span><br><span class="line">    public User(String email, String name, String password)&#123;</span><br><span class="line">        this.email = email;</span><br><span class="line">        this.name = name;</span><br><span class="line">        this.password = password;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int getId()&#123;</span><br><span class="line">        return id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setId(int id) &#123;</span><br><span class="line">        this.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getEmail()&#123;</span><br><span class="line">        return email;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setEmail(String email)&#123;</span><br><span class="line">        this.email = email;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getName()&#123;</span><br><span class="line">        return name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setName(String name)&#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getPassword()&#123;</span><br><span class="line">        return password;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setPassword(String password)&#123;</span><br><span class="line">        this.password = password;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/11/17/16720d71b533fc07" alt="在这里插入图片描述"><br>模型中的成员属性<code>id</code>、<code>email</code>、<code>name</code>、<code>password</code>分别对应数据表user的<strong>字段</strong>，为每个成员属性添加<code>getter</code>和<code>setter</code>方法，实现对成员属性的操作。</p>
+<h1 id="数据访问对象（DAO）模式"><a href="#数据访问对象（DAO）模式" class="headerlink" title="数据访问对象（DAO）模式"></a>数据访问对象（DAO）模式</h1><p><strong>DAO（data access object）</strong>，数据库访问对象，主要的功能就是用于惊险数据库操作的。</p>
+<h2 id="UserDao接口"><a href="#UserDao接口" class="headerlink" title="UserDao接口"></a>UserDao接口</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">package cn.zhenta.www.service.impl.Dao;</span><br><span class="line"></span><br><span class="line">import cn.zhenta.www.service.impl.Entity.User;</span><br><span class="line"></span><br><span class="line">public interface UserDao &#123;</span><br><span class="line">    public void inSert(User User);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://user-gold-cdn.xitu.io/2018/11/17/16720d71b6573640?w=1270&amp;h=677&amp;f=png&amp;s=92459" alt="在这里插入图片描述"><br><strong>抽象</strong>了User的操作，即User可以进行<strong>插入操作（inSert）</strong>。</p>
+<h2 id="UserDao接口的实现"><a href="#UserDao接口的实现" class="headerlink" title="UserDao接口的实现"></a>UserDao接口的实现</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">package cn.zhenta.www.service.impl.Dao.impl;</span><br><span class="line"></span><br><span class="line">import cn.zhenta.www.service.impl.Dao.UserDao;</span><br><span class="line">import cn.zhenta.www.service.impl.Entity.User;</span><br><span class="line"></span><br><span class="line">import javax.sql.DataSource;</span><br><span class="line">import java.sql.Connection;</span><br><span class="line">import java.sql.PreparedStatement;</span><br><span class="line">import java.sql.SQLException;</span><br><span class="line"></span><br><span class="line">public class UserDaoImpl implements UserDao &#123;</span><br><span class="line">    private DataSource dataSource;</span><br><span class="line"></span><br><span class="line">    public void setDataSource(DataSource dataSource)&#123;</span><br><span class="line">        this.dataSource = dataSource;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void inSert(User user)&#123;</span><br><span class="line">        String sql = &quot;INSERT INTO `spring`.`user` (`email`, `name`, `password`) VALUES (?, ?,?)&quot;;</span><br><span class="line">        Connection conn = null;</span><br><span class="line"></span><br><span class="line">        try&#123;</span><br><span class="line">            conn = dataSource.getConnection();</span><br><span class="line">            PreparedStatement ps = conn.prepareStatement(sql);</span><br><span class="line">            ps.setString(1, user.getEmail());</span><br><span class="line">            ps.setString(2, user.getName());</span><br><span class="line">            ps.setString(3, user.getPassword());</span><br><span class="line">            ps.executeUpdate();</span><br><span class="line">            ps.close();</span><br><span class="line">        &#125;catch(SQLException e)&#123;</span><br><span class="line">            throw new RuntimeException(e);</span><br><span class="line">        &#125;finally &#123;</span><br><span class="line">            if (conn != null) &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    conn.close();</span><br><span class="line">                &#125; catch (SQLException e) &#123;&#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://user-gold-cdn.xitu.io/2018/11/17/16720d71b5bcbf45?w=1781&amp;h=738&amp;f=png&amp;s=203125" alt="在这里插入图片描述"><br>这里直接用了传统的JDBC，没有使用Spring的JdbcTemplate或者别的ORM框架。<a href="https://blog.csdn.net/xueba8/article/details/84065855" target="_blank" rel="noopener">传统JDBC和Spring的JdbcTemplate区别</a><br><code>private DataSource dataSource;</code>这里对</p>
+<h1 id="数据源配置"><a href="#数据源配置" class="headerlink" title="数据源配置"></a>数据源配置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans</span><br><span class="line">	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;bean id=&quot;customerDAO&quot; class=&quot;cn.zhenta.www.service.impl.Dao.impl.UserDaoImpl&quot;&gt;</span><br><span class="line">        &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot; /&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">    &lt;bean id=&quot;dataSource&quot;</span><br><span class="line">          class=&quot;org.springframework.jdbc.datasource.DriverManagerDataSource&quot;&gt;</span><br><span class="line"></span><br><span class="line">        &lt;property name=&quot;driverClassName&quot; value=&quot;com.mysql.jdbc.Driver&quot; /&gt;</span><br><span class="line">        &lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/spring&quot; /&gt;</span><br><span class="line">        &lt;property name=&quot;username&quot; value=&quot;root&quot; /&gt;</span><br><span class="line">        &lt;property name=&quot;password&quot; value=&quot;root&quot; /&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://user-gold-cdn.xitu.io/2018/11/17/16720d71b7cc7f72?w=1708&amp;h=627&amp;f=png&amp;s=196146" alt="在这里插入图片描述"><br>这里为了方便直接使用了<strong>直连的数据源</strong>（<a href="https://blog.csdn.net/xueba8/article/details/84107204" target="_blank" rel="noopener">关于直连的数据源和连接池的数据源</a>）,也可以使用连接池的数据源。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;customerDAO&quot; class=&quot;cn.zhenta.www.service.impl.Dao.impl.UserDaoImpl&quot;&gt;</span><br><span class="line">    &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot; /&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure></p>
+<p>其中<code>name=&quot;dataSource&quot;</code>为向<code>cn.zhenta.www.service.impl.Dao.impl.UserDaoImpl</code>这个类名为<code>dataSource</code>成员属性<strong>注入</strong>一个<code>id</code>为<code>dataSource</code>（<code>ref=&quot;dataSource&quot;</code>）的Bean（通过setter方法即<code>setDataSource</code>），也就是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;dataSource&quot;</span><br><span class="line">      class=&quot;org.springframework.jdbc.datasource.DriverManagerDataSource&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;property name=&quot;driverClassName&quot; value=&quot;com.mysql.jdbc.Driver&quot; /&gt;</span><br><span class="line">    &lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/spring&quot; /&gt;</span><br><span class="line">    &lt;property name=&quot;username&quot; value=&quot;root&quot; /&gt;</span><br><span class="line">    &lt;property name=&quot;password&quot; value=&quot;root&quot; /&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure></p>
+<p>这样在<code>UserDao</code>的实现类<code>UserDaoImpl</code>就能完成了数据源的装配了。</p>
+<h1 id="装配Bean"><a href="#装配Bean" class="headerlink" title="装配Bean"></a>装配Bean</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">package cn.zhenta.www.service.impl.Config;</span><br><span class="line"></span><br><span class="line">import org.springframework.context.annotation.ComponentScan;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line">import org.springframework.context.annotation.ImportResource;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">@ImportResource(locations = &#123;&quot;Spring-Datasource.xml&quot;&#125;)</span><br><span class="line">@ComponentScan(basePackages = &#123;&quot;cn.zhenta.www.service.impl&quot;&#125;)</span><br><span class="line">public class Config &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://user-gold-cdn.xitu.io/2018/11/17/16720d71b9d7ab20?w=1407&amp;h=728&amp;f=png&amp;s=135454" alt="在这里插入图片描述"></p>
+<p><code>@Configuration</code>声明这个是配置类，<code>@ImportResource</code>装配xml配置文件（Spring-Datasource.xml为直连数据源的配置文件），<code>@ComponentScan</code>开启组件扫描。</p>
+<h1 id="测试类"><a href="#测试类" class="headerlink" title="测试类"></a>测试类</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">package cn.zhenta.www.service.impl.TestC;</span><br><span class="line"></span><br><span class="line">import cn.zhenta.www.service.impl.Dao.UserDao;</span><br><span class="line">import cn.zhenta.www.service.impl.Entity.User;</span><br><span class="line">import org.junit.Test;</span><br><span class="line">import org.junit.runner.RunWith;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.test.context.ContextConfiguration;</span><br><span class="line">import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;</span><br><span class="line"></span><br><span class="line">@ContextConfiguration(classes = cn.zhenta.www.service.impl.Config.Config.class)</span><br><span class="line">@RunWith(SpringJUnit4ClassRunner.class)</span><br><span class="line">public class TestC &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    UserDao userDao;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void dd()&#123;</span><br><span class="line">        User user = new User(&quot;22&quot;, &quot;xue8&quot;,&quot;22&quot;);</span><br><span class="line">        userDao.inSert(user);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://user-gold-cdn.xitu.io/2018/11/17/16720d71e6636956?w=1553&amp;h=762&amp;f=png&amp;s=184494" alt="在这里插入图片描述"></p>
+<p><code>ContextConfiguration</code> 指定Spring配置信息来源，<code>UserDao userDAO</code>引用UserDao接口，<code>User user = new User(&quot;22&quot;, &quot;xue8&quot;,&quot;22&quot;)</code>创建一个User实体类中储存我们要保存的数据，<code>userDAO.inSert(user)</code>通过接口的实现类插入数据。<a href="https://blog.csdn.net/xueba8/article/details/83898278" target="_blank" rel="noopener">接口的引用</a></p>
+<p>最后我们数据库成功插入了我们插入的数据。<br><img src="https://user-gold-cdn.xitu.io/2018/11/17/16720d71ebceb2ef?w=409&amp;h=156&amp;f=png&amp;s=11100" alt="在这里插入图片描述"></p>
+
       
 
       
@@ -206,7 +242,29 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Jdbc</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Spring-Programming//" class="article-tag-list-link color2">Spring</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
 
@@ -256,7 +314,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://ddnd.cn/tags/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://ddnd.cn/2018/11/19/Spring-Jdbc-CRUD/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -268,6 +326,25 @@
 </article>
 
   
+<nav id="article-nav">
+  
+    <a href="/2018/11/19/Spring-Jdbc-JdbcTemplate/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Spring和JdbcTemplate实现数据库操作
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/11/18/Java-DataSource/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">JAVA数据源</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -292,7 +369,7 @@
   
 
   
-  <div id="SOHUCS" sid=""></div> 
+  <div id="SOHUCS" sid="Spring-Jdbc-CRUD"></div> 
 <script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js"></script>
 <script type="text/javascript">
     window.changyan.api.config({
@@ -328,7 +405,7 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

@@ -6,20 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://ddnd.cn">
-  <title>tags | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
+  <title>Spring对JDBC的支持 | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
-<meta name="keywords" content="Java,xue8,薛8,DDND,程序员,">
-<meta property="og:type" content="website">
-<meta property="og:title" content="tags">
-<meta property="og:url" content="http://ddnd.cn/tags/index.html">
+  <meta name="description" content="引言企业应用程序经常要访问存储在数据库中的信息，因此JDK提供了一个标准接口 JDBC（Java DataBase Connection，Java数据库连接）来进行数据库访问操作。JDBC为多种关系数据库提供了统一访问方式，作为特定厂商数据库访问API的一种高级抽象，它主要包含一些通用的接口类，所以真正的数据库访问操作实现是由各自数据库厂商提供的。通常把厂商提供的特定于数据库的访问API称为数据库">
+<meta name="keywords" content="Jdbc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring对JDBC的支持">
+<meta property="og:url" content="http://ddnd.cn/2018/11/18/Spring-Jdbc-Support/index.html">
 <meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
-<meta property="og:description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
+<meta property="og:description" content="引言企业应用程序经常要访问存储在数据库中的信息，因此JDK提供了一个标准接口 JDBC（Java DataBase Connection，Java数据库连接）来进行数据库访问操作。JDBC为多种关系数据库提供了统一访问方式，作为特定厂商数据库访问API的一种高级抽象，它主要包含一些通用的接口类，所以真正的数据库访问操作实现是由各自数据库厂商提供的。通常把厂商提供的特定于数据库的访问API称为数据库">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-25T04:59:04.119Z">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720dd3ac879cb0?w=945&h=382&f=png&s=171916">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720dd3ac78e04c?w=875&h=446&f=png&s=319992">
+<meta property="og:updated_time" content="2018-11-25T07:59:28.795Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tags">
-<meta name="twitter:description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
+<meta name="twitter:title" content="Spring对JDBC的支持">
+<meta name="twitter:description" content="引言企业应用程序经常要访问存储在数据库中的信息，因此JDK提供了一个标准接口 JDBC（Java DataBase Connection，Java数据库连接）来进行数据库访问操作。JDBC为多种关系数据库提供了统一访问方式，作为特定厂商数据库访问API的一种高级抽象，它主要包含一些通用的接口类，所以真正的数据库访问操作实现是由各自数据库厂商提供的。通常把厂商提供的特定于数据库的访问API称为数据库">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720dd3ac879cb0?w=945&h=382&f=png&s=171916">
   
     <link rel="alternative" href="/atom.xml" title="薛8的个人网站 - xue8&#39;s Blog - DDND.CN" type="application/atom+xml">
   
@@ -157,27 +160,111 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="page-" class="article article-type-page " itemscope="" itemprop="blogPost">
+            <article id="post-Spring-Jdbc-Support" class="article article-type-post " itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      tags
+      Spring对JDBC的支持
     </h1>
   
 
         
-        <a href="/tags/index.html" class="archive-article-date">
-  	<time datetime="2018-11-25T04:58:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-25</time>
+        <a href="/2018/11/18/Spring-Jdbc-Support/" class="archive-article-date">
+  	<time datetime="2018-11-18T07:58:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-18</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>企业应用程序经常要访问存储在数据库中的信息，因此JDK提供了一个标准<strong>接口</strong> JDBC（Java DataBase Connection，Java数据库连接）来进行数据库访问操作。JDBC为多种关系数据库提供了统一访问方式，作为特定厂商数据库访问API的一种高级抽象，它主要包含一些通用的<strong>接口类</strong>，所以真正的数据库访问操作实现是由各自数据库厂商提供的。通常把厂商提供的特定于数据库的访问API称为数据库JDBC驱动程序，如：Mysql、Oracle、SQL Server驱动等等。</p>
+<p>利用JDBC虽然可以方便地访问存储在关系数据库中的信息，但是代码比较繁琐，开发人员不得不在<strong>Java对象</strong>与<strong>关系数据</strong>之间进行转换。因此，随着企业应用开发技术的进步。逐渐产生了用来实现Java对象与关系数据之间自动映射的持久化框架，称为<strong>对象-关系映射（Ovject/Relation Mapping，ORM）</strong>。这些持久化框架包括Hibernate、Mybatis等等。为了进一步促进Java EE企业应用开发，进一步规范ORM实现，Java EE 5.0规范中推出了<strong>JPA（Java Persistence API）</strong>。需要注意的是，JPA是一个ORM的标准规范，而不是一个具体的ORM框架。<br><a id="more"></a><br>好了，说了这么多，也是为了大家能清楚JDBC和JPA的区别。回归正题，本文关注的是Spring对JDBC的支持，至于Spring对于JPA的支持往后的文章再介绍。</p>
+<h1 id="Spring对JDBC的封装"><a href="#Spring对JDBC的封装" class="headerlink" title="Spring对JDBC的封装"></a>Spring对JDBC的封装</h1><h2 id="传统的JDBC"><a href="#传统的JDBC" class="headerlink" title="传统的JDBC"></a>传统的JDBC</h2><p>首先我们了解一下传统JDBC的工作流程</p>
+<ul>
+<li>加载数据库驱动程序（Mysql、SQL Server等）</li>
+<li>通过<code>DriverManager</code>获取<code>Connection</code>对象</li>
+<li>获取Statement对象</li>
+<li>执行SQL语句</li>
+<li>操作结果集ResultSet</li>
+<li>关闭资源</li>
+</ul>
+<p>传统的JDBC使用过程中有一定的局限：</p>
+<ol>
+<li>都需要按照上面的6个步骤进行数据库的访问，应用程序中可能会出现大量重复的代码。</li>
+<li>数据库访问的代码和业务代码混杂在一起，难以维护。</li>
+<li>不适当的SQL异常处理操作，有时候程序员并不清楚如何处理SQL异常但又不能忽略（检查性异常，编译器不通过）。</li>
+<li>……<h2 id="Spring对于JDBC的封装"><a href="#Spring对于JDBC的封装" class="headerlink" title="Spring对于JDBC的封装"></a>Spring对于JDBC的封装</h2>鉴于传统JDBC的不足，Spring对JDBC进行深层次的封装（<strong>JdbcTemplate</strong>）,让JDBC更加易用和维护，也降低了代码的耦合度。接下来让我们来了解一下Spring是怎么封装的JDBC。<h3 id="Spring的数据访问哲学"><a href="#Spring的数据访问哲学" class="headerlink" title="Spring的数据访问哲学"></a>Spring的数据访问哲学</h3>为了避免持久化的逻辑分散到应用的各个组件中，最好将数据访问的功能放到一个或多个专注与此项任务的组件中。这样的组件通常称为数据<strong>访问对象（Data Access object DAO）</strong> 或<strong>Repository</strong>。<br>为了避免应用于特定的数据访问策略耦合在一起，编写良好的Repository应该以<strong>接口</strong>的方式暴露功能。如下图。<br><img src="https://user-gold-cdn.xitu.io/2018/11/17/16720dd3ac879cb0?w=945&amp;h=382&amp;f=png&amp;s=171916" alt="在这里插入图片描述"></li>
+</ol>
+<p>服务对象通过接口来访问Repository。<a href="https://blog.csdn.net/xueba8/article/details/84071837" target="_blank" rel="noopener">【设计模式】MVC模式与三层架构关系</a></p>
+<h3 id="数据访问模板化"><a href="#数据访问模板化" class="headerlink" title="数据访问模板化"></a>数据访问模板化</h3><p>在我们进行数据访问的过程中，我们都需要<strong>获取</strong>到一个数据存储的连接并在处理完成后<strong>释放</strong>。这些都是在数据访问处理过程中固定步骤，但是每种数据访问的方法又会有些不同，我们会查询不同的对象或以不同的方式更新数据，这都是数据访问过程中变化的部分。<br>Spring将数据访问过程中固定的和可变的部分明确划分为两个不同的类：<strong>模板（template）</strong> 和<strong>回调（callback）</strong>。模板管理过程中固定的部分，而回调处理自定义的数据访问代码。<br><img src="https://user-gold-cdn.xitu.io/2018/11/17/16720dd3ac78e04c?w=875&amp;h=446&amp;f=png&amp;s=319992" alt="在这里插入图片描述"></p>
+<h2 id="传统JDBC和Spring封装的JdbcTemplate区别"><a href="#传统JDBC和Spring封装的JdbcTemplate区别" class="headerlink" title="传统JDBC和Spring封装的JdbcTemplate区别"></a>传统JDBC和Spring封装的JdbcTemplate区别</h2><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>传统JDBC</th>
+<th>JdbcTemplate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>获取JDBC连接</td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td>声明SQL</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>预编译SQL</td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td>执行SQL</td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td>处理结果集</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>释放结果集</td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td>释放Statement</td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td>提交事务</td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td>处理异常并回滚事务</td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td>释放JDBC连接</td>
+<td>√</td>
+</tr>
+</tbody>
+</table>
+<p>由表格我们就可以看出，JdbcTemplate 只需程序员关注需要<strong>执行的SQL</strong>和<strong>获取结果</strong>，而别的部分操作则不需要程序员关注，模板都帮处理好了，这样一看，JdbcTemplate 是不是比JDBC用起来更加方便呀？<br>本文介绍的是Spring对JDBC的支持（JdbcTemplate），至于Spring对JPA的支持（HibernateTemplate、JpaTemplate后面文章再写）</p>
+<blockquote>
+<p>欢迎加入JAVA学习群949419296，一起交流！</p>
+</blockquote>
+
       
 
       
@@ -206,7 +293,29 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Jdbc</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Spring-Programming//" class="article-tag-list-link color2">Spring</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
 
@@ -256,7 +365,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://ddnd.cn/tags/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://ddnd.cn/2018/11/18/Spring-Jdbc-Support/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -268,6 +377,25 @@
 </article>
 
   
+<nav id="article-nav">
+  
+    <a href="/2018/11/18/Java-DataSource/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          JAVA数据源
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/11/17/Spring-Bean-Annotation/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Spring 注解自动装配Bean</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -292,7 +420,7 @@
   
 
   
-  <div id="SOHUCS" sid=""></div> 
+  <div id="SOHUCS" sid="Spring-Jdbc-Support"></div> 
 <script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js"></script>
 <script type="text/javascript">
     window.changyan.api.config({
@@ -328,7 +456,7 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

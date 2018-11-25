@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://ddnd.cn">
-  <title>tags | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
+  <title>Spring自动装配Bean实现hello | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
-<meta name="keywords" content="Java,xue8,薛8,DDND,程序员,">
-<meta property="og:type" content="website">
-<meta property="og:title" content="tags">
-<meta property="og:url" content="http://ddnd.cn/tags/index.html">
+  <meta name="description" content="通过xml配置自动装配Bean1.创建一个简单的类test，作为被调用的Spring Bean。1234567891011121314package cn.zhenta.www.service.impl; public class test&amp;#123;    private String sex;     public void setSex(String sex) &amp;#123;        t">
+<meta name="keywords" content="Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring自动装配Bean实现hello">
+<meta property="og:url" content="http://ddnd.cn/2018/11/17/Spring-Bean-Automatic/index.html">
 <meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
-<meta property="og:description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
+<meta property="og:description" content="通过xml配置自动装配Bean1.创建一个简单的类test，作为被调用的Spring Bean。1234567891011121314package cn.zhenta.www.service.impl; public class test&amp;#123;    private String sex;     public void setSex(String sex) &amp;#123;        t">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-25T04:59:04.119Z">
+<meta property="og:updated_time" content="2018-11-25T07:50:11.355Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tags">
-<meta name="twitter:description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
+<meta name="twitter:title" content="Spring自动装配Bean实现hello">
+<meta name="twitter:description" content="通过xml配置自动装配Bean1.创建一个简单的类test，作为被调用的Spring Bean。1234567891011121314package cn.zhenta.www.service.impl; public class test&amp;#123;    private String sex;     public void setSex(String sex) &amp;#123;        t">
   
     <link rel="alternative" href="/atom.xml" title="薛8的个人网站 - xue8&#39;s Blog - DDND.CN" type="application/atom+xml">
   
@@ -157,27 +157,44 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="page-" class="article article-type-page " itemscope="" itemprop="blogPost">
+            <article id="post-Spring-Bean-Automatic" class="article article-type-post " itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      tags
+      Spring自动装配Bean实现hello
     </h1>
   
 
         
-        <a href="/tags/index.html" class="archive-article-date">
-  	<time datetime="2018-11-25T04:58:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-25</time>
+        <a href="/2018/11/17/Spring-Bean-Automatic/" class="archive-article-date">
+  	<time datetime="2018-11-17T07:48:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-17</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>通过xml配置自动装配Bean<br>1.创建一个简单的类test，作为被调用的Spring Bean。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">package cn.zhenta.www.service.impl;</span><br><span class="line"> </span><br><span class="line">public class test</span><br><span class="line">&#123;</span><br><span class="line">    private String sex;</span><br><span class="line"> </span><br><span class="line">    public void setSex(String sex) &#123;</span><br><span class="line">        this.sex = sex;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public void pri()&#123;</span><br><span class="line">        System.out.println(&quot;hi &quot; + sex);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其中test类有一个sex的成员属性，两个方法（至于为什么有个setSex的方法，在第三点进行解释）。我们要实现的是另一个类通过xml自动装配这个类（Bean），来调用这个类的pri方法。所以我们再创建一个test1类，作为执行者。</p>
+<p>2.创建执行的类test1，进行调用test的pri方法。<br><a id="more"></a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">package cn.zhenta.www.service.impl;</span><br><span class="line"> </span><br><span class="line">import org.apache.xbean.spring.context.ClassPathXmlApplicationContext;</span><br><span class="line">import org.springframework.context.ApplicationContext;</span><br><span class="line"> </span><br><span class="line">public class test1 &#123;</span><br><span class="line"> </span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        ApplicationContext a = new ClassPathXmlApplicationContext(&quot;test.xml&quot;);</span><br><span class="line">        test obj = (test) a.getBean(&quot;helloBean&quot;);</span><br><span class="line">        obj.pri();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>被调用的类test和调用的类test1都创建好了，其中test.xml对应的是xml配置文件名称，helloBean对应的是test.xml配置文件中Bean的id，pri（）即为test的pri方法，仅仅通过这两句话就可以不用实例化test类，即可调用test类的方法，怎么做到的呢？这就需要用到我们Spring的自动装配了，首先需要配置xml文件。</p>
+<p>3.创建text.xml配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans</span><br><span class="line">	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd&quot;&gt;</span><br><span class="line"> </span><br><span class="line">    &lt;bean id=&quot;helloBean&quot; class=&quot;cn.zhenta.www.service.impl.test&quot;&gt;</span><br><span class="line">        &lt;property name=&quot;sex&quot; value=&quot;xsx&quot; /&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line"> </span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure></p>
+<p>配置文件写好了，那配置文件里面的内容是什么意思呢？让我们慢慢道来，首先<bean></bean>声明这是个Bean，然后class即为你要配置为Bean的类的命名空间（我这里对应的是第1点的test类），id即为表示你这个Bean的标识符（自己随意起名，不冲突即可），而property作为bean的属性，也就是指一个类中的成员，既name=“sex”对应test的sex成员变量，同时这个成员必须有get和set方法（既test类中的setSex（）方法，需要注意的是setXXX的XXX需要为成员变量的名字），至于为什么要有set，get方法，可以阅读Spring IOC相关知识，至于property的用法，以下列举出一些常用的。</p>
+<p>property的一般用法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;playerDataManager&quot; class=&quot;com.cp.game.PlayerDataManager&quot; init-method=&quot;init&quot; scope=&quot;singleton&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;property name=&quot;sleepTime&quot; value=&quot;$&#123;app.dispatcher.sleepTime&#125;&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
+<p>//从外部的property文件中用el表达式获取值</p>
+<p><code>&lt;property name=&quot;sleepTime&quot; value=&quot;333&quot; /&gt;</code> //直接在赋值</p>
+<p><code>&lt;property name=&quot;playerDao&quot; ref=&quot;playerDao&quot; /&gt;</code> 引用其他bean对象。 ref的值是其他bean的id名</p>
+<p>4.运行结果<br>运行test1后，输出的内容是：hi xsx。</p>
+<p>5.补充<br>两个Bean，person 和 ability。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">package com.yiibai.common;</span><br><span class="line"> </span><br><span class="line">public class Person </span><br><span class="line">&#123;</span><br><span class="line">	private Ability ability;</span><br><span class="line">	//...</span><br><span class="line">&#125;</span><br><span class="line">package com.yiibai.common;</span><br><span class="line"> </span><br><span class="line">public class Ability </span><br><span class="line">&#123;</span><br><span class="line">	private String skill;</span><br><span class="line">	//...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>通过装配 hre装配<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;person&quot; class=&quot;com.yiibai.common.Person&quot;&gt;</span><br><span class="line">		&lt;property name=&quot;ability&quot; ref=&quot;invisible&quot; /&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line">	</span><br><span class="line">&lt;bean id=&quot;invisible&quot; class=&quot;com.yiibai.common.Ability&quot; &gt;</span><br><span class="line">		&lt;property name=&quot;skill&quot; value=&quot;Invisible&quot; /&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line">```    </span><br><span class="line">输出：</span><br><span class="line"></span><br><span class="line">Person [ability=Ability [skill=Invisible]]</span><br><span class="line">注意：想要自动装载，需要获Spring的上下文！</span><br></pre></td></tr></table></figure></p>
+<p>ApplicationContext a = new ClassPathXmlApplicationContext(“test.xml”);<br> test obj = (test) a.getBean(“helloBean”);<br><code>`</code></p>
+<blockquote>
+<p>下一篇更新使用注解自动装载的时候，就不需要使用代码来获取了。欢迎加入JAVA学习群949419296，一起交流！</p>
+</blockquote>
+
       
 
       
@@ -206,7 +223,29 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Spring-Programming//" class="article-tag-list-link color2">Spring</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
 
@@ -256,7 +295,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://ddnd.cn/tags/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://ddnd.cn/2018/11/17/Spring-Bean-Automatic/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -268,6 +307,25 @@
 </article>
 
   
+<nav id="article-nav">
+  
+    <a href="/2018/11/17/Spring-Bean-Annotation/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Spring 注解自动装配Bean
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/11/17/Java-Interface/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">接口的引用</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -292,7 +350,7 @@
   
 
   
-  <div id="SOHUCS" sid=""></div> 
+  <div id="SOHUCS" sid="Spring-Bean-Automatic"></div> 
 <script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js"></script>
 <script type="text/javascript">
     window.changyan.api.config({
@@ -328,7 +386,7 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

@@ -8,13 +8,13 @@
   <link rel="dns-prefetch" href="http://ddnd.cn">
   <title>Spring和Tomcat自带的连接池实现数据库操作 | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言前面我们已经用Spring和传统的Jdbc实现数据库操作、Spring和JdbcTemplate实现数据库操作。但是这些都是基于直连的数据源进行的，现在我们将介绍基于连接池的数据源进行数据库操作。前面几个步骤都相同。 创建数据库首先创建我们的数据库（这里我使用的是Mysql），为了演示方便，我这里简单的创建一个spring数据库，然后数据库有一个user用户表：  创建一个名为spring的数">
+  <meta name="description" content="前言前面我们已经用Spring和传统的Jdbc实现数据库操作、Spring和JdbcTemplate实现数据库操作。但是这些都是基于直连的数据源进行的，现在我们将介绍基于连接池的数据源进行数据库操作。前面几个步骤都相同。">
 <meta name="keywords" content="Spring,TomcatDBCP,连接池">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring和Tomcat自带的连接池实现数据库操作">
 <meta property="og:url" content="http://ddnd.cn/2018/11/26/Spring-Tomcat-DBCP/index.html">
 <meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
-<meta property="og:description" content="前言前面我们已经用Spring和传统的Jdbc实现数据库操作、Spring和JdbcTemplate实现数据库操作。但是这些都是基于直连的数据源进行的，现在我们将介绍基于连接池的数据源进行数据库操作。前面几个步骤都相同。 创建数据库首先创建我们的数据库（这里我使用的是Mysql），为了演示方便，我这里简单的创建一个spring数据库，然后数据库有一个user用户表：  创建一个名为spring的数">
+<meta property="og:description" content="前言前面我们已经用Spring和传统的Jdbc实现数据库操作、Spring和JdbcTemplate实现数据库操作。但是这些都是基于直连的数据源进行的，现在我们将介绍基于连接池的数据源进行数据库操作。前面几个步骤都相同。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/e0e01e43gy1fxlomtejdlj20k20dm3zg.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/e0e01e43gy1fxlop5qno4j20yy0hytb5.jpg">
@@ -25,10 +25,10 @@
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/e0e01e43gy1fxlr03bqm4j21920ip77l.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/e0e01e43gy1fxlr0b6970j212w0j6adc.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/e0e01e43gy1fxlr50y7zhj20qc0ebmyi.jpg">
-<meta property="og:updated_time" content="2018-11-26T12:47:45.920Z">
+<meta property="og:updated_time" content="2018-11-26T12:51:04.053Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring和Tomcat自带的连接池实现数据库操作">
-<meta name="twitter:description" content="前言前面我们已经用Spring和传统的Jdbc实现数据库操作、Spring和JdbcTemplate实现数据库操作。但是这些都是基于直连的数据源进行的，现在我们将介绍基于连接池的数据源进行数据库操作。前面几个步骤都相同。 创建数据库首先创建我们的数据库（这里我使用的是Mysql），为了演示方便，我这里简单的创建一个spring数据库，然后数据库有一个user用户表：  创建一个名为spring的数">
+<meta name="twitter:description" content="前言前面我们已经用Spring和传统的Jdbc实现数据库操作、Spring和JdbcTemplate实现数据库操作。但是这些都是基于直连的数据源进行的，现在我们将介绍基于连接池的数据源进行数据库操作。前面几个步骤都相同。">
 <meta name="twitter:image" content="https://ws1.sinaimg.cn/large/e0e01e43gy1fxlomtejdlj20k20dm3zg.jpg">
   
     <link rel="alternative" href="/atom.xml" title="薛8的个人网站 - xue8&#39;s Blog - DDND.CN" type="application/atom+xml">
@@ -187,7 +187,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>前面我们已经用<a href="https://ddnd.cn/2018/11/19/Spring-Jdbc-CRUD/">Spring和传统的Jdbc实现数据库操作</a>、<a href="https://ddnd.cn/2018/11/19/Spring-Jdbc-JdbcTemplate/">Spring和JdbcTemplate实现数据库操作</a>。但是这些都是基于<strong>直连的数据源</strong>进行的，现在我们将介绍基于<strong>连接池的数据源</strong>进行数据库操作。前面几个步骤都相同。</p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>前面我们已经用<a href="https://ddnd.cn/2018/11/19/Spring-Jdbc-CRUD/">Spring和传统的Jdbc实现数据库操作</a>、<a href="https://ddnd.cn/2018/11/19/Spring-Jdbc-JdbcTemplate/">Spring和JdbcTemplate实现数据库操作</a>。但是这些都是基于<strong>直连的数据源</strong>进行的，现在我们将介绍基于<strong>连接池的数据源</strong>进行数据库操作。前面几个步骤都相同。<br><a id="more"></a></p>
 <h1 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h1><p>首先创建我们的数据库（这里我使用的是Mysql），为了演示方便，我这里简单的创建一个spring数据库，然后数据库有一个user用户表：</p>
 <ol>
 <li>创建一个名为<code>spring</code>的数据库。</li>

@@ -158,6 +158,85 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Java-Interface" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/17/Java-Interface/">接口的引用</a>
+    </h1>
+  
+
+        
+        <a href="/2018/11/17/Java-Interface/" class="archive-article-date">
+  	<time datetime="2018-11-17T07:44:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近在学习java的过程中，遇到了一下代码。<br>代码1：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface Handler｛</span><br><span class="line">  public void Hello();</span><br><span class="line">｝</span><br></pre></td></tr></table></figure></p>
+<p>代码2：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import Handler;</span><br><span class="line">public class OtherParser&#123;</span><br><span class="line">  Handler handler;</span><br><span class="line">......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>代码1说明了Handler是一个接口了，既接口不能直接实例化，必须经过实现类继承这个接口之后，实例化实现类。那为啥代码2可以直接声明Handler呢？原因是，代码2只是对Handler接口的引用（在对接口的引用时，采用的是实例化实现该接口的类，前提是你实现这个接口的类已经加上@Component注解，引用这个接口的时候才会自动注入相关的实现类），并不是实例化！</p>
+<p>接口是永远不能被实例化的，而2中只是对接口做引用，并没有被实例化。<br>接口可以看成是高度抽象的抽象类，它描述的事物们所共有的方法（方法签名），也就是规定除了该接口的方法的调用参数与规则，仅仅而已，它的使用必须依赖于实现类。<br>例如：<br>
+        
+          <a class="article-more-a" href="/2018/11/17/Java-Interface/#more">more >></a>
+        
+      
+
+      
+    </p></div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Java-Programming//" class="article-tag-list-link color4">Java编程基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/11/17/Java-Interface/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Technique-Mvc-3ta" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -354,11 +433,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Jdbc</a>
+                <a href="javascript:void(0)" class="js-tag color4">MVC</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">MVC</a>
+                <a href="javascript:void(0)" class="js-tag color5">Jdbc</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -8,16 +8,19 @@
   <link rel="dns-prefetch" href="http://ddnd.cn">
   <title>Mybatis mapper动态代理方式 | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="Mybatis">
+  <meta name="description" content="前言我们在使用Mybatis的时候，获取需要执行的SQL语句的时候，都是通过调用xml文件来获取，例如：User user = (User) sqlSession.selectOne(&amp;quot;cn.ddnd.www.Entity.User.getUser&amp;quot;, &amp;quot;xue8@qq.com&amp;quot;);。这种方式是通过字符串去调用标签定义的SQL语句，第一容易出错，第二是当x">
+<meta name="keywords" content="Mybatis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mybatis mapper动态代理方式">
 <meta property="og:url" content="http://ddnd.cn/2018/11/30/Mybatis-Proxy/index.html">
 <meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
+<meta property="og:description" content="前言我们在使用Mybatis的时候，获取需要执行的SQL语句的时候，都是通过调用xml文件来获取，例如：User user = (User) sqlSession.selectOne(&amp;quot;cn.ddnd.www.Entity.User.getUser&amp;quot;, &amp;quot;xue8@qq.com&amp;quot;);。这种方式是通过字符串去调用标签定义的SQL语句，第一容易出错，第二是当x">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/e0e01e43gy1fxqf5iw6clj20m80cin0d.jpg">
-<meta property="og:updated_time" content="2018-11-30T15:18:07.133Z">
+<meta property="og:updated_time" content="2018-11-30T15:21:16.805Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mybatis mapper动态代理方式">
+<meta name="twitter:description" content="前言我们在使用Mybatis的时候，获取需要执行的SQL语句的时候，都是通过调用xml文件来获取，例如：User user = (User) sqlSession.selectOne(&amp;quot;cn.ddnd.www.Entity.User.getUser&amp;quot;, &amp;quot;xue8@qq.com&amp;quot;);。这种方式是通过字符串去调用标签定义的SQL语句，第一容易出错，第二是当x">
 <meta name="twitter:image" content="https://ws1.sinaimg.cn/large/e0e01e43gy1fxqf5iw6clj20m80cin0d.jpg">
   
     <link rel="alternative" href="/atom.xml" title="薛8的个人网站 - xue8&#39;s Blog - DDND.CN" type="application/atom+xml">
@@ -176,8 +179,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="https://ws1.sinaimg.cn/large/e0e01e43gy1fxqf5iw6clj20m80cin0d.jpg" style="width: 100%"><br><a id="more"></a></p>
+        <p><img src="https://ws1.sinaimg.cn/large/e0e01e43gy1fxqf5iw6clj20m80cin0d.jpg" style="width: 100%"></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>我们在使用Mybatis的时候，获取需要执行的SQL语句的时候，都是通过调用xml文件来获取，例如：<code>User user = (User) sqlSession.selectOne(&quot;cn.ddnd.www.Entity.User.getUser&quot;, &quot;xue8@qq.com&quot;);</code>。这种方式是通过字符串去调用标签定义的SQL语句，第一容易出错，第二是当xml当中的id修改过后你不知道在程序当中有多少个地方使用了这个id，需要手动一一修改。后来Mybatis推出了Mapper动态代理方式，只需要编写<strong>Mapper接口</strong>（相当于Dao层）,由Mybatis框架根据接口定义创建接口的动态代理对象。</p>
+<a id="more"></a>
 <h1 id="Mapper接口规范"><a href="#Mapper接口规范" class="headerlink" title="Mapper接口规范"></a>Mapper接口规范</h1><ol>
 <li>Mapper.xml中的namespace和Mapper.java接口中的类路径相同，即<code>&lt;mapper namespace=&quot;cn.ddnd.www.Dao.User&quot;&gt;</code>对应的是<code>cn.ddnd.www.Dao</code>包下的<code>User</code>类。</li>
 <li>Mapper.xml中的<code>select</code>ID要和Mapper.java接口中的类方法名相同，即<code>&lt;select id=&quot;getUser&quot; parameterType=&quot;String&quot; resultType=&quot;User&quot;&gt;</code>的<code>getUser</code>和<code>public User getUser(String email);</code>的<code>getUser</code>方法名对应。</li>
@@ -444,11 +448,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
               </li>
              
               <li class="article-tag-list-item">

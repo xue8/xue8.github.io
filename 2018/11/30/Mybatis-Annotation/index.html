@@ -6,20 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://ddnd.cn">
-  <title>tags | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
+  <title>Mybatis接口注解实现映射 | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
-<meta name="keywords" content="Java,xue8,薛8,DDND,程序员,">
-<meta property="og:type" content="website">
-<meta property="og:title" content="tags">
-<meta property="og:url" content="http://ddnd.cn/tags/index.html">
+  <meta name="description" content="前言上一篇文章介绍了xml文件映射SQL语句，即User user = (User) sqlSession.selectOne(&amp;quot;cn.ddnd.www.Entity.User.getUser&amp;quot;, &amp;quot;xue8@qq.com&amp;quot;)，但是这种方式过于繁杂，所以我们本篇介绍使用注解和SQL语句返回值的接口（如：IUser.class），即可实现xml配置文件的功能">
+<meta name="keywords" content="Mybatis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mybatis接口注解实现映射">
+<meta property="og:url" content="http://ddnd.cn/2018/11/30/Mybatis-Annotation/index.html">
 <meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
-<meta property="og:description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
+<meta property="og:description" content="前言上一篇文章介绍了xml文件映射SQL语句，即User user = (User) sqlSession.selectOne(&amp;quot;cn.ddnd.www.Entity.User.getUser&amp;quot;, &amp;quot;xue8@qq.com&amp;quot;)，但是这种方式过于繁杂，所以我们本篇介绍使用注解和SQL语句返回值的接口（如：IUser.class），即可实现xml配置文件的功能">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-25T04:59:04.119Z">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/e0e01e43gy1fxq59jtsmsj20jk09mjr9.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/e0e01e43gy1fxq6alhwtcj20e90e6t9a.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/e0e01e43gy1fxq6bhkzs1j20pb06iq3a.jpg">
+<meta property="og:updated_time" content="2018-11-30T08:35:01.970Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tags">
-<meta name="twitter:description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
+<meta name="twitter:title" content="Mybatis接口注解实现映射">
+<meta name="twitter:description" content="前言上一篇文章介绍了xml文件映射SQL语句，即User user = (User) sqlSession.selectOne(&amp;quot;cn.ddnd.www.Entity.User.getUser&amp;quot;, &amp;quot;xue8@qq.com&amp;quot;)，但是这种方式过于繁杂，所以我们本篇介绍使用注解和SQL语句返回值的接口（如：IUser.class），即可实现xml配置文件的功能">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/e0e01e43gy1fxq59jtsmsj20jk09mjr9.jpg">
   
     <link rel="alternative" href="/atom.xml" title="薛8的个人网站 - xue8&#39;s Blog - DDND.CN" type="application/atom+xml">
   
@@ -157,38 +161,43 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="page-" class="article article-type-page " itemscope="" itemprop="blogPost">
+            <article id="post-Mybatis-Annotation" class="article article-type-post " itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      tags
+      Mybatis接口注解实现映射
     </h1>
   
 
         
-        <a href="/tags/index.html" class="archive-article-date">
-  	<time datetime="2018-11-25T04:58:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-25</time>
+        <a href="/2018/11/30/Mybatis-Annotation/" class="archive-article-date">
+  	<time datetime="2018-11-30T07:50:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-30</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
-    	
-			<!--
-            	作者：3788837@qq.com
-            	时间：2018-11-30
-            	描述：增加分类信息
-            -->
-    	<ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java-Programming/">Java编程基础</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mybatis-Programming/">Mybatis</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Programming/">Spring</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Technique/">技术杂谈</a><span class="category-list-count">1</span></li></ul>
-    	<!--<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jdbc/">Jdbc</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MVC/">MVC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mybatis/">Mybatis</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TomcatDBCP/">TomcatDBCP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/连接池/">连接池</a><span class="tag-list-count">1</span></li></ul>
-    	<ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">11</span></li></ul>-->
-
-    	
       
-        
+        <p><img src="https://ws1.sinaimg.cn/large/e0e01e43gy1fxq59jtsmsj20jk09mjr9.jpg" style="width:100%"></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>上一篇文章介绍了xml文件映射SQL语句，即<code>User user = (User) sqlSession.selectOne(&quot;cn.ddnd.www.Entity.User.getUser&quot;, &quot;xue8@qq.com&quot;)</code>，但是这种方式过于繁杂，所以我们本篇介绍使用<strong>注解</strong>和<strong>SQL语句返回值的接口</strong>（如：IUser.class），即可实现xml配置文件的功能。</p>
+<h1 id="新建工程"><a href="#新建工程" class="headerlink" title="新建工程"></a>新建工程</h1><p>将工程新建成和上篇的一样<a href="https://ddnd.cn/2018/11/29/Mybatis-Introduction/">Mybatis实现数据库操作</a>，即把上篇的内容搬过来。</p>
+<h1 id="修改成用注解方式"><a href="#修改成用注解方式" class="headerlink" title="修改成用注解方式"></a>修改成用注解方式</h1><ol>
+<li><p>可以删除 <code>cn.ddnd.www.Entity</code>包下的<code>User.xml</code>，去掉<code>Mybatis-config.xml</code>的如下代码。因为此时<code>User.xml</code>已经没用了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;mappers&gt;</span><br><span class="line">    &lt;mapper resource=&quot;cn/ddnd/www/Entity/User.xml&quot;&gt;&lt;/mapper&gt;</span><br><span class="line">&lt;/mappers&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>新建<code>cn.ddnd.www.Dao</code>包，并且建立<code>IUser</code>接口和方法。<br>IUser.java：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">package cn.ddnd.www.Dao;</span><br><span class="line"></span><br><span class="line">import cn.ddnd.www.Entity.User;</span><br><span class="line">import org.apache.ibatis.annotations.Select;</span><br><span class="line"></span><br><span class="line">public interface IUser &#123;</span><br><span class="line">    @Select(&quot;select * from user where email = #&#123;email&#125;&quot;)</span><br><span class="line">    public User getUser(String email);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改测试类，即增加了<code>sqlSessionFactory.getConfiguration().addMapper(IUser.class);</code>，作用是注册SQL语句映射的接口，去掉<code>User user = (User) sqlSession.selectOne(&quot;cn.ddnd.www.Entity.User.getUser&quot;, &quot;xue8@qq.com&quot;);</code>，增加<code>IUser IUser = (IUser) sqlSession.getMapper(IUser.class); User user = IUser.getUser(&quot;xue8@qq.com&quot;);</code>即可。<br>text.java：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">import cn.ddnd.www.Dao.IUser;</span><br><span class="line">import cn.ddnd.www.Entity.User;</span><br><span class="line">import org.apache.ibatis.session.SqlSession;</span><br><span class="line">import org.apache.ibatis.session.SqlSessionFactory;</span><br><span class="line">import org.apache.ibatis.session.SqlSessionFactoryBuilder;</span><br><span class="line">import org.junit.Test;</span><br><span class="line">import org.apache.ibatis.io.Resources;</span><br><span class="line"></span><br><span class="line">import java.io.Reader;</span><br><span class="line">import java.io.IOException;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public class test &#123;</span><br><span class="line">    private static Reader reader;</span><br><span class="line">    private static SqlSessionFactory sqlSessionFactory;</span><br><span class="line"></span><br><span class="line">    static&#123;</span><br><span class="line">        try&#123;</span><br><span class="line">            reader = Resources.getResourceAsReader(&quot;Mybatis-config.xml&quot;);</span><br><span class="line">            sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);</span><br><span class="line">//            注册SQL语句映射的接口</span><br><span class="line">            sqlSessionFactory.getConfiguration().addMapper(IUser.class);</span><br><span class="line">        &#125;catch (IOException e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    @Test</span><br><span class="line">    public void a() throws IOException &#123;</span><br><span class="line">        SqlSession sqlSession = sqlSessionFactory.openSession();</span><br><span class="line"></span><br><span class="line">        try&#123;</span><br><span class="line">//            User user = (User) sqlSession.selectOne(&quot;cn.ddnd.www.Entity.User.getUser&quot;, &quot;xue8@qq.com&quot;);</span><br><span class="line"></span><br><span class="line">//            IUser.class只是个接口 Mybatis面向接口编程 只写接口 不用写接口的实现类 Mybatis帮我们去写实现类了！</span><br><span class="line">            IUser IUser = (IUser) sqlSession.getMapper(IUser.class);</span><br><span class="line">            User user = IUser.getUser(&quot;xue8@qq.com&quot;);</span><br><span class="line">            System.out.println(&quot;用户的邮箱是：&quot; + user.getEmail() + &quot;，用户的名称是：&quot; + user.getName() + &quot;，用户的密码是：&quot; + user.getPassword());</span><br><span class="line">        &#125;finally &#123;</span><br><span class="line">            sqlSession.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h1><p><img src="https://ws1.sinaimg.cn/large/e0e01e43gy1fxq6alhwtcj20e90e6t9a.jpg" alt=""></p>
+<h1 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h1><p>运行测试类<br><img src="https://ws1.sinaimg.cn/large/e0e01e43gy1fxq6bhkzs1j20pb06iq3a.jpg" alt=""></p>
+
       
 
       
@@ -217,7 +226,29 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Mybatis</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Mybatis-Programming//" class="article-tag-list-link color3">Mybatis</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
 
@@ -267,7 +298,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://ddnd.cn/tags/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://ddnd.cn/2018/11/30/Mybatis-Annotation/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -279,6 +310,16 @@
 </article>
 
   
+<nav id="article-nav">
+  
+  
+    <a href="/2018/11/29/Mybatis-Introduction/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Mybatis实现数据库操作</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -303,7 +344,7 @@
   
 
   
-  <div id="SOHUCS" sid=""></div> 
+  <div id="SOHUCS" sid="Mybatis-Annotation"></div> 
 <script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js"></script>
 <script type="text/javascript">
     window.changyan.api.config({
@@ -341,7 +382,7 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

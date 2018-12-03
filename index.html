@@ -178,7 +178,7 @@
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在很多项目中，Mybatis都是和Spring配合起来一起发挥作用的，利用Spring的注入、基于接口编程等优势，将Mybatis的一些琐事交给Spring管理，而Mybatis可以更加注重在自身业务SQL语句上。Mybatis和Spring的整合思路如下：</p>
 <ol>
 <li>Mybatis将SqlSessionFactory交给Spring创建和管理<br><code>SqlSessionFactoryBean</code>代替了<code>SqlSessionFactoryBuilder</code>来创建<code>SqlSessionFactory</code>,SqlSessionFactoryBean实现了Spring的FactoryBean接口，Spring在应用启动的时候为你创建SqlSessionFactory对象，然后将它以SqlSessionFactory为命名来存储。</li>
-<li>Mybatis将数据映射器Mapper交给Spring管理<br><code>MapperFactoryBean</code>封装了原有的<code>session.getMapper()</code>功能的实现，它可以把我们对应的Mapper接口<strong>注入</strong>到由Spring管理的Bean对象中(如Service Bean对象)，这样当我们需要使用到相应的Mapper对象时候，<code>MapperFactoryBean</code>会从它的getObject方法中获取到对应的Mapper对象，即通过<strong>Mapper接口</strong>(xx.java)获取我们想要的<strong>Mapper对象</strong>(xx.xml)。
+<li>Mybatis将数据映射器Mapper交给Spring管理<br><code>MapperFactoryBean</code>封装了原有的<code>session.getMapper()</code>功能的实现，它可以把我们对应的Mapper接口<strong>注入</strong>到由Spring管理的Bean对象中(如Service Bean对象)，这样当我们需要使用到相应的Mapper对象时候，<code>MapperFactoryBean</code>会从它的getObject方法中获取到对应的Mapper.xml文件，即通过<strong>Mapper接口</strong>(xx.java)获取我们想要的<strong>Mapper对象</strong>。
         
           <a class="article-more-a" href="/2018/12/01/Spring-Mybatis/#more">more >></a>
         

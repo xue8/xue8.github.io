@@ -8,20 +8,20 @@
   <link rel="dns-prefetch" href="http://ddnd.cn">
   <title>RPC和RESTful API入门篇 | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言这两天在和同学谈到RPC、RESTful时候发现自己对这两者并不是很理解，于是查阅了网上相关资料加上自己的理解写下本篇文章以加深印象，由于本人水平有限，若对这两者的理解有不妥之处望指出。 什么是REST和RESTful在认识RESTful之前，我们先科普一下REST。 RESTREST即Representational State Transfer的缩写，是基于HTTP协议之上的一组约束和属">
+  <meta name="description" content="前言这两天在和同学谈到RPC、RESTful时候发现自己对这两者并不是很理解，于是查阅了网上相关资料加上自己的理解写下本篇文章以加深印象，由于本人水平有限，若对这两者的理解有不妥之处望指出。">
 <meta name="keywords" content="RPC,RESTful">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RPC和RESTful API入门篇">
 <meta property="og:url" content="http://ddnd.cn/2018/12/19/rpc-and-restful/index.html">
 <meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
-<meta property="og:description" content="前言这两天在和同学谈到RPC、RESTful时候发现自己对这两者并不是很理解，于是查阅了网上相关资料加上自己的理解写下本篇文章以加深印象，由于本人水平有限，若对这两者的理解有不妥之处望指出。 什么是REST和RESTful在认识RESTful之前，我们先科普一下REST。 RESTREST即Representational State Transfer的缩写，是基于HTTP协议之上的一组约束和属">
+<meta property="og:description" content="前言这两天在和同学谈到RPC、RESTful时候发现自己对这两者并不是很理解，于是查阅了网上相关资料加上自己的理解写下本篇文章以加深印象，由于本人水平有限，若对这两者的理解有不妥之处望指出。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/e0e01e43gy1fyaudx4yrxj209u03yt8m.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/e0e01e43gy1fyc1ig0m9tg207c072jr9.jpg">
-<meta property="og:updated_time" content="2018-12-19T07:51:14.621Z">
+<meta property="og:updated_time" content="2018-12-19T07:54:23.983Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RPC和RESTful API入门篇">
-<meta name="twitter:description" content="前言这两天在和同学谈到RPC、RESTful时候发现自己对这两者并不是很理解，于是查阅了网上相关资料加上自己的理解写下本篇文章以加深印象，由于本人水平有限，若对这两者的理解有不妥之处望指出。 什么是REST和RESTful在认识RESTful之前，我们先科普一下REST。 RESTREST即Representational State Transfer的缩写，是基于HTTP协议之上的一组约束和属">
+<meta name="twitter:description" content="前言这两天在和同学谈到RPC、RESTful时候发现自己对这两者并不是很理解，于是查阅了网上相关资料加上自己的理解写下本篇文章以加深印象，由于本人水平有限，若对这两者的理解有不妥之处望指出。">
 <meta name="twitter:image" content="https://ws1.sinaimg.cn/large/e0e01e43gy1fyaudx4yrxj209u03yt8m.jpg">
   
     <link rel="alternative" href="/atom.xml" title="薛8的个人网站 - xue8&#39;s Blog - DDND.CN" type="application/atom+xml">
@@ -182,6 +182,7 @@
       
         <p><img src="https://ws1.sinaimg.cn/large/e0e01e43gy1fyaudx4yrxj209u03yt8m.jpg" style="width: 100%"></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这两天在和同学谈到RPC、RESTful时候发现自己对这两者并不是很理解，于是查阅了网上相关资料加上自己的理解写下本篇文章以加深印象，由于本人水平有限，若对这两者的理解有不妥之处望指出。</p>
+<a id="more"></a>
 <h1 id="什么是REST和RESTful"><a href="#什么是REST和RESTful" class="headerlink" title="什么是REST和RESTful"></a>什么是REST和RESTful</h1><p>在认识RESTful之前，我们先科普一下REST。</p>
 <h2 id="REST"><a href="#REST" class="headerlink" title="REST"></a>REST</h2><p>REST即Representational State Transfer的缩写，<strong>是基于HTTP协议之上的一组约束和属性</strong>，翻译过来是<strong>表现层状态转移</strong>。REST是一种<em>设计风格</em>（并非一种标准），描述的是在网络中Client和Server的一种交互形式，目的是便于<strong>不同</strong>的软件/程序在网络中互相传递消息。按照我的理解：<strong><em>我们通过URI定位到服务器上的资源（例如文本、图片、服务），然后对资源进行某种操作（CRUD）并且返回足够的信息描述服务器的状态（比如：状态码）让客户端知道如何处理，资源传递给客户端并且以某种形式表现（比如JSON、HTML、XML、PNG等）出来</em></strong>，而REST则是将URI的命名风格、对资源操作的实现方式、操作之后返回什么信息和资源以哪种形式表现出来等总结成了一种设计风格，让大家都使用这种设计风格去实现这些设计，当然REST的设计风格不止我指出的这几个，只是这几个是要点。<br>REST设计的风格遵循以下几点：</p>
 <ol>
@@ -500,15 +501,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RPC</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">RESTful</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Spring MVC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">MVC</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -516,7 +513,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">MVC</a>
+                <a href="javascript:void(0)" class="js-tag color4">RPC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">RESTful</a>
               </li>
              
               <li class="article-tag-list-item">

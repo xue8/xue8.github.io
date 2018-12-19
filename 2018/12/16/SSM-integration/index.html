@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/e0e01e43gy1fy8pkuz1huj20pk08ddgb.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/e0e01e43gy1fy8pl9cs0aj20nn08bwf4.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/e0e01e43gy1fy8q8xln3bj20lr08mq3b.jpg">
-<meta property="og:updated_time" content="2018-12-16T09:57:06.131Z">
+<meta property="og:updated_time" content="2018-12-17T13:18:23.750Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SSM框架整合 附源码">
 <meta name="twitter:description" content="前言前面已经介绍Spring和Mybatis整合，而本篇介绍在IDEA下Spring、Spring MVC、Mybatis（SSM）三个框架的整合，在阅读本篇之前，建议大家先去了解一下Spring、Spring MVC、Mybatis（三大框架基础入门传送门），会达到事半功倍的效果。至于Spring MVC相对于Servlet、JSP的优点这里就不累赘了，大家可以上网查阅相关资料。本篇注重整合思">
@@ -209,7 +209,7 @@
 <ol>
 <li>添加<code>mapperLocations</code>属性：因为我们把Mapper.xml文件和Mapper接口放在了不同的目录下，所以我们需要在配置Mybatis的<code>SqlSessionFactory</code>时候添加一个属性<code>mapperLocations</code>，即指定<code>mapper.xml</code>文件的路径。</li>
 <li>启动扫描JavaBean：<code>&lt;context:component-scan base-package=&quot;cn.ddnd.www&quot;&gt;&lt;/context:component-scan&gt;</code>扫描指定包下的所有JavaBean，</li>
-<li>添加XML命名空间：<code>xmlns:context=&quot;http://www.springframework.org/schema/context&quot;</code>,<code>xsi:schemaLocation=&quot;http://www.springframework.org/schema/context</code>，不然会出现通配符的匹配很全面, 但无法找到元素 ‘context:component-scan’ 的声明的问题。</li>
+<li>添加XML命名空间：<code>xmlns:context=&quot;http://www.springframework.org/schema/context&quot;</code>,<code>xsi:schemaLocation=&quot;http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd</code>，不然会出现通配符的匹配很全面, 但无法找到元素 ‘context:component-scan’ 的声明的问题。</li>
 <li>路径前添加classpath：在指定XML路径的时候，需要以<code>classpath:文件路径</code>的形式，不然会出现XML文件找不到的问题，因为工程编译后XML文件都是放在<code>classes</code>的文件夹下。<br><img src="https://ws1.sinaimg.cn/large/e0e01e43gy1fy8pkuz1huj20pk08ddgb.jpg" alt=""><br><img src="https://ws1.sinaimg.cn/large/e0e01e43gy1fy8pl9cs0aj20nn08bwf4.jpg" alt=""></li>
 </ol>
 <h1 id="编写Service层"><a href="#编写Service层" class="headerlink" title="编写Service层"></a>编写Service层</h1><p>虽然前面已经编写了Dao层（UserDao）了，但是Dao层的工作主要是做数据持久化的，而Service层则负责业务模块的逻辑应用设计，Service调用已定义的Dao层的接口实现数据的持久化。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">package cn.ddnd.www.Service;</span><br><span class="line"></span><br><span class="line">import cn.ddnd.www.Dao.UserDao;</span><br><span class="line">import cn.ddnd.www.Entity.User;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line">@Service</span><br><span class="line">public class Uservice &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    UserDao userDao;</span><br><span class="line"></span><br><span class="line">    public User getUserByEmail(String email) &#123;</span><br><span class="line">        return userDao.getUserByEmail(email);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -343,6 +343,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2018/12/19/rpc-and-restful/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          RPC和RESTful API入门篇
+        
+      </div>
+    </a>
   
   
     <a href="/2018/12/03/SpringMVC-Introduction/" id="article-nav-older" class="article-nav-link-wrap">
@@ -496,15 +505,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RPC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">RESTful</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Spring MVC</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">MVC</a>
+                <a href="javascript:void(0)" class="js-tag color1">Spring-MVC</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Spring-MVC</a>
+                <a href="javascript:void(0)" class="js-tag color4">MVC</a>
               </li>
              
               <li class="article-tag-list-item">

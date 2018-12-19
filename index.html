@@ -158,6 +158,143 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-rpc-and-restful" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/19/rpc-and-restful/">RPC和RESTful API入门篇</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/19/rpc-and-restful/" class="archive-article-date">
+  	<time datetime="2018-12-19T05:31:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="https://ws1.sinaimg.cn/large/e0e01e43gy1fyaudx4yrxj209u03yt8m.jpg" style="width: 100%"></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这两天在和同学谈到RPC、RESTful时候发现自己对这两者并不是很理解，于是查阅了网上相关资料加上自己的理解写下本篇文章以加深印象，由于本人水平有限，若对这两者的理解有不妥之处望指出。</p>
+<h1 id="什么是REST和RESTful"><a href="#什么是REST和RESTful" class="headerlink" title="什么是REST和RESTful"></a>什么是REST和RESTful</h1><p>在认识RESTful之前，我们先科普一下REST。</p>
+<h2 id="REST"><a href="#REST" class="headerlink" title="REST"></a>REST</h2><p>REST即Representational State Transfer的缩写，<strong>是基于HTTP协议之上的一组约束和属性</strong>，翻译过来是<strong>表现层状态转移</strong>。REST是一种<em>设计风格</em>（并非一种标准），描述的是在网络中Client和Server的一种交互形式，目的是便于<strong>不同</strong>的软件/程序在网络中互相传递消息。按照我的理解：<strong><em>我们通过URI定位到服务器上的资源（例如文本、图片、服务），然后对资源进行某种操作（CRUD）并且返回足够的信息描述服务器的状态（比如：状态码）让客户端知道如何处理，资源传递给客户端并且以某种形式表现（比如JSON、HTML、XML、PNG等）出来</em></strong>，而REST则是将URI的命名风格、对资源操作的实现方式、操作之后返回什么信息和资源以哪种形式表现出来等总结成了一种设计风格，让大家都使用这种设计风格去实现这些设计，当然REST的设计风格不止我指出的这几个，只是这几个是要点。<br>REST设计的风格遵循以下几点：</p>
+<ol>
+<li><strong>利用HTTP方法让接口统一化</strong><br>REST充分利用HTTP自身的GET、POST、PUT、DELETE的方法实现接口的统一化，比如对同一个资源进行CRUD操作时：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GET /posts     获取文章             GET /getPosts       获取文章 </span><br><span class="line">POST /posts    发布文章             GET /addPosts       发布文章 </span><br><span class="line">PUT /posts     修改文章             GET /editPosts      修改文章 </span><br><span class="line">DELETE /posts  删除文章             GET /deletePosts    删除文章</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>上面的设计中，左边的是符合REST设计风格的，右边的是不符合REST设计风格的。URI只需将资源准确无误的暴露出来就可以，而不需要加上动作词，而动作则体现在HTTP的GET、POST、PUT、DELETE方法中，其中URI还推荐使用复数。</p>
+<ol start="2">
+<li><strong>利用HTTP状态码返回状态信息</strong><br>下面举例几个HTTP Status Code和表示的什么：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Status Code: 200 OK</span><br><span class="line">Status Code: 400 Bed Request</span><br><span class="line">Status Code: 404 Not Found</span><br><span class="line">Status Code: 500 Internal Server Error</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>其中2XX的状态码表示请求已成功被服务器已接收、理解、并接受<br>3XX的状态码表示重定向<br>4XX的状态码表示客户端错误<br>5XX的状态码表示服务器错误</p>
+<ol start="3">
+<li><p><strong>利用HTTP报头告知对方如何处理本次请求（相应）</strong><br>HTTP报头是描述客户端与服务器之间的请求或者响应应该如何处理本次请求的，比如该用什么表现形式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Authorization 认证报头 </span><br><span class="line">Cache-Control 缓存报头 </span><br><span class="line">Cnotent-Type  消息体类型报头</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>无状态</strong><br>REST设计风格要求Server无状态，无状<strong>态并不等于</strong>不保存用户的状态，而是指服务器不保存请求状态（会话信息），客户端必须每次都<strong>带上自己的状态</strong>去请求服务器，如果确实要维持用户的状态，也应由客户端负责，例如：在服务端上通过Cookie保存Token，之后的请求中都带上Token，而这个Token就保存有了用户的状态（如登录信息）。这里需要注意的是：</p>
+</li>
+</ol>
+<ul>
+<li>通过Session保存状态<strong>不是REST设计风格</strong>，因为Session是将状态信息（用户信息、过期时间等）保存在了服务器上，比如用户登录成功后，会将Session信息保存在服务器，然后返回个SessionID给客户端并且将SessionID保存在Cookies中,之后的请求客户端都会通过Cookies传递SessionID给服务器，服务器根据客户端传来的SessionID去匹配之前保存的Session状态信息，所以这个状态是保存在服务器上的，是靠服务器维持的，所以不是REST设计风格。</li>
+<li>通过Token保存状态<strong>是REST设计风格</strong>，因为状态信息（用户信息、过期时间等）都是保存在Token中，而Token又是保存在客户端中（如Cookies），比如用户登录成功后，服务器会返回一个Token（包含了用户信息、过期时间等）给服务端，服务端将Token保存在Cookies中，之后的请求客户端都会取出Token放到Request Headers中传给服务器，服务器验证Token的有效性即可。<blockquote>
+<p>看到这里是不是能理解*<em>状态转移</em>这个词了？就是状态通过客户端来转移。</p>
+</blockquote>
+</li>
+</ul>
+<p>简单的来说就是状态信息保存在服务器的就是<strong>有状态的</strong>，而状态信息保存在客户端的就是<strong>无状态的</strong>。通过REST的无状态原则恰好有利于实现负载均衡，在分布式的Web系统上，有多个可用的服务器，每个服务器都可以处理客户端发来的请求，及时有一台服务器宕机，无状态的请求可以交给别的服务器处理，这是有状态的请求所做不到的。</p>
+<h2 id="什么是RESTful"><a href="#什么是RESTful" class="headerlink" title="什么是RESTful"></a>什么是RESTful</h2><p>理解完REST那我们就很容易理解RESTful了，RESTful即实现REST设计风格的一种架构，如RESTful API（REST设计风格的API）</p>
+<h1 id="什么是RPC"><a href="#什么是RPC" class="headerlink" title="什么是RPC"></a>什么是RPC</h1><p>RPC就是Remote Procedure Call的简称，翻译成中文就是<strong>远程过程调用</strong>，什么是远程过程调用？举个例子：有两台服务器A、B，一个应用部署在A服务器上，另一个应用部署在B服务器上，A服务器上的应用想要调用B服务器上应用所提供的方法、函数，那么这个调用过程就需要网络来支撑，整个调用过程可以用下图表示。<br><img src="https://ws1.sinaimg.cn/large/e0e01e43gy1fyc1ig0m9tg207c072jr9.jpg" alt=""></p>
+<h2 id="RPC分类"><a href="#RPC分类" class="headerlink" title="RPC分类"></a>RPC分类</h2><p>其中RPC分为两种：</p>
+<ol>
+<li><strong>同步调用</strong><br>在上面举的例子中，A服务器的应用调用B服务器上应用的方法、函数后，A服务器的应用会处在<strong>阻塞状态</strong>，只有等到B服务器上的应用通过网络返回结果后，A服务器的应用才会继续往下执行。</li>
+<li><strong>异步调用</strong><br>在上面举的例子中，A服务器的应用调用B服务器上应用的方法、函数后，A服务器的应用并不会进入阻塞状态等待结果的返回，可以通过回调通知等方式获得返回的结果。</li>
+</ol>
+<h2 id="RPC的网络通信问题"><a href="#RPC的网络通信问题" class="headerlink" title="RPC的网络通信问题"></a>RPC的网络通信问题</h2><p>我们知道在RPC调用的时候需要网络来支撑，那么以何种方式来实现通信呢。</p>
+<ol>
+<li><strong>HTTP协议</strong><br>A服务器的应用可以通过HTTP将数据传输到B服务器，B服务器接收到数据后执行数据中调用的指定方法、函数，例如谷歌的gRPC就是在HTTP上进行数据传输的。但是由于HTTP报头中有太多不需要的信息造成带宽的浪费，所以很多人都是用比HTTP传输效率高的TCP、UDP进行数据传输。</li>
+<li><strong>TCP、UDP</strong><br>例如著名的Netty就是基于TCP、UDP上进行传输的，当然你也可以不使用框架，自己编写Socket实现网络数据传输。</li>
+</ol>
+<h1 id="RESTful-API和RPC"><a href="#RESTful-API和RPC" class="headerlink" title="RESTful API和RPC"></a>RESTful API和RPC</h1><h2 id="RESTful-API和RPC区别和关系"><a href="#RESTful-API和RPC区别和关系" class="headerlink" title="RESTful API和RPC区别和关系"></a>RESTful API和RPC区别和关系</h2><p>在我理解中，RESTful API和RPC是两种完全不同概念的东西，是没法放在一起比较的，如果硬要将它俩比较，我认为RESTful是RPC的一种实现，即RPC包括RESTful API，但RPC不等于RESTful API。</p>
+<ul>
+<li>RPC：我认为RPC是一种为实现远程调用而提出<strong>一种思想</strong>，至于你用什么方式去达到目的都可以（例如：用什么网络协议来传输数据看自己的选择）。</li>
+<li>RESTful API：符合REST设计风格的一种接口架构，它也是通过网络进行的远程调用，但是远程调用仅限于HTTP。<h2 id="RESTful-API和RPC用途"><a href="#RESTful-API和RPC用途" class="headerlink" title="RESTful API和RPC用途"></a>RESTful API和RPC用途</h2>既然RESTful API和RPC都可以实现远程调用，那我们应该在这两者之中如何抉择呢？</li>
+<li>RESTful API：主要用在为第三方提供调用自家系统的一种途径。</li>
+<li>RPC：主要用在自家系统之间的互相调用，即实现系统的分布式。</li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>在这里我仅是以我掌握的知识给大家介绍RPC和RESTful，给初学者大概了解一下RPC和RESTful，若文中有不妥的地方希望大家指出。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">RPC</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">RESTful</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Technique//" class="article-tag-list-link color5">Technique</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/19/rpc-and-restful/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-SSM-integration" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -985,83 +1122,6 @@
 
 
   
-    <article id="post-Java-DataSource" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/18/Java-DataSource/">JAVA数据源</a>
-    </h1>
-  
-
-        
-        <a href="/2018/11/18/Java-DataSource/" class="archive-article-date">
-  	<time datetime="2018-11-18T08:00:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>我们在进行数据访问，声明模板和repository之前<a href="http://ddnd.cn/2018/11/18/Spring-Jdbc-Support/">【JAVA】Spring对JDBC的支持</a>，都需要配置<strong>数据源</strong>用来连接数据库。数据源又可以分为两大类：<strong><em>直连的数据源</em></strong> 和 <strong><em>连接池的数据源</em></strong> ，其中连接池的数据源又有多种，接下来就让我们来学习一下这两种数据源。当然在学习之前，我们首先需要知道<strong>连接池</strong>、<strong>数据源</strong>、<strong>JNDI</strong>是什么，分别从当什么角色，有什么作用。</p>
-<h1 id="连接池、数据源、JNDI"><a href="#连接池、数据源、JNDI" class="headerlink" title="连接池、数据源、JNDI"></a>连接池、数据源、JNDI</h1><h2 id="连接池、数据源"><a href="#连接池、数据源" class="headerlink" title="连接池、数据源"></a>连接池、数据源</h2><p>Java中的数据源就是连接到数据库的一条<strong>路径</strong>，数据源中并无真正的数据，它仅仅记录的是你连接到<strong>哪个数据库</strong>，以及<strong>如何连接</strong>。<code>DataSource</code>的创建可以有不同的实现。<code>DataSource</code>通常被称为数据源，它包含<strong>连接池</strong> 和<strong>连接池管理</strong> 两部分，习惯上也经常把<code>DataSource</code>称为连接池。<br>
-        
-          <a class="article-more-a" href="/2018/11/18/Java-DataSource/#more">more >></a>
-        
-      
-
-      
-    </p></div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Java-Programming//" class="article-tag-list-link color4">Java编程基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/18/Java-DataSource/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1174,15 +1234,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RPC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">RESTful</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Spring MVC</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">MVC</a>
+                <a href="javascript:void(0)" class="js-tag color1">Spring-MVC</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Spring-MVC</a>
+                <a href="javascript:void(0)" class="js-tag color4">MVC</a>
               </li>
              
               <li class="article-tag-list-item">

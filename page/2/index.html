@@ -158,6 +158,83 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Java-DataSource" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/18/Java-DataSource/">JAVA数据源</a>
+    </h1>
+  
+
+        
+        <a href="/2018/11/18/Java-DataSource/" class="archive-article-date">
+  	<time datetime="2018-11-18T08:00:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>我们在进行数据访问，声明模板和repository之前<a href="http://ddnd.cn/2018/11/18/Spring-Jdbc-Support/">【JAVA】Spring对JDBC的支持</a>，都需要配置<strong>数据源</strong>用来连接数据库。数据源又可以分为两大类：<strong><em>直连的数据源</em></strong> 和 <strong><em>连接池的数据源</em></strong> ，其中连接池的数据源又有多种，接下来就让我们来学习一下这两种数据源。当然在学习之前，我们首先需要知道<strong>连接池</strong>、<strong>数据源</strong>、<strong>JNDI</strong>是什么，分别从当什么角色，有什么作用。</p>
+<h1 id="连接池、数据源、JNDI"><a href="#连接池、数据源、JNDI" class="headerlink" title="连接池、数据源、JNDI"></a>连接池、数据源、JNDI</h1><h2 id="连接池、数据源"><a href="#连接池、数据源" class="headerlink" title="连接池、数据源"></a>连接池、数据源</h2><p>Java中的数据源就是连接到数据库的一条<strong>路径</strong>，数据源中并无真正的数据，它仅仅记录的是你连接到<strong>哪个数据库</strong>，以及<strong>如何连接</strong>。<code>DataSource</code>的创建可以有不同的实现。<code>DataSource</code>通常被称为数据源，它包含<strong>连接池</strong> 和<strong>连接池管理</strong> 两部分，习惯上也经常把<code>DataSource</code>称为连接池。<br>
+        
+          <a class="article-more-a" href="/2018/11/18/Java-DataSource/#more">more >></a>
+        
+      
+
+      
+    </p></div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Java-Programming//" class="article-tag-list-link color4">Java编程基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/11/18/Java-DataSource/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Spring-Jdbc-Support" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -702,15 +779,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RPC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">RESTful</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Spring MVC</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">MVC</a>
+                <a href="javascript:void(0)" class="js-tag color1">Spring-MVC</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Spring-MVC</a>
+                <a href="javascript:void(0)" class="js-tag color4">MVC</a>
               </li>
              
               <li class="article-tag-list-item">

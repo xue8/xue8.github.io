@@ -18,7 +18,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/e0e01e43gy1fyaudx4yrxj209u03yt8m.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/e0e01e43gy1fyc1ig0m9tg207c072jr9.jpg">
-<meta property="og:updated_time" content="2018-12-26T14:33:38.711Z">
+<meta property="og:updated_time" content="2018-12-26T14:36:20.611Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RPC和RESTful API入门篇">
 <meta name="twitter:description" content="前言这两天在和同学谈到RPC、RESTful时候发现自己对这两者并不是很理解，于是查阅了网上相关资料加上自己的理解写下本篇文章以加深印象，由于本人水平有限，若对这两者的理解有不妥之处望指出。">
@@ -184,24 +184,12 @@
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这两天在和同学谈到RPC、RESTful时候发现自己对这两者并不是很理解，于是查阅了网上相关资料加上自己的理解写下本篇文章以加深印象，由于本人水平有限，若对这两者的理解有不妥之处望指出。</p>
 <a id="more"></a>
 <h1 id="什么是REST和RESTful"><a href="#什么是REST和RESTful" class="headerlink" title="什么是REST和RESTful"></a>什么是REST和RESTful</h1><p>在认识RESTful之前，我们先科普一下REST。</p>
-<h2 id="REST"><a href="#REST" class="headerlink" title="REST"></a>REST</h2><p>REST即Representational State Transfer的缩写，<strong>是基于HTTP协议之上的一组约束和属性</strong>，翻译过来是<strong>表现层状态转移</strong>。REST是一种<em>设计风格</em>（并非一种标准），描述的是在网络中Client和Server的一种交互形式，目的是便于<strong>不同</strong>的软件/程序在网络中互相传递消息。按照我的理解：<strong><em>我们通过URI定位到服务器上的资源（例如文本、图片、服务），然后对资源进行某种操作（CRUD）并且返回足够的信息描述服务器的状态（比如：状态码）让客户端知道如何处理，资源传递给客户端并且以某种形式表现（比如JSON、HTML、XML、PNG等）出来</em></strong>，而REST则是将URI的命名风格、对资源操作的实现方式、操作之后返回什么信息和资源以哪种形式表现出来等总结成了一种设计风格，让大家都使用这种设计风格去实现这些设计，当然REST的设计风格不止我指出的这几个，只是这几个是要点。<br>REST设计的风格遵循以下几点：</p>
-<ol>
-<li><strong>利用HTTP方法让接口统一化</strong><br>REST充分利用HTTP自身的GET、POST、PUT、DELETE的方法实现接口的统一化，比如对同一个资源进行CRUD操作时：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GET /posts     获取文章             GET /getPosts       获取文章 </span><br><span class="line">POST /posts    发布文章             GET /addPosts       发布文章 </span><br><span class="line">PUT /posts     修改文章             GET /editPosts      修改文章 </span><br><span class="line">DELETE /posts  删除文章             GET /deletePosts    删除文章</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
+<h2 id="REST"><a href="#REST" class="headerlink" title="REST"></a>REST</h2><p>REST即Representational State Transfer的缩写，<strong>是基于HTTP协议之上的一组约束和属性</strong>，翻译过来是<strong>表现层状态转移</strong>。REST是一种<em>设计风格</em>（并非一种标准），描述的是在网络中Client和Server的一种交互形式，目的是便于<strong>不同</strong>的软件/程序在网络中互相传递消息。按照我的理解：<strong><em>我们通过URI定位到服务器上的资源（例如文本、图片、服务），然后对资源进行某种操作（CRUD）并且返回足够的信息描述服务器的状态（比如：状态码）让客户端知道如何处理，资源传递给客户端并且以某种形式表现（比如JSON、HTML、XML、PNG等）出来</em></strong>，而REST则是将URI的命名风格、对资源操作的实现方式、操作之后返回什么信息和资源以哪种形式表现出来等总结成了一种设计风格，让大家都使用这种设计风格去实现这些设计，当然REST的设计风格不止我指出的这几个，只是这几个是要点。<br>REST设计的风格遵循以下几点：<br>1.<strong>利用HTTP方法让接口统一化</strong><br>REST充分利用HTTP自身的GET、POST、PUT、DELETE的方法实现接口的统一化，比如对同一个资源进行CRUD操作时：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GET /posts     获取文章             GET /getPosts       获取文章 </span><br><span class="line">POST /posts    发布文章             GET /addPosts       发布文章 </span><br><span class="line">PUT /posts     修改文章             GET /editPosts      修改文章 </span><br><span class="line">DELETE /posts  删除文章             GET /deletePosts    删除文章</span><br></pre></td></tr></table></figure></p>
 <p>上面的设计中，左边的是符合REST设计风格的，右边的是不符合REST设计风格的。URI只需将资源准确无误的暴露出来就可以，而不需要加上动作词，而动作则体现在HTTP的GET、POST、PUT、DELETE方法中，其中URI还推荐使用复数。</p>
-<ol start="2">
-<li><strong>利用HTTP状态码返回状态信息</strong><br>下面举例几个HTTP Status Code和表示的什么：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Status Code: 200 OK</span><br><span class="line">Status Code: 400 Bed Request</span><br><span class="line">Status Code: 404 Not Found</span><br><span class="line">Status Code: 500 Internal Server Error</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
+<p>2.<strong>利用HTTP状态码返回状态信息</strong><br>下面举例几个HTTP Status Code和表示的什么：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Status Code: 200 OK</span><br><span class="line">Status Code: 400 Bed Request</span><br><span class="line">Status Code: 404 Not Found</span><br><span class="line">Status Code: 500 Internal Server Error</span><br></pre></td></tr></table></figure></p>
 <p>其中2XX的状态码表示请求已成功被服务器已接收、理解、并接受<br>3XX的状态码表示重定向<br>4XX的状态码表示客户端错误<br>5XX的状态码表示服务器错误</p>
-<ol start="3">
-<li><p><strong>利用HTTP报头告知对方如何处理本次请求（相应）</strong><br>HTTP报头是描述客户端与服务器之间的请求或者响应应该如何处理本次请求的，比如该用什么表现形式。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Authorization 认证报头 </span><br><span class="line">Cache-Control 缓存报头 </span><br><span class="line">Cnotent-Type  消息体类型报头</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>无状态</strong><br>REST设计风格要求Server无状态，无状<strong>态并不等于</strong>不保存用户的状态，而是指服务器不保存请求状态（会话信息），客户端必须每次都<strong>带上自己的状态</strong>去请求服务器，如果确实要维持用户的状态，也应由客户端负责，例如：在服务端上通过Cookie保存Token，之后的请求中都带上Token，而这个Token就保存有了用户的状态（如登录信息）。这里需要注意的是：</p>
-</li>
-</ol>
+<p>3.<strong>利用HTTP报头告知对方如何处理本次请求（相应）</strong><br>HTTP报头是描述客户端与服务器之间的请求或者响应应该如何处理本次请求的，比如该用什么表现形式。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Authorization 认证报头 </span><br><span class="line">Cache-Control 缓存报头 </span><br><span class="line">Cnotent-Type  消息体类型报头</span><br></pre></td></tr></table></figure></p>
+<p>4.<strong>无状态</strong><br>REST设计风格要求Server无状态，无状<strong>态并不等于</strong>不保存用户的状态，而是指服务器不保存请求状态（会话信息），客户端必须每次都<strong>带上自己的状态</strong>去请求服务器，如果确实要维持用户的状态，也应由客户端负责，例如：在服务端上通过Cookie保存Token，之后的请求中都带上Token，而这个Token就保存有了用户的状态（如登录信息）。这里需要注意的是：</p>
 <ul>
 <li>通过Session保存状态<strong>不是REST设计风格</strong>，因为Session是将状态信息（用户信息、过期时间等）保存在了服务器上，比如用户登录成功后，会将Session信息保存在服务器，然后返回个SessionID给客户端并且将SessionID保存在Cookies中,之后的请求客户端都会通过Cookies传递SessionID给服务器，服务器根据客户端传来的SessionID去匹配之前保存的Session状态信息，所以这个状态是保存在服务器上的，是靠服务器维持的，所以不是REST设计风格。</li>
 <li>通过Token保存状态<strong>是REST设计风格</strong>，因为状态信息（用户信息、过期时间等）都是保存在Token中，而Token又是保存在客户端中（如Cookies），比如用户登录成功后，服务器会返回一个Token（包含了用户信息、过期时间等）给服务端，服务端将Token保存在Cookies中，之后的请求客户端都会取出Token放到Request Headers中传给服务器，服务器验证Token的有效性即可。<blockquote>
@@ -509,11 +497,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -525,11 +513,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RPC</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">RESTful</a>
+                <a href="javascript:void(0)" class="js-tag color1">Spring-MVC</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -553,7 +537,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Spring-MVC</a>
+                <a href="javascript:void(0)" class="js-tag color4">RPC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">RESTful</a>
               </li>
             
             <div class="clearfix"></div>

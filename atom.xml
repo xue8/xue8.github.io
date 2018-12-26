@@ -96,32 +96,6 @@
   </entry>
   
   <entry>
-    <title>Spring MVC</title>
-    <link href="http://ddnd.cn/2018/12/03/SpringMVC-Introduction/"/>
-    <id>http://ddnd.cn/2018/12/03/SpringMVC-Introduction/</id>
-    <published>2018-12-03T14:05:17.000Z</published>
-    <updated>2018-12-04T06:04:35.322Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://ws1.sinaimg.cn/large/e0e01e43gy1fxum6qcv4nj20x10il0z7.jpg" style="width: 100%"></p><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Spring Web MVC</p><p>@Controller注解表明了一个类是作为控制器的角色而存在的。Spring不要求你去继承任何控制器基类，也不要求你去实现Servlet的那套API。当然，如果你需要的话也可以去使用任何与Servlet相关的特性和设施。<br>@Controller注解可以认为是被标注类的原型（stereotype），表明了这个类所承担的角色。分派器（DispatcherServlet）会扫描所有注解了@Controller的类，检测其中通过@RequestMapping注解配置的方法<br>你需要在配置中加入组件扫描的配置代码来开启框架对注解控制器的自动检测。请使用下面XML代码所示的spring-context schema：</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;&lt;img src=&quot;https://ws1.sinaimg.cn/large/e0e01e43gy1fxum6qcv4nj20x10il0z7.jpg&quot; style=&quot;width: 100%&quot;&gt;&lt;/p&gt;
-&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;he
-      
-    
-    </summary>
-    
-      <category term="Spring MVC" scheme="http://ddnd.cn/categories/Spring-MVC/"/>
-    
-    
-      <category term="Spring MVC" scheme="http://ddnd.cn/tags/Spring-MVC/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Spring和Mybatis整合</title>
     <link href="http://ddnd.cn/2018/12/01/Spring-Mybatis/"/>
     <id>http://ddnd.cn/2018/12/01/Spring-Mybatis/</id>

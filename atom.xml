@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ddnd.cn/"/>
-  <updated>2019-01-20T09:06:03.597Z</updated>
+  <updated>2019-02-01T11:28:32.293Z</updated>
   <id>http://ddnd.cn/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Shiro抛出异常UnavailableSecurityManagerException</title>
+    <link href="http://ddnd.cn/2019/02/01/shiro-unavailablesecuritymanagerexception/"/>
+    <id>http://ddnd.cn/2019/02/01/shiro-unavailablesecuritymanagerexception/</id>
+    <published>2019-02-01T11:20:05.000Z</published>
+    <updated>2019-02-01T11:28:32.293Z</updated>
+    
+    <content type="html"><![CDATA[<p>Shiro报错<code>org.apache.shiro.UnavailableSecurityManagerException: No SecurityManager accessible to the calling code, either bound to the org.apache.shiro.util.ThreadContext or as a vm static singleton.  This is an invalid application configuration.</code>。<br>解决方法，修改<code>web.xml</code>的filter，将<code>&lt;url-pattern&gt;/&lt;/url-pattern&gt;</code>改成<code>&lt;url-pattern&gt;/*&lt;/url-pattern&gt;</code>，即：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;filter&gt;</span><br><span class="line">&lt;filter-name&gt;shiroFilter&lt;/filter-name&gt;</span><br><span class="line">&lt;filter-class&gt;org.springframework.web.filter.DelegatingFilterProxy&lt;/filter-class&gt;</span><br><span class="line">&lt;/filter&gt;</span><br><span class="line"></span><br><span class="line">&lt;filter-mapping&gt;</span><br><span class="line">&lt;filter-name&gt;shiroFilter&lt;/filter-name&gt;</span><br><span class="line">&lt;url-pattern&gt;/&lt;/url-pattern&gt;</span><br><span class="line">&lt;/filter-mapping&gt;</span><br></pre></td></tr></table></figure></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Shiro报错&lt;code&gt;org.apache.shiro.UnavailableSecurityManagerException: No SecurityManager accessible to the calling code, either bound to the
+      
+    
+    </summary>
+    
+      <category term="Shiro" scheme="http://ddnd.cn/categories/Shiro/"/>
+    
+    
+      <category term="Shiro" scheme="http://ddnd.cn/tags/Shiro/"/>
+    
+  </entry>
   
   <entry>
     <title>Spring+Tomcat+WebSocket教程 附源码</title>
@@ -109,9 +134,9 @@
       <category term="Spring" scheme="http://ddnd.cn/categories/Spring-Programming/"/>
     
     
-      <category term="Mybatis" scheme="http://ddnd.cn/tags/Mybatis/"/>
-    
       <category term="Spring" scheme="http://ddnd.cn/tags/Spring/"/>
+    
+      <category term="Mybatis" scheme="http://ddnd.cn/tags/Mybatis/"/>
     
       <category term="Spring-MVC" scheme="http://ddnd.cn/tags/Spring-MVC/"/>
     
@@ -139,9 +164,9 @@
       <category term="Spring" scheme="http://ddnd.cn/categories/Spring-Programming/"/>
     
     
-      <category term="Mybatis" scheme="http://ddnd.cn/tags/Mybatis/"/>
-    
       <category term="Spring" scheme="http://ddnd.cn/tags/Spring/"/>
+    
+      <category term="Mybatis" scheme="http://ddnd.cn/tags/Mybatis/"/>
     
   </entry>
   

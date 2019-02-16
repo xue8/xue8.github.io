@@ -158,6 +158,105 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Spring-Jdbc-Support" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/18/Spring-Jdbc-Support/">Spring对JDBC的支持</a>
+    </h1>
+  
+
+        
+        <a href="/2018/11/18/Spring-Jdbc-Support/" class="archive-article-date">
+  	<time datetime="2018-11-18T07:58:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>企业应用程序经常要访问存储在数据库中的信息，因此JDK提供了一个标准<strong>接口</strong> JDBC（Java DataBase Connection，Java数据库连接）来进行数据库访问操作。JDBC为多种关系数据库提供了统一访问方式，作为特定厂商数据库访问API的一种高级抽象，它主要包含一些通用的<strong>接口类</strong>，所以真正的数据库访问操作实现是由各自数据库厂商提供的。通常把厂商提供的特定于数据库的访问API称为数据库JDBC驱动程序，如：Mysql、Oracle、SQL Server驱动等等。</p>
+<p>利用JDBC虽然可以方便地访问存储在关系数据库中的信息，但是代码比较繁琐，开发人员不得不在<strong>Java对象</strong>与<strong>关系数据</strong>之间进行转换。因此，随着企业应用开发技术的进步。逐渐产生了用来实现Java对象与关系数据之间自动映射的持久化框架，称为<strong>对象-关系映射（Ovject/Relation Mapping，ORM）</strong>。这些持久化框架包括Hibernate、Mybatis等等。为了进一步促进Java EE企业应用开发，进一步规范ORM实现，Java EE 5.0规范中推出了<strong>JPA（Java Persistence API）</strong>。需要注意的是，JPA是一个ORM的标准规范，而不是一个具体的ORM框架。<br>
+        
+          <a class="article-more-a" href="/2018/11/18/Spring-Jdbc-Support/#more">more >></a>
+        
+      
+
+      
+    </p></div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Jdbc</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Spring-Programming//" class="article-tag-list-link color2">Spring</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/11/18/Spring-Jdbc-Support/">展开全文 >></a>
+        </p>
+      
+
+      
+      
+			<!--
+            	作者：3788837@qq.com
+            	时间：2018-11-30
+            	描述：添加字数统计
+            -->       
+      <div class="article-tag tagcloud">
+        <div class="category-list-link" style="font-weight: 200">
+					1.1k字
+      	</div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Spring-Bean-Annotation" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -654,11 +753,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Jdbc</a>
+                <a href="javascript:void(0)" class="js-tag color4">MVC</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">MVC</a>
+                <a href="javascript:void(0)" class="js-tag color5">Jdbc</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -678,11 +777,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">TEA算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">RPC</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">RESTful</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -695,14 +802,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">servlet</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">TEA算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
               </li>
             
             <div class="clearfix"></div>

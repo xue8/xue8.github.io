@@ -6,19 +6,30 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://ddnd.cn">
-  <title>Archives: 2018/11 | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
+  <title>计算机如何储存数字和字符 | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
+  <meta name="description" content="前言最近在学习中涉及到计算机储存、传输数字和字符等操作，由于对字节、2进制、10进制、16进制、ASCII码的概念以及它们之间的关系和转换理解的不够透彻，导致在通讯、MD5消息摘要算法等时候出现问题，是因为数据转成计算机认识的01的这个环节出现问题。由于这个问题并不是那么容易发现，所以我也算是花了挺多时间才解决了这个问题，记录下解决过程，顺便也当复习一下计算机组成原理。">
 <meta name="keywords" content="Java,xue8,薛8,DDND,程序员,">
-<meta property="og:type" content="website">
-<meta property="og:title" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
-<meta property="og:url" content="http://ddnd.cn/archives/2018/11/index.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机如何储存数字和字符">
+<meta property="og:url" content="http://ddnd.cn/2019/02/16/byte-hex-ascii/index.html">
 <meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
-<meta property="og:description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
+<meta property="og:description" content="前言最近在学习中涉及到计算机储存、传输数字和字符等操作，由于对字节、2进制、10进制、16进制、ASCII码的概念以及它们之间的关系和转换理解的不够透彻，导致在通讯、MD5消息摘要算法等时候出现问题，是因为数据转成计算机认识的01的这个环节出现问题。由于这个问题并不是那么容易发现，所以我也算是花了挺多时间才解决了这个问题，记录下解决过程，顺便也当复习一下计算机组成原理。">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://ws3.sinaimg.cn/large/e0e01e43gy1g08660xgavj20sg0lc43a.jpg">
+<meta property="og:image" content="http://ws4.sinaimg.cn/large/e0e01e43gy1g08enhtsx1j213s0jjtby.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/large/e0e01e43gy1g08f28qjz1j214b0gbgni.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/large/e0e01e43gy1g08f7puifrj21910af3z7.jpg">
+<meta property="og:image" content="http://ws2.sinaimg.cn/large/e0e01e43gy1g08fxhd6efj214r0i3tau.jpg">
+<meta property="og:image" content="http://ws2.sinaimg.cn/large/e0e01e43gy1g08g0ta24uj20fq0c10tg.jpg">
+<meta property="og:image" content="http://ws4.sinaimg.cn/large/e0e01e43gy1g08izqbof9j213w0npjva.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/large/e0e01e43gy1g08j73hvayj21g40jgn3x.jpg">
+<meta property="og:image" content="http://ws1.sinaimg.cn/large/e0e01e43gy1g08jiea66vj213d0njadu.jpg">
+<meta property="og:updated_time" content="2019-02-16T12:56:55.188Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
-<meta name="twitter:description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
+<meta name="twitter:title" content="计算机如何储存数字和字符">
+<meta name="twitter:description" content="前言最近在学习中涉及到计算机储存、传输数字和字符等操作，由于对字节、2进制、10进制、16进制、ASCII码的概念以及它们之间的关系和转换理解的不够透彻，导致在通讯、MD5消息摘要算法等时候出现问题，是因为数据转成计算机认识的01的这个环节出现问题。由于这个问题并不是那么容易发现，所以我也算是花了挺多时间才解决了这个问题，记录下解决过程，顺便也当复习一下计算机组成原理。">
+<meta name="twitter:image" content="http://ws3.sinaimg.cn/large/e0e01e43gy1g08660xgavj20sg0lc43a.jpg">
   
     <link rel="alternative" href="/atom.xml" title="薛8的个人网站 - xue8&#39;s Blog - DDND.CN" type="application/atom+xml">
   
@@ -156,518 +167,218 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-byte-hex-ascii" class="article article-type-post " itemscope="" itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      计算机如何储存数字和字符
+    </h1>
+  
+
+        
+        <a href="/2019/02/16/byte-hex-ascii/" class="archive-article-date">
+  	<time datetime="2019-02-16T03:46:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-16</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://ws3.sinaimg.cn/large/e0e01e43gy1g08660xgavj20sg0lc43a.jpg" alt="image" width="100%"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近在学习中涉及到计算机储存、传输数字和字符等操作，由于对字节、<code>2</code>进制、<code>10</code>进制、<code>16</code>进制、ASCII码的概念以及它们之间的关系和转换理解的不够透彻，导致在通讯、<code>MD5</code>消息摘要算法等时候出现问题，是因为<strong>数据</strong>转成<strong>计算机认识的01</strong>的这个环节出现问题。由于这个问题并不是那么容易发现，所以我也算是花了挺多时间才解决了这个问题，记录下解决过程，顺便也当复习一下计算机组成原理。</p>
+<a id="more"></a>
+<h2 id="ASCII码"><a href="#ASCII码" class="headerlink" title="ASCII码"></a>ASCII码</h2><p>在计算机中，所有的数据在存储和运算时都要使用<strong>二进制数</strong>表示（因为计算机用高电平和低电平分别表示1和0），例如，像a、b、c、d这样的52个字母（包括大写）以及0、1等数字还有一些常用的符号（例如*、#、@等）在计算机中存储时也要使用二进制数来表示，而具体用哪些二进制数字表示哪个符号，当然每个人都可以约定自己的一套（这就叫编码），而大家如果要想互相通信而不造成混乱，那么大家就必须使用相同的编码规则，于是美国有关的标准化组织就出台了ASCII编码，统一规定了上述常用符号用哪些二进制数来表示。<br>ASCII 码一共规定了<code>128</code>个字符（<code>0000 0000</code>-<code>0111 1111</code>）的编码，比如空格<code>SPACE</code>是32（二进制<code>0010 0000</code>），大写的字母<code>A</code>是65（二进制<code>0100 0001</code> ）。这128个符号（包括32个不能打印出来的控制符号），只占用了一个字节的后面7位（低7位），最前面的一位（高1位）统一规定为<code>0</code>(不要和数字的符号位搞混)。<br>当然除了ASCII码，还有UTF-8、GBK等。</p>
+<h2 id="字节"><a href="#字节" class="headerlink" title="字节"></a>字节</h2><p>字节(Byte)普通计算机系统能读取和定位到最小信息单位，即我们通过计算机储存和传输数据的时候都是先把数据转成字节。<br>字节即<code>Byte</code>，一个字节代表<code>8</code>个比特（Bit），字节通常缩写为B，比特通常缩写为b。字节的大小是<code>8</code>Bit，即字节的范围是<code>0000 0000</code> - <code>1111 1111</code>，对于<strong>无符号型</strong>，它表示的十进制范围是[0,255]，对于<strong>有符号型</strong>，高一位表示符号位，它表示的十进制范围是[-128,127]。</p>
+<h2 id="计算机若何储存数据"><a href="#计算机若何储存数据" class="headerlink" title="计算机若何储存数据"></a>计算机若何储存数据</h2><p>计算机只认识<code>0</code>和<code>1</code>（因为计算机只有高低电平两个状态），数据要想通过计算机储存或者传输，首先是要把数据转成计算机能认识的格式即01数据。<br>我们举个例子，以储存十进制数字<code>28</code>和<code>-28</code>为例，首先将十进制数转成二进制。    </p>
+<blockquote>
+<p><strong>需要注意的是：</strong> 数字在计算机中储存的是补码，而字符是在计算机中储存的是字符对应的编码（不要和数字的补码搞混）。</p>
+</blockquote>
+<h3 id="数字"><a href="#数字" class="headerlink" title="数字"></a>数字</h3><p>储存十进制数字<code>28</code>和<code>-28</code>为例，首先将十进制数转成二进制，高<code>1</code>位为<code>0</code>代表正数，为<code>1</code>代表负数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">28(10) = 0001 1100(2)(原码)            </span><br><span class="line">-28(10) = 1001 1100(2)(原码)</span><br></pre></td></tr></table></figure></p>
+<p>然后计算机将二进制数字进行补码运算，运算结果如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">28(10) = 0001 1100(2)(原码) =  0001 1100(2)(补码)       </span><br><span class="line">-28(10) = 1001 1100(2)(原码) = 1110 0100(2)(补码)</span><br></pre></td></tr></table></figure></p>
+<p>然后计算机保存的就是<strong>补码</strong>，当要取出数据的时候，就将补码逆运算一下，即可求出原码，再将原码转换一下就可以得到真实的数据了。<br>下面以Java语言演示这个过程，首先我们要清楚Java的byte、short、int、long都是有符号的(signed)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class test &#123;</span><br><span class="line">    public static void main(String[] args) throws NoSuchAlgorithmException &#123;</span><br><span class="line">        int a1 = 28;</span><br><span class="line">        int a2 = -28;</span><br><span class="line"></span><br><span class="line">//        转成二进制表示</span><br><span class="line">        String b1 = Integer.toBinaryString(a1);</span><br><span class="line">        String b2 = Integer.toBinaryString(a2);</span><br><span class="line">//        转成无无符号表示</span><br><span class="line">        String b3 = Integer.toUnsignedString(a1);</span><br><span class="line">        String b4 = Integer.toUnsignedString(a2);</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;28储存到计算机后为：&quot; + b1);</span><br><span class="line">        System.out.println(&quot;-28储存到计算机后为：&quot; + b2);</span><br><span class="line">        System.out.println(&quot;取出储存的28 以无符号表示：&quot; + b3);</span><br><span class="line">        System.out.println(&quot;取出储存的-28 以无符号表示：&quot; + b4);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>运行输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">28储存到计算机后为：11100</span><br><span class="line">-28储存到计算机后为：11111111111111111111111111100100</span><br><span class="line">取出储存的28 以无符号表示：28</span><br><span class="line">取出储存的-28 以无符号表示：4294967268</span><br></pre></td></tr></table></figure></p>
+<p>我们验证一下结果，验证了计算机确实是以补码的方式储存数字。这里有个小问题，就是我们知道<code>int</code>型有<code>4</code>个字节即<code>32</code>个比特，但是28却输出了<code>11100</code>5个比特而已，是因为<code>toBinaryString()</code>方法把<code>11100</code>前面的<code>0</code>给忽略了。<br>取出的时候，我们以无符号的标准去处理，导致取出存入的<code>-28</code>结果是<code>4294967268</code>和我们存入的不一样，这是因为<code>-28</code>是负数，负数的补码和原码不一样，而用无符号处理的话就是直接将<code>11111111111111111111111111100100</code>转成结果了。而为什么<code>28</code>用有无符号处理结果都一样是因为正数的原码和补码一样，这样验证了Java的数据类型都是有符号的。   </p>
+<p><strong>至于计算机为什么用补码来储存数字，而不是原码，原因是：</strong><br>拿单字节整数来说，无符号型，其表示范围是[0,255]，总共表示了<code>256</code>个数据。有符号型，其表示范围是[-128,127]。<br>先看无符号，原码和补码都一样，<code>0</code>表示为<code>0000 0000</code>，<code>255</code>表示为<code>1111 1111</code>，刚好满足了要求，可以表示<code>256</code>个数据。<br>再看有符号的，若是用<strong>原码</strong>表示，<code>0</code>表示为<code>0000 000</code>。因为咱们有符号，所以应该也有个<strong>负0</strong>（虽然它还是0）<code>1000 0000</code>。这样的话那就有2个0，也就是只能表示<code>255</code>个数据，不能够满足我们的要求。而用补码则很好的解决了这个问题。    </p>
+<h3 id="字符"><a href="#字符" class="headerlink" title="字符"></a>字符</h3><p>在计算机中，对<strong>非数值</strong>的字符进行处理时，要对字符进行数字化，即用二进制编码来表示字符。其中西文字符最常用到的编码方案有ASCII编码和EBCDIC编码。对于汉字，我国也制定的相应的编码方案，比如 GBK，GB2312等。<br>比如字符<code>a</code>的<code>ASCII</code>码十进制值为<code>97</code>，在计算机中用二进制表示就是 01100001。下面同样用Java来演示计算机是如何储存字符的。  </p>
+<ol>
+<li>采用UTF-8和GBK两种编码储存汉字<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public class test &#123;</span><br><span class="line">    public static void main(String[] args) throws NoSuchAlgorithmException &#123;</span><br><span class="line">        String a1 = &quot;中&quot;;</span><br><span class="line">//        采用两种不同的编码储存&quot;中&quot;这个汉字 比较两种编码</span><br><span class="line">        byte[] b1 = a1.getBytes(&quot;GBK&quot;);</span><br><span class="line">        byte[] b2 = a1.getBytes(&quot;UTF-8&quot;);</span><br><span class="line">        String c1 = binary(b1,2);</span><br><span class="line">        String c2= binary(b2,2);</span><br><span class="line">        System.out.println(&quot;GBK储存对应的二进制：&quot; + c1);</span><br><span class="line">        System.out.println(&quot;UTF-8储存对应的二进制：&quot; +c2);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    /**</span><br><span class="line">     * 将byte[]转为各种进制的字符串</span><br><span class="line">     * @param bytes byte[]</span><br><span class="line">     * @param radix 基数可以转换进制的范围，从Character.MIN_RADIX到Character.MAX_RADIX，超出范围后变为10进制</span><br><span class="line">     * @return 转换后的字符串</span><br><span class="line">     */</span><br><span class="line">    public static String binary(byte[] bytes, int radix)&#123;</span><br><span class="line">        return new BigInteger(1, bytes).toString(radix);// 这里的1代表正数</span><br><span class="line">    &#125;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><img src="http://ws4.sinaimg.cn/large/e0e01e43gy1g08enhtsx1j213s0jjtby.jpg" alt="image"><br>我们调试看看，发现GBK编码采用<code>2</code>个字节储存，储存的数据分别是<code>10</code>进制的<code>-42</code>和<code>-48</code>对应的二进制分别是<code>11010110</code>和<code>11010000</code>(补码)，即汉字<code>中</code>对应的二进制为<code>1101011011010000</code>，即16进制的<code>D6D0</code>，查看GBK对照表，发现16进制编码<code>D6D0</code>对应的汉字确实是<code>中</code><br><img src="http://wx4.sinaimg.cn/large/e0e01e43gy1g08f28qjz1j214b0gbgni.jpg" alt="image"></p>
+<p>而UTF-8编码采用<code>3</code>个字节储存，同理将对应的二进制<code>111001001011100010101101</code>转成16进制，为E4B8AD，通过UTF-8编码查询，发现汉字<code>中</code>对应的16进制编码确实是<code>E4B8AD</code><br><img src="http://wx2.sinaimg.cn/large/e0e01e43gy1g08f7puifrj21910af3z7.jpg" alt="image"></p>
+<ol start="2">
+<li>储存字符<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class test &#123;</span><br><span class="line">    public static void main(String[] args) throws NoSuchAlgorithmException &#123;</span><br><span class="line">        String a1 = &quot;EF&quot;;</span><br><span class="line">//        将字符串转成字节数组</span><br><span class="line">        byte[] b1 = a1.getBytes();</span><br><span class="line">        String c1 = binary(b1,2);</span><br><span class="line">        System.out.println(&quot;对应的二进制：&quot; + c1);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    /**</span><br><span class="line">     * 将byte[]转为各种进制的字符串</span><br><span class="line">     * @param bytes byte[]</span><br><span class="line">     * @param radix 基数可以转换进制的范围，从Character.MIN_RADIX到Character.MAX_RADIX，超出范围后变为10进制</span><br><span class="line">     * @return 转换后的字符串</span><br><span class="line">     */</span><br><span class="line">    public static String binary(byte[] bytes, int radix)&#123;</span><br><span class="line">        return new BigInteger(1, bytes).toString(radix);// 这里的1代表正数</span><br><span class="line">    &#125;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><img src="http://ws2.sinaimg.cn/large/e0e01e43gy1g08fxhd6efj214r0i3tau.jpg" alt="image"><br>调试看看，字符串<code>EF</code>有<code>E</code>和<code>F</code>两个字符，它们对应的十进制ASCII码分别是<code>69</code>和<code>70</code><br><img src="http://ws2.sinaimg.cn/large/e0e01e43gy1g08g0ta24uj20fq0c10tg.jpg" alt="image"></p>
+<p>我们发现Java的<code>getBytes()</code>方法是将字符串的每一个字符都储存到一个字节的，如果我们想把<code>EF</code>储存在一个字节里面，即<code>EF</code>是一个整体的，一个字节，不能拆分，那我们可以把<code>EF</code>放在一个字节里面<code>(byte)(0xEF)</code>，声明它是一个字节，不是字符，不用再将它转成字符对应的编码。<br>下面说说我在进行<code>MD5</code>消息摘要算法时候遇到的坑，我要对QQ号对应的Hex进行<code>MD5</code>算法散列，这里我举例QQ号的<code>10</code>进制为<code>12345678</code>，对应的<code>16</code>进制为<code>00BC614E</code>(因为QQ号固定长度4个字节，所以前面补了2个0)，一开始我是以下面的方式进行<code>MD5</code>算法的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public class test &#123;</span><br><span class="line">    public static void main(String[] args) throws NoSuchAlgorithmException &#123;</span><br><span class="line">        String qq = &quot;00BC614E&quot;;</span><br><span class="line">//        将字符串转成字节数组</span><br><span class="line">        byte[] b1 = qq.getBytes();</span><br><span class="line"></span><br><span class="line">        MessageDigest md = MessageDigest.getInstance(&quot;MD5&quot;);</span><br><span class="line">        md.update(b1);</span><br><span class="line">//        得到MD5后的哈希值</span><br><span class="line">        byte[] hash = md.digest();</span><br><span class="line">//        将结构转成16进制</span><br><span class="line">        String c1 = binary(hash,16);</span><br><span class="line">        System.out.println(&quot;对应的16进制：&quot; + c1);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    /**</span><br><span class="line">     * 将byte[]转为各种进制的字符串</span><br><span class="line">     * @param bytes byte[]</span><br><span class="line">     * @param radix 基数可以转换进制的范围，从Character.MIN_RADIX到Character.MAX_RADIX，超出范围后变为10进制</span><br><span class="line">     * @return 转换后的字符串</span><br><span class="line">     */</span><br><span class="line">    public static String binary(byte[] bytes, int radix)&#123;</span><br><span class="line">        return new BigInteger(1, bytes).toString(radix);// 这里的1代表正数</span><br><span class="line">    &#125;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://ws4.sinaimg.cn/large/e0e01e43gy1g08izqbof9j213w0npjva.jpg" alt="image"><br>调试可以看到上面的代码其实是将字符串<code>00BC614E</code>转成了<code>8</code>个字节，然后再对这8个字节进行散列，这也是基于<strong>字符串</strong>进行的<code>MD5</code>散列，和通过网上一些网站散列得到的值是一样的<br><img src="http://wx3.sinaimg.cn/large/e0e01e43gy1g08j73hvayj21g40jgn3x.jpg" alt="image"></p>
+<p>但是这个哈希值和预想的结果不一致，后来才知道预想的结果是基于<strong>字节</strong>进行的<code>MD5</code>散列，也就是<code>00BC614E</code>应该分成<code>4</code>个字节（00、BC、61、4E）而不是<code>8</code>个字节（0、0、B、C、6、1、4、E），然后通过修改代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">public class test &#123;</span><br><span class="line">    public static void main(String[] args) throws NoSuchAlgorithmException &#123;</span><br><span class="line">//        String qq = &quot;00BC614E&quot;;</span><br><span class="line">//        将字符串转成字节数组</span><br><span class="line">//        byte[] b1 = qq.getBytes();</span><br><span class="line">        byte[] b1 = &#123;(byte)(0x00),(byte)(0xBC),(byte)(0x61),(byte)(0x4E)&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        MessageDigest md = MessageDigest.getInstance(&quot;MD5&quot;);</span><br><span class="line">        md.update(b1);</span><br><span class="line">//        得到MD5后的哈希值</span><br><span class="line">        byte[] hash = md.digest();</span><br><span class="line">//        将结构转成16进制</span><br><span class="line">        String c1 = binary(hash,16);</span><br><span class="line">        System.out.println(&quot;对应的16进制：&quot; + c1);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    /**</span><br><span class="line">     * 将byte[]转为各种进制的字符串</span><br><span class="line">     * @param bytes byte[]</span><br><span class="line">     * @param radix 基数可以转换进制的范围，从Character.MIN_RADIX到Character.MAX_RADIX，超出范围后变为10进制</span><br><span class="line">     * @return 转换后的字符串</span><br><span class="line">     */</span><br><span class="line">    public static String binary(byte[] bytes, int radix)&#123;</span><br><span class="line">        return new BigInteger(1, bytes).toString(radix);// 这里的1代表正数</span><br><span class="line">    &#125;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://ws1.sinaimg.cn/large/e0e01e43gy1g08jiea66vj213d0njadu.jpg" alt="image"><br>使用<code>(byte)</code>声明是一个字节，不是字符，不用再将它转成字符对应的编码。00、BC、61、4E分别是一个字节，当然因为字节为<code>8</code>个比特，能表示256个数字，因为Java的数据类型是有符号的，所以<code>8</code>个比特能表示的<code>10</code>进制范围是[-128,127]，所以(byte)(x) x不能小于<code>-128</code>和不能大于<code>127</code>，否则会溢出，溢出的部分数据会丢失。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/30/Mybatis-Proxy/" class="archive-article-date">
-  	<time datetime="2018-11-30T13:33:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/30/Mybatis-Proxy/">Mybatis mapper动态代理方式</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Mybatis</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Mybatis-Programming//" class="article-tag-list-link color3">Mybatis</a>
+        			<a href="/categories/Computer-Foundation//" class="article-tag-list-link color1">计算机基础</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://ddnd.cn/2019/02/16/byte-hex-ascii/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      
+			<!--
+            	作者：3788837@qq.com
+            	时间：2018-11-30
+            	描述：添加字数统计
+            -->       
+      <div class="article-tag tagcloud">
+        <div class="category-list-link" style="font-weight: 200">
+					2.9k字
+      	</div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/30/Mybatis-Annotation/" class="archive-article-date">
-  	<time datetime="2018-11-30T07:50:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-30</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/02/15/redis-chapter-3/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">第三章 Redis 客户端的使用 Java版【Redis入门教程】</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/30/Mybatis-Annotation/">Mybatis接口注解实现映射</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Mybatis</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Mybatis-Programming//" class="article-tag-list-link color3">Mybatis</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/29/Mybatis-Introduction/" class="archive-article-date">
-  	<time datetime="2018-11-29T13:49:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/29/Mybatis-Introduction/">Mybatis实现数据库操作</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Mybatis</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Mybatis-Programming//" class="article-tag-list-link color3">Mybatis</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/26/Spring-Tomcat-DBCP/" class="archive-article-date">
-  	<time datetime="2018-11-26T11:12:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-26</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/26/Spring-Tomcat-DBCP/">Spring和Tomcat自带的连接池实现数据库操作</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">TomcatDBCP</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">连接池</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Spring-Programming//" class="article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/19/Spring-Jdbc-JdbcTemplate/" class="archive-article-date">
-  	<time datetime="2018-11-19T09:49:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/19/Spring-Jdbc-JdbcTemplate/">Spring和JdbcTemplate实现数据库操作</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Jdbc</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Spring-Programming//" class="article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/19/Spring-Jdbc-CRUD/" class="archive-article-date">
-  	<time datetime="2018-11-19T04:04:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/19/Spring-Jdbc-CRUD/">Srping和传统JDBC实现数据库操作</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Jdbc</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Spring-Programming//" class="article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/18/Java-DataSource/" class="archive-article-date">
-  	<time datetime="2018-11-18T08:00:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/18/Java-DataSource/">JAVA数据源</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Java-Programming//" class="article-tag-list-link color4">Java编程基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/18/Spring-Jdbc-Support/" class="archive-article-date">
-  	<time datetime="2018-11-18T07:58:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/18/Spring-Jdbc-Support/">Spring对JDBC的支持</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Jdbc</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Spring-Programming//" class="article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/17/Spring-Bean-Annotation/" class="archive-article-date">
-  	<time datetime="2018-11-17T07:50:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-17</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/17/Spring-Bean-Annotation/">Spring 注解自动装配Bean</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Spring-Programming//" class="article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/17/Spring-Bean-Automatic/" class="archive-article-date">
-  	<time datetime="2018-11-17T07:48:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-17</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/17/Spring-Bean-Automatic/">Spring自动装配Bean实现hello</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Spring-Programming//" class="article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2018/11/page/2/">2</a><a class="extend next" rel="next" href="/archives/2018/11/page/2/">Next &raquo;</a>
-    </nav>
+  
+  <div id="SOHUCS" sid="byte-hex-ascii"></div> 
+<script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js"></script>
+<script type="text/javascript">
+    window.changyan.api.config({
+        appid: "cysQyVYbf",
+        conf: "prod_4c3fdac1045cd48f184b31bc47ce864e"
+    });
+</script>
+
   
 
+  
+
+  
 
 
           </div>
@@ -692,8 +403,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

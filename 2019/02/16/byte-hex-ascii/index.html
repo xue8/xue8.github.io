@@ -25,7 +25,7 @@
 <meta property="og:image" content="http://ws4.sinaimg.cn/large/e0e01e43gy1g08izqbof9j213w0npjva.jpg">
 <meta property="og:image" content="http://wx3.sinaimg.cn/large/e0e01e43gy1g08j73hvayj21g40jgn3x.jpg">
 <meta property="og:image" content="http://ws1.sinaimg.cn/large/e0e01e43gy1g08jiea66vj213d0njadu.jpg">
-<meta property="og:updated_time" content="2019-02-16T12:56:55.188Z">
+<meta property="og:updated_time" content="2019-02-16T13:05:09.057Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算机如何储存数字和字符">
 <meta name="twitter:description" content="前言最近在学习中涉及到计算机储存、传输数字和字符等操作，由于对字节、2进制、10进制、16进制、ASCII码的概念以及它们之间的关系和转换理解的不够透彻，导致在通讯、MD5消息摘要算法等时候出现问题，是因为数据转成计算机认识的01的这个环节出现问题。由于这个问题并不是那么容易发现，所以我也算是花了挺多时间才解决了这个问题，记录下解决过程，顺便也当复习一下计算机组成原理。">
@@ -204,15 +204,15 @@
 <p><strong>至于计算机为什么用补码来储存数字，而不是原码，原因是：</strong><br>拿单字节整数来说，无符号型，其表示范围是[0,255]，总共表示了<code>256</code>个数据。有符号型，其表示范围是[-128,127]。<br>先看无符号，原码和补码都一样，<code>0</code>表示为<code>0000 0000</code>，<code>255</code>表示为<code>1111 1111</code>，刚好满足了要求，可以表示<code>256</code>个数据。<br>再看有符号的，若是用<strong>原码</strong>表示，<code>0</code>表示为<code>0000 000</code>。因为咱们有符号，所以应该也有个<strong>负0</strong>（虽然它还是0）<code>1000 0000</code>。这样的话那就有2个0，也就是只能表示<code>255</code>个数据，不能够满足我们的要求。而用补码则很好的解决了这个问题。    </p>
 <h3 id="字符"><a href="#字符" class="headerlink" title="字符"></a>字符</h3><p>在计算机中，对<strong>非数值</strong>的字符进行处理时，要对字符进行数字化，即用二进制编码来表示字符。其中西文字符最常用到的编码方案有ASCII编码和EBCDIC编码。对于汉字，我国也制定的相应的编码方案，比如 GBK，GB2312等。<br>比如字符<code>a</code>的<code>ASCII</code>码十进制值为<code>97</code>，在计算机中用二进制表示就是 01100001。下面同样用Java来演示计算机是如何储存字符的。  </p>
 <ol>
-<li>采用UTF-8和GBK两种编码储存汉字<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public class test &#123;</span><br><span class="line">    public static void main(String[] args) throws NoSuchAlgorithmException &#123;</span><br><span class="line">        String a1 = &quot;中&quot;;</span><br><span class="line">//        采用两种不同的编码储存&quot;中&quot;这个汉字 比较两种编码</span><br><span class="line">        byte[] b1 = a1.getBytes(&quot;GBK&quot;);</span><br><span class="line">        byte[] b2 = a1.getBytes(&quot;UTF-8&quot;);</span><br><span class="line">        String c1 = binary(b1,2);</span><br><span class="line">        String c2= binary(b2,2);</span><br><span class="line">        System.out.println(&quot;GBK储存对应的二进制：&quot; + c1);</span><br><span class="line">        System.out.println(&quot;UTF-8储存对应的二进制：&quot; +c2);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    /**</span><br><span class="line">     * 将byte[]转为各种进制的字符串</span><br><span class="line">     * @param bytes byte[]</span><br><span class="line">     * @param radix 基数可以转换进制的范围，从Character.MIN_RADIX到Character.MAX_RADIX，超出范围后变为10进制</span><br><span class="line">     * @return 转换后的字符串</span><br><span class="line">     */</span><br><span class="line">    public static String binary(byte[] bytes, int radix)&#123;</span><br><span class="line">        return new BigInteger(1, bytes).toString(radix);// 这里的1代表正数</span><br><span class="line">    &#125;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<li>采用UTF-8和GBK两种编码储存汉字</li>
 </ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public class test &#123;</span><br><span class="line">    public static void main(String[] args) throws NoSuchAlgorithmException &#123;</span><br><span class="line">        String a1 = &quot;中&quot;;</span><br><span class="line">//        采用两种不同的编码储存&quot;中&quot;这个汉字 比较两种编码</span><br><span class="line">        byte[] b1 = a1.getBytes(&quot;GBK&quot;);</span><br><span class="line">        byte[] b2 = a1.getBytes(&quot;UTF-8&quot;);</span><br><span class="line">        String c1 = binary(b1,2);</span><br><span class="line">        String c2= binary(b2,2);</span><br><span class="line">        System.out.println(&quot;GBK储存对应的二进制：&quot; + c1);</span><br><span class="line">        System.out.println(&quot;UTF-8储存对应的二进制：&quot; +c2);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    /**</span><br><span class="line">     * 将byte[]转为各种进制的字符串</span><br><span class="line">     * @param bytes byte[]</span><br><span class="line">     * @param radix 基数可以转换进制的范围，从Character.MIN_RADIX到Character.MAX_RADIX，超出范围后变为10进制</span><br><span class="line">     * @return 转换后的字符串</span><br><span class="line">     */</span><br><span class="line">    public static String binary(byte[] bytes, int radix)&#123;</span><br><span class="line">        return new BigInteger(1, bytes).toString(radix);// 这里的1代表正数</span><br><span class="line">    &#125;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="http://ws4.sinaimg.cn/large/e0e01e43gy1g08enhtsx1j213s0jjtby.jpg" alt="image"><br>我们调试看看，发现GBK编码采用<code>2</code>个字节储存，储存的数据分别是<code>10</code>进制的<code>-42</code>和<code>-48</code>对应的二进制分别是<code>11010110</code>和<code>11010000</code>(补码)，即汉字<code>中</code>对应的二进制为<code>1101011011010000</code>，即16进制的<code>D6D0</code>，查看GBK对照表，发现16进制编码<code>D6D0</code>对应的汉字确实是<code>中</code><br><img src="http://wx4.sinaimg.cn/large/e0e01e43gy1g08f28qjz1j214b0gbgni.jpg" alt="image"></p>
 <p>而UTF-8编码采用<code>3</code>个字节储存，同理将对应的二进制<code>111001001011100010101101</code>转成16进制，为E4B8AD，通过UTF-8编码查询，发现汉字<code>中</code>对应的16进制编码确实是<code>E4B8AD</code><br><img src="http://wx2.sinaimg.cn/large/e0e01e43gy1g08f7puifrj21910af3z7.jpg" alt="image"></p>
 <ol start="2">
-<li>储存字符<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class test &#123;</span><br><span class="line">    public static void main(String[] args) throws NoSuchAlgorithmException &#123;</span><br><span class="line">        String a1 = &quot;EF&quot;;</span><br><span class="line">//        将字符串转成字节数组</span><br><span class="line">        byte[] b1 = a1.getBytes();</span><br><span class="line">        String c1 = binary(b1,2);</span><br><span class="line">        System.out.println(&quot;对应的二进制：&quot; + c1);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    /**</span><br><span class="line">     * 将byte[]转为各种进制的字符串</span><br><span class="line">     * @param bytes byte[]</span><br><span class="line">     * @param radix 基数可以转换进制的范围，从Character.MIN_RADIX到Character.MAX_RADIX，超出范围后变为10进制</span><br><span class="line">     * @return 转换后的字符串</span><br><span class="line">     */</span><br><span class="line">    public static String binary(byte[] bytes, int radix)&#123;</span><br><span class="line">        return new BigInteger(1, bytes).toString(radix);// 这里的1代表正数</span><br><span class="line">    &#125;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<li>储存字符</li>
 </ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class test &#123;</span><br><span class="line">    public static void main(String[] args) throws NoSuchAlgorithmException &#123;</span><br><span class="line">        String a1 = &quot;EF&quot;;</span><br><span class="line">//        将字符串转成字节数组</span><br><span class="line">        byte[] b1 = a1.getBytes();</span><br><span class="line">        String c1 = binary(b1,2);</span><br><span class="line">        System.out.println(&quot;对应的二进制：&quot; + c1);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    /**</span><br><span class="line">     * 将byte[]转为各种进制的字符串</span><br><span class="line">     * @param bytes byte[]</span><br><span class="line">     * @param radix 基数可以转换进制的范围，从Character.MIN_RADIX到Character.MAX_RADIX，超出范围后变为10进制</span><br><span class="line">     * @return 转换后的字符串</span><br><span class="line">     */</span><br><span class="line">    public static String binary(byte[] bytes, int radix)&#123;</span><br><span class="line">        return new BigInteger(1, bytes).toString(radix);// 这里的1代表正数</span><br><span class="line">    &#125;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="http://ws2.sinaimg.cn/large/e0e01e43gy1g08fxhd6efj214r0i3tau.jpg" alt="image"><br>调试看看，字符串<code>EF</code>有<code>E</code>和<code>F</code>两个字符，它们对应的十进制ASCII码分别是<code>69</code>和<code>70</code><br><img src="http://ws2.sinaimg.cn/large/e0e01e43gy1g08g0ta24uj20fq0c10tg.jpg" alt="image"></p>
 <p>我们发现Java的<code>getBytes()</code>方法是将字符串的每一个字符都储存到一个字节的，如果我们想把<code>EF</code>储存在一个字节里面，即<code>EF</code>是一个整体的，一个字节，不能拆分，那我们可以把<code>EF</code>放在一个字节里面<code>(byte)(0xEF)</code>，声明它是一个字节，不是字符，不用再将它转成字符对应的编码。<br>下面说说我在进行<code>MD5</code>消息摘要算法时候遇到的坑，我要对QQ号对应的Hex进行<code>MD5</code>算法散列，这里我举例QQ号的<code>10</code>进制为<code>12345678</code>，对应的<code>16</code>进制为<code>00BC614E</code>(因为QQ号固定长度4个字节，所以前面补了2个0)，一开始我是以下面的方式进行<code>MD5</code>算法的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public class test &#123;</span><br><span class="line">    public static void main(String[] args) throws NoSuchAlgorithmException &#123;</span><br><span class="line">        String qq = &quot;00BC614E&quot;;</span><br><span class="line">//        将字符串转成字节数组</span><br><span class="line">        byte[] b1 = qq.getBytes();</span><br><span class="line"></span><br><span class="line">        MessageDigest md = MessageDigest.getInstance(&quot;MD5&quot;);</span><br><span class="line">        md.update(b1);</span><br><span class="line">//        得到MD5后的哈希值</span><br><span class="line">        byte[] hash = md.digest();</span><br><span class="line">//        将结构转成16进制</span><br><span class="line">        String c1 = binary(hash,16);</span><br><span class="line">        System.out.println(&quot;对应的16进制：&quot; + c1);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    /**</span><br><span class="line">     * 将byte[]转为各种进制的字符串</span><br><span class="line">     * @param bytes byte[]</span><br><span class="line">     * @param radix 基数可以转换进制的范围，从Character.MIN_RADIX到Character.MAX_RADIX，超出范围后变为10进制</span><br><span class="line">     * @return 转换后的字符串</span><br><span class="line">     */</span><br><span class="line">    public static String binary(byte[] bytes, int radix)&#123;</span><br><span class="line">        return new BigInteger(1, bytes).toString(radix);// 这里的1代表正数</span><br><span class="line">    &#125;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p><img src="http://ws4.sinaimg.cn/large/e0e01e43gy1g08izqbof9j213w0npjva.jpg" alt="image"><br>调试可以看到上面的代码其实是将字符串<code>00BC614E</code>转成了<code>8</code>个字节，然后再对这8个字节进行散列，这也是基于<strong>字符串</strong>进行的<code>MD5</code>散列，和通过网上一些网站散列得到的值是一样的<br><img src="http://wx3.sinaimg.cn/large/e0e01e43gy1g08j73hvayj21g40jgn3x.jpg" alt="image"></p>
@@ -332,6 +332,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2019/03/07/jdk1.8-hashmap/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          HashMap从认识到源码分析
+        
+      </div>
+    </a>
   
   
     <a href="/2019/02/15/redis-chapter-3/" id="article-nav-older" class="article-nav-link-wrap">
@@ -505,19 +514,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">TEA算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">RPC</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">RESTful</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -530,6 +531,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">servlet</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">TEA算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">HashMap</a>
               </li>
             
             <div class="clearfix"></div>

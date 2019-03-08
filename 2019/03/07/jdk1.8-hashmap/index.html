@@ -22,7 +22,7 @@
 <meta property="og:image" content="http://ws4.sinaimg.cn/large/e0e01e43ly1g0vf07q9plj20vt0ldacm.jpg">
 <meta property="og:image" content="http://wx4.sinaimg.cn/large/e0e01e43ly1g0vf0g8sq8j20q10netbf.jpg">
 <meta property="og:image" content="http://ws2.sinaimg.cn/large/e0e01e43ly1g0vf0lbaphj20fo0b0ab8.jpg">
-<meta property="og:updated_time" content="2019-03-08T07:45:51.693Z">
+<meta property="og:updated_time" content="2019-03-08T07:48:14.306Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HashMap从认识到源码分析">
 <meta name="twitter:image" content="http://wx3.sinaimg.cn/large/e0e01e43ly1g0vf2bq3xgj21g80ytkjm.jpg">
@@ -188,13 +188,16 @@
 <h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><p>Map在开发过程中使用频率很高的数据结构，Map是<code>Key-value</code>键值对映射的抽象<strong>接口</strong>，该映射不包括重复的键，既一个键对应一个值。<code>HashMap</code>、<code>HashTable</code>、<code>ConcurrentHashMap</code>都是Java Collection Framework的重要成员。Map接口提供三种collection视图，允许以键集(keySet())、值集(values())或键-值映射关系集(entrySet())的形式查看某个映射的内容。<br><img src="https://user-gold-cdn.xitu.io/2019/3/7/169575a7d1acb827?w=1018&amp;h=636&amp;f=png&amp;s=48415" alt=""></p>
 <h2 id="HasH表"><a href="#HasH表" class="headerlink" title="HasH表"></a>HasH表</h2><p>我们知道数组的储存方式是在内存上分配固定的连续的空间，寻址速度快（查询速度快），时间复杂度为<code>O(1)</code>，但是在插入、删除元素时候需要移动数组的元素，所以插入、删除时候速度慢，时间复杂度为<code>O(n)</code>。链表的存储方式在内存上是不连续的，每个元素都保存着下个元素的内存地址，通过这个地址找到下个元素，所以链表在查询的时候速度慢，时间复杂度为<code>O(n)</code>，在插入和删除的时候速度快，时间复杂度为<code>O(1)</code>。<br>如果我们想要一个数据结构既查询速度快，插入和删除速度也要快，那我们应该怎么做呢？这时<strong>哈希(Hash)表</strong>就应时而生了，通过<strong>哈希函数</strong>计算出<strong>键</strong>在哈希表中指定的储存位置(注意这里的储存位置是在表中的位置，并不是内存的地址)，称为哈希地址，然后将值储存在这个哈希地址上，然后通过<strong>键</strong>就可以直接操作到<strong>值</strong>，查询、插入、删除等操作时间复杂度都是<code>O(1)</code>。<br>既然是键通过哈希函数计算出储存位置，那么哈希函数的好坏直接影响到哈希表的操作效率，如会出现浪费储存空间、出现大量冲突(即不同的键计算出来的储存位置一样)。     </p>
 <blockquote>
-<p>哈希函数可以将任意长度的输入映射成固定长度的输出，也就是哈希地址<br>哈希冲突是不可避免的，常用的哈希冲突解决办法有以下2种方法。     </p>
+<p>哈希函数可以将任意长度的输入映射成固定长度的输出，也就是哈希地址<br>哈希冲突是不可避免的，常用的哈希冲突解决办法有以下2种方法。            </p>
+</blockquote>
 <ol>
 <li><strong>链地址法(拉链法)</strong><br>采用数组和链表结合的方法，对哈希表中每个哈希地址建立一个线性表，将哈希地址相同的数据储存在线性表中，并将<strong>链表的头指针保存在数组中</strong>，哈希地址、键、值等信息一般保存在链表节点中。一般通过哈希地址计算出数组的下标，将哈希值相同的保存在下标相同的数组中的。拉链法适合经常进行插入、删除操作的情况。<br><img src="https://user-gold-cdn.xitu.io/2019/3/7/16957dc37460bcb7?w=541&amp;h=336&amp;f=png&amp;s=15864" alt=""></li>
 <li><strong>开放定址法</strong><br>开放定址法也称线性探测法，基本思想是：将哈希表T[0…m-1]看成是个循环向量，若初始探测地址为d，则最长的探测路径为：d，d+i，d+2i，…，m-1。即探测时候从地址d开始，首先探测T[d]，如果T[d]发生哈希冲突则继续探测下一个T[d+1]…直到探测到T[m-1]为止，i为自定义的常数。开放定址法很容易产生<strong>堆聚现象</strong>，所谓堆聚现象就是哈希表中的数据连成一片，在加入新元素的时候就容易产生哈希冲突。</li>
-<li><strong>拉链法和开放定址比较</strong><br>拉链法：处理冲突简单，无堆聚现象，同时链表插入、删除操作简单，所以拉链法适合经常进行插入、删除操作的情况。<br>开放定址法：为了减少冲突，要求<strong>负载因子(装填因子)</strong>较小，当节点规模较大时候会浪费很多空间。且开放定址法在删除节点的时候，不能简单的将节点所在的空间置为空，否则将截断在它之后的节点的查找路径，这是因为各种开放定址法中，<strong>空地址单元都是查找失败的条件</strong>。因此在进行删除节点操作的时候，需要使用逻辑删除，即在被删除的节点上做删除标记。<br>负载因子 = 填入哈希表中的元素个数 / 哈希表的数组长度</li>
-</ol>
+<li><strong>拉链法和开放定址比较</strong><br>拉链法：处理冲突简单，无堆聚现象，同时链表插入、删除操作简单，所以拉链法适合经常进行插入、删除操作的情况。<br>开放定址法：为了减少冲突，要求<strong>负载因子(装填因子)</strong>较小，当节点规模较大时候会浪费很多空间。且开放定址法在删除节点的时候，不能简单的将节点所在的空间置为空，否则将截断在它之后的节点的查找路径，这是因为各种开放定址法中，<strong>空地址单元都是查找失败的条件</strong>。因此在进行删除节点操作的时候，需要使用逻辑删除，即在被删除的节点上做删除标记。   <blockquote>
+<p>负载因子 = 填入哈希表中的元素个数 / 哈希表的数组长度</p>
 </blockquote>
+</li>
+</ol>
 <h2 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h2><h3 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h3><p><code>HashMap</code>采用上述的<strong>拉链法</strong>解决哈希冲突.HashMap是非线程安全的，允许键、值为<code>null</code>，不保证有序(比如插入的顺序)，也不保证顺序不随时间变化(哈希表加倍扩容后，数据会有迁移)。<br>我们创建个HashMap运行看看<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">HashMap&lt;String, Integer&gt; map = new HashMap();</span><br><span class="line">map.put(&quot;语文&quot;, 1);</span><br><span class="line">map.put(&quot;数学&quot;, 2);</span><br><span class="line">map.put(&quot;英语&quot;, 3);</span><br><span class="line">map.put(&quot;历史&quot;, 4);</span><br><span class="line">map.put(&quot;政治&quot;, 5);</span><br><span class="line">map.put(&quot;地理&quot;, 6);</span><br><span class="line">map.put(&quot;生物&quot;, 7);</span><br><span class="line">map.put(&quot;化学&quot;, 8);</span><br></pre></td></tr></table></figure></p>
 <p><img src="http://ws4.sinaimg.cn/large/e0e01e43ly1g0vezgvmdvj211l0jnq8d.jpg" alt="image"><br>通过图可以看到HashMap并不是按照插入顺序存储的(无序的)。<br>接下来我们看看HashMap的<strong>数据结构</strong><br><img src="http://ws2.sinaimg.cn/large/e0e01e43ly1g0vezylsa5j20he0dhwg2.jpg" alt="image"><br>HashMap有几个重要的成员变量，<code>table</code>，<code>size</code>，<code>threshold</code>，<code>loadFactor</code>，<code>modCount</code>。</p>
 <ul>

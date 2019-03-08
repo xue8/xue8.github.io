@@ -22,7 +22,7 @@
 <meta property="og:image" content="http://ws4.sinaimg.cn/large/e0e01e43ly1g0vf07q9plj20vt0ldacm.jpg">
 <meta property="og:image" content="http://wx4.sinaimg.cn/large/e0e01e43ly1g0vf0g8sq8j20q10netbf.jpg">
 <meta property="og:image" content="http://ws2.sinaimg.cn/large/e0e01e43ly1g0vf0lbaphj20fo0b0ab8.jpg">
-<meta property="og:updated_time" content="2019-03-08T08:40:41.797Z">
+<meta property="og:updated_time" content="2019-03-08T13:09:42.170Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HashMap从认识到源码分析">
 <meta name="twitter:image" content="http://wx3.sinaimg.cn/large/e0e01e43ly1g0vf2bq3xgj21g80ytkjm.jpg">
@@ -225,7 +225,7 @@
 <li>根据键(key)的<code>hashCode()</code>计算出当前键值对的<strong>哈希地址</strong>，用于定位键值对在HashMap数组中存储的下标</li>
 <li>判断<code>table</code>是否初始化，没有初始化则调用<code>resize()</code>为<code>table</code>初始化容量，以及threshold的值</li>
 <li>根据<strong>table数组长度和哈希地址做&amp;运算(i = (n - 1) &amp; hash)</strong>计算出该key对应的<code>table</code>数组索引，如果对应的数组索引位置没有值，则调用<code>newNode(hash, key, value, null)</code>方法，为该键值对创建节点。<blockquote>
-<p>这里思考个问题，当table数组长度变化后，是不是取到的值就不正确了？后面给出分析。这里简单分析下为什么不是直接按照哈希地址做数组下标，而是用<strong>table数组长度和哈希地址做&amp;运算(i = (n - 1) &amp; hash)</strong>(因为数组的大小是2的幂次方，所以这个运算等效于mod 数组大小的运算)计算数组下标，因为哈希地址可能超过数组大小，还有就是为了让键值对更均匀的分布的在各个桶(链表)中，也因为这个所以各个桶(链表)中的节点的哈希地址并不是相同的。</p>
+<p>这里思考个问题，当table数组长度变化后，是不是取到的值就不正确了？后面给出分析。这里简单分析下为什么不是直接按照哈希地址做数组下标，而是用<strong>table数组长度和哈希地址做&amp;运算(i = (n - 1) &amp; hash)</strong>(因为数组的大小是2的幂次方，所以这个运算等效于mod 数组大小的运算)计算数组下标，因为哈希地址可能超过数组大小，还有就是为了让键值对更均匀的分布的在各个桶(链表)中，也因为容量会变所以各个桶(链表)中的节点的哈希地址并不是相同的，相同的哈希地址也可能分到不同的下标。</p>
 </blockquote>
 </li>
 <li>如果根据哈希地址计算出该key对应的<code>table</code>数组索引有节点，且节点的键<code>key</code>和传入的键<code>key</code>相等，哈希地址和传入的哈希地址也相等，<strong>则将对应的节点引用赋值给e</strong>。</li>

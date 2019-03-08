@@ -6,20 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://ddnd.cn">
-  <title>jdk1.8-hashtable | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
+  <title>五分钟看懂Hashtable源码以及与HashMap的区别 | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
-<meta name="keywords" content="Java,xue8,薛8,DDND,程序员,">
+  <meta name="description" content="前言上一篇HashMap从认识到源码分析我们认识了什么是Map、Hash，了解了Hash处理哈希冲突的几种常用方法(拉链法、开放定址法)，以及分析了JDK1.8版本的HashMap源码，对Java集合框架有了初步的认识，我们本篇继续分析JDK1.8版本的Hashtable源码，最后比较HashMap和HashTable的区别。">
+<meta name="keywords" content="HashTable">
 <meta property="og:type" content="article">
-<meta property="og:title" content="jdk1.8-hashtable">
+<meta property="og:title" content="五分钟看懂Hashtable源码以及与HashMap的区别">
 <meta property="og:url" content="http://ddnd.cn/2019/03/08/jdk1-8-hashtable/index.html">
 <meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
-<meta property="og:description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
+<meta property="og:description" content="前言上一篇HashMap从认识到源码分析我们认识了什么是Map、Hash，了解了Hash处理哈希冲突的几种常用方法(拉链法、开放定址法)，以及分析了JDK1.8版本的HashMap源码，对Java集合框架有了初步的认识，我们本篇继续分析JDK1.8版本的Hashtable源码，最后比较HashMap和HashTable的区别。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-08T07:51:16.116Z">
+<meta property="og:image" content="http://ws3.sinaimg.cn/large/e0e01e43ly1g0vnl8sswvj21y013e7wl.jpg">
+<meta property="og:image" content="http://ws1.sinaimg.cn/large/e0e01e43ly1g0vnltvf4xj20ct07fwei.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/large/e0e01e43ly1g0vnm42jo8j20xd0nx76s.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/large/e0e01e43ly1g0vnmd81wyj20u40of0va.jpg">
+<meta property="og:updated_time" content="2019-03-08T12:32:14.690Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="jdk1.8-hashtable">
-<meta name="twitter:description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
+<meta name="twitter:title" content="五分钟看懂Hashtable源码以及与HashMap的区别">
+<meta name="twitter:description" content="前言上一篇HashMap从认识到源码分析我们认识了什么是Map、Hash，了解了Hash处理哈希冲突的几种常用方法(拉链法、开放定址法)，以及分析了JDK1.8版本的HashMap源码，对Java集合框架有了初步的认识，我们本篇继续分析JDK1.8版本的Hashtable源码，最后比较HashMap和HashTable的区别。">
+<meta name="twitter:image" content="http://ws3.sinaimg.cn/large/e0e01e43ly1g0vnl8sswvj21y013e7wl.jpg">
   
     <link rel="alternative" href="/atom.xml" title="薛8的个人网站 - xue8&#39;s Blog - DDND.CN" type="application/atom+xml">
   
@@ -164,7 +169,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      jdk1.8-hashtable
+      五分钟看懂Hashtable源码以及与HashMap的区别
     </h1>
   
 
@@ -177,7 +182,42 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p><img src="http://ws3.sinaimg.cn/large/e0e01e43ly1g0vnl8sswvj21y013e7wl.jpg" alt="image" width="100%" data-width="2520" data-height="1418"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>上一篇<a href="https://ddnd.cn/2019/03/07/jdk1.8-hashmap/">HashMap从认识到源码分析</a>我们认识了什么是<code>Map</code>、<code>Hash</code>，了解了<code>Hash</code>处理哈希冲突的几种常用方法(拉链法、开放定址法)，以及分析了JDK1.8版本的<code>HashMap</code>源码，对Java集合框架有了初步的认识，我们本篇继续分析JDK1.8版本的<code>Hashtable</code>源码，最后比较<code>HashMap</code>和<code>HashTable</code>的区别。 </p>
+<a id="more"></a>
+<h2 id="Hashtable"><a href="#Hashtable" class="headerlink" title="Hashtable"></a>Hashtable</h2><p>注意是Hashtable不是HashTable(t为小写)，这不是违背了驼峰定理了嘛？这还得从Hashtable的出生说起，Hashtable是在<code>Java1.0</code>的时候创建的，而集合的统一规范命名是在后来的<code>Java2</code>开始约定的，而当时又发布了新的集合代替它，所以这个命名也一直使用到现在，所以Hashtable是一个<strong>过时</strong>的集合了，不推崇大家使用这个类，虽说Hashtable是过时的了，我们还是有必要分析一下它，以便对Java集合框架有一个整体的认知。<br>首先<code>Hashtable</code>采用<strong>拉链法</strong>处理哈希冲突，是<strong>线程安全</strong>的，键值不允许为<code>null</code>，然后Hashtable继承自Dictionary，实现Map接口，Hashtable有几个重要的成员变量<code>table</code>、<code>count</code>、<code>threshold</code>、<code>loadFactor</code></p>
+<ul>
+<li>table：是一个<code>Entry[]</code>数据类型，而<code>Entry</code>实际是一个单链表</li>
+<li>count：Hashtable的大小，即Hashtable中保存的键值对数量</li>
+<li>threshold：Hashtable的阈值，用于判断是否需要调整Hashtable的容量，threshold = 容量<em>负载因子</em>，threshold=11*0.75 取整即8</li>
+<li>loadFactor：用来实现快速失败机制的<br><img src="http://ws1.sinaimg.cn/large/e0e01e43ly1g0vnltvf4xj20ct07fwei.jpg" alt="image"></li>
+</ul>
+<h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><p><code>Hashtable</code>有4个构造函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">//无参构造函数 默认Hashtable容量是11，默认负载因子是0.75</span><br><span class="line">public Hashtable() &#123;</span><br><span class="line">    this(11, 0.75f);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//指定Hashtable容量，默认负载因子是0.75</span><br><span class="line">public Hashtable(int initialCapacity) &#123;</span><br><span class="line">    this(initialCapacity, 0.75f);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//指定Hashtable的容量和负载因子</span><br><span class="line">public Hashtable(int initialCapacity, float loadFactor) &#123;</span><br><span class="line">    if (initialCapacity &lt; 0)</span><br><span class="line">        throw new IllegalArgumentException(&quot;Illegal Capacity: &quot;+</span><br><span class="line">                                           initialCapacity);</span><br><span class="line">    if (loadFactor &lt;= 0 || Float.isNaN(loadFactor))</span><br><span class="line">        throw new IllegalArgumentException(&quot;Illegal Load: &quot;+loadFactor);</span><br><span class="line"></span><br><span class="line">    if (initialCapacity==0)</span><br><span class="line">        initialCapacity = 1;</span><br><span class="line">    this.loadFactor = loadFactor;</span><br><span class="line">    //new一个指定容量的Hashtable</span><br><span class="line">    table = new Entry&lt;?,?&gt;[initialCapacity];</span><br><span class="line">    //阈值threshold=容量*负载因子</span><br><span class="line">    threshold = (int)Math.min(initialCapacity * loadFactor, MAX_ARRAY_SIZE + 1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//包含指定Map的构造函数</span><br><span class="line">public Hashtable(Map&lt;? extends K, ? extends V&gt; t) &#123;</span><br><span class="line">    this(Math.max(2*t.size(), 11), 0.75f);</span><br><span class="line">    putAll(t);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里的Hashtable容量和HashMap的容量就有区别，Hashtable并不要求容量是2的幂次方，而HashMap要求容量是2的幂次方。负载因子则默认都是0.75。</p>
+<h3 id="put方法"><a href="#put方法" class="headerlink" title="put方法"></a>put方法</h3><p><code>put</code>方法是<strong>同步</strong>的，即线程安全的，这点和<code>HashMap</code>不一样，还有具体的<code>put</code>操作和<code>HashMap</code>也存在很大的差别，Hashtable插入的时候是插入到<strong>链表头部</strong>，而HashMap是插入到<strong>链表尾部</strong>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">//synchronized同步锁，所以Hashtable是线程安全的</span><br><span class="line">public synchronized V put(K key, V value) &#123;</span><br><span class="line">    // Make sure the value is not null</span><br><span class="line">    //如果值value为空，则抛出异常 至于为什么官方不允许为空，下面给出分析</span><br><span class="line">    if (value == null) &#123;</span><br><span class="line">        throw new NullPointerException();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Makes sure the key is not already in the hashtable.</span><br><span class="line">    Entry&lt;?,?&gt; tab[] = table;</span><br><span class="line">    //直接取key的hashCode()作为哈希地址，这与HashMap的取hashCode()之后再进行hash()的结果作为哈希地址 不一样</span><br><span class="line">    int hash = key.hashCode();</span><br><span class="line">    //数组下标=(哈希地址 &amp; 0x7FFFFFFF) % Hashtable容量，这与HashMap的数组下标=哈希地址 &amp; (HashMap容量-1)计算数组下标方式不一样，前者是取模运算，后者是位于运算，这也就是为什么HashMap的容量要是2的幂次方的原因，效率上后者的效率更高。</span><br><span class="line">    int index = (hash &amp; 0x7FFFFFFF) % tab.length;</span><br><span class="line">    @SuppressWarnings(&quot;unchecked&quot;)</span><br><span class="line">    Entry&lt;K,V&gt; entry = (Entry&lt;K,V&gt;)tab[index];</span><br><span class="line">    //遍历Entry链表，如果链表中存在key、哈希地址相同的节点，则将值更新，返回旧值</span><br><span class="line">    for(; entry != null ; entry = entry.next) &#123;</span><br><span class="line">        if ((entry.hash == hash) &amp;&amp; entry.key.equals(key)) &#123;</span><br><span class="line">            V old = entry.value;</span><br><span class="line">            entry.value = value;</span><br><span class="line">            return old;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //如果为新的节点，则调用addEntry()方法添加新的节点</span><br><span class="line">    addEntry(hash, key, value, index);</span><br><span class="line">    //插入成功返回null</span><br><span class="line">    return null;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private void addEntry(int hash, K key, V value, int index) &#123;</span><br><span class="line">    modCount++;</span><br><span class="line"></span><br><span class="line">    Entry&lt;?,?&gt; tab[] = table;</span><br><span class="line">    //如果当前键值对数量&gt;=阈值，则执行rehash()方法扩容Hashtable的容量</span><br><span class="line">    if (count &gt;= threshold) &#123;</span><br><span class="line">        // Rehash the table if the threshold is exceeded</span><br><span class="line">        rehash();</span><br><span class="line"></span><br><span class="line">        tab = table;</span><br><span class="line">        //获取key的hashCode();</span><br><span class="line">        hash = key.hashCode();</span><br><span class="line">        //重新计算下标，因为Hashtable已经扩容了。</span><br><span class="line">        index = (hash &amp; 0x7FFFFFFF) % tab.length;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Creates the new entry.</span><br><span class="line">    @SuppressWarnings(&quot;unchecked&quot;)</span><br><span class="line">    //获取当前Entry链表的引用 复赋值给e</span><br><span class="line">    Entry&lt;K,V&gt; e = (Entry&lt;K,V&gt;) tab[index];</span><br><span class="line">    //创建新的Entry链表的 将新的节点插入到Entry链表的头部，再指向之前的Entry，即在链表头部插入节点，这个和HashMap在尾部插入不一样。</span><br><span class="line">    tab[index] = new Entry&lt;&gt;(hash, key, value, e);</span><br><span class="line">    count++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="get方法"><a href="#get方法" class="headerlink" title="get方法"></a>get方法</h3><p><code>get</code>方法也是同步的，和<code>HashMap</code>不一样,即线程安全，具体的<code>get</code>操作和<code>HashMap</code>也有区别。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//同步</span><br><span class="line">public synchronized V get(Object key) &#123;</span><br><span class="line">    Entry&lt;?,?&gt; tab[] = table;</span><br><span class="line">    //和put方法一样 都是直接获取key的hashCode()作为哈希地址</span><br><span class="line">    int hash = key.hashCode();</span><br><span class="line">    //和put方法一样 通过(哈希地址 &amp; 0x7FFFFFFF)与Hashtable容量做%运算 计算出下标</span><br><span class="line">    int index = (hash &amp; 0x7FFFFFFF) % tab.length;</span><br><span class="line">    //遍历Entry链表，如果链表中存在key、哈希地址一样的节点，则找到 返回该节点的值，否者返回null</span><br><span class="line">    for (Entry&lt;?,?&gt; e = tab[index] ; e != null ; e = e.next) &#123;</span><br><span class="line">        if ((e.hash == hash) &amp;&amp; e.key.equals(key)) &#123;</span><br><span class="line">            return (V)e.value;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="remove方法"><a href="#remove方法" class="headerlink" title="remove方法"></a>remove方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">//同步</span><br><span class="line">public synchronized V remove(Object key) &#123;</span><br><span class="line">    Entry&lt;?,?&gt; tab[] = table;</span><br><span class="line">    int hash = key.hashCode();</span><br><span class="line">    int index = (hash &amp; 0x7FFFFFFF) % tab.length;</span><br><span class="line">    @SuppressWarnings(&quot;unchecked&quot;)</span><br><span class="line">    Entry&lt;K,V&gt; e = (Entry&lt;K,V&gt;)tab[index];</span><br><span class="line">    //遍历Entry链表，e为当前节点，prev为上一个节点</span><br><span class="line">    for(Entry&lt;K,V&gt; prev = null ; e != null ; prev = e, e = e.next) &#123;</span><br><span class="line">        //找到key、哈希地址一样的节点</span><br><span class="line">        if ((e.hash == hash) &amp;&amp; e.key.equals(key)) &#123;</span><br><span class="line">            modCount++;</span><br><span class="line">            //如果上一个节点不为空(即不是当前节点头结点)，将上一个节点的next指向当前节点的next，即将当前节点移除链表</span><br><span class="line">            if (prev != null) &#123;</span><br><span class="line">                prev.next = e.next;</span><br><span class="line">            &#125; else &#123; //如果上一个节点为空，即当前节点为头结点，将table数组保存的链表头结点地址改成当前节点的下一个节点</span><br><span class="line">                tab[index] = e.next;</span><br><span class="line">            &#125;</span><br><span class="line">            //Hashtable的键值对数量-1</span><br><span class="line">            count--;</span><br><span class="line">            //获取被删除节点的值 并且返回</span><br><span class="line">            V oldValue = e.value;</span><br><span class="line">            e.value = null;</span><br><span class="line">            return oldValue;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="rehash方法"><a href="#rehash方法" class="headerlink" title="rehash方法"></a>rehash方法</h3><p>Hashtable的<code>rehash</code>方法和HashMap的<code>resize</code>方法一样，是用来扩容哈希表的，但是扩容的实现又有区别。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">protected void rehash() &#123;</span><br><span class="line">    //获取旧的Hashtable的容量</span><br><span class="line">    int oldCapacity = table.length;</span><br><span class="line">    //获取旧的Hashtable引用，为旧哈希表</span><br><span class="line">    Entry&lt;?,?&gt;[] oldMap = table;</span><br><span class="line"></span><br><span class="line">    // overflow-conscious code</span><br><span class="line">    //新的Hashtable容量=旧的Hashtable容量 * 2 + 1，这里和HashMap的扩容不一样，HashMap是新的Hashtable容量=旧的Hashtable容量 * 2。</span><br><span class="line">    int newCapacity = (oldCapacity &lt;&lt; 1) + 1;</span><br><span class="line">    //如果新的Hashtable容量大于允许的最大容量值(Integer的最大值 - 8)</span><br><span class="line">    if (newCapacity - MAX_ARRAY_SIZE &gt; 0) &#123;</span><br><span class="line">        //如果旧的容量等于允许的最大容量值则返回</span><br><span class="line">        if (oldCapacity == MAX_ARRAY_SIZE)</span><br><span class="line">            // Keep running with MAX_ARRAY_SIZE buckets</span><br><span class="line">            return;</span><br><span class="line">        //新的容量等于允许的最大容量值</span><br><span class="line">        newCapacity = MAX_ARRAY_SIZE;</span><br><span class="line">    &#125;</span><br><span class="line">    //new一个新的Hashtable 容量为新的容量</span><br><span class="line">    Entry&lt;?,?&gt;[] newMap = new Entry&lt;?,?&gt;[newCapacity];</span><br><span class="line"></span><br><span class="line">    modCount++;</span><br><span class="line">    //计算新的阈值</span><br><span class="line">    threshold = (int)Math.min(newCapacity * loadFactor, MAX_ARRAY_SIZE + 1);</span><br><span class="line">    table = newMap;</span><br><span class="line">    //扩容后迁移Hashtable的Entry链表到正确的下标上</span><br><span class="line">    for (int i = oldCapacity ; i-- &gt; 0 ;) &#123;</span><br><span class="line">        for (Entry&lt;K,V&gt; old = (Entry&lt;K,V&gt;)oldMap[i] ; old != null ; ) &#123;</span><br><span class="line">            Entry&lt;K,V&gt; e = old;</span><br><span class="line">            old = old.next;</span><br><span class="line"></span><br><span class="line">            int index = (e.hash &amp; 0x7FFFFFFF) % newCapacity;</span><br><span class="line">            e.next = (Entry&lt;K,V&gt;)newMap[index];</span><br><span class="line">            newMap[index] = e;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>接下来我们执行以下代码，验证以下数据迁移过程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Hashtable hashtable = new Hashtable();</span><br><span class="line">for (int i = 1; i &lt;= 24; i ++) &#123;</span><br><span class="line">    hashtable.put(String.valueOf(i), i);</span><br><span class="line">&#125;</span><br><span class="line">for (int i = 25; i &lt;= 80; i ++) &#123;</span><br><span class="line">    hashtable.put(String.valueOf(i), i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>new</code>一个Hashtable，默认容量是<code>11</code>，负载因子是<code>0.75</code><br>执行第一个<code>for</code>循环后，<code>20</code>保存在下标为<code>0</code>的<code>Entry</code>中，即<code>(hash &amp;0x7FFFFFFF) % 容量 -&gt; (1598 &amp;0x7FFFFFFF) % 11 = 0</code><br><img src="http://wx1.sinaimg.cn/large/e0e01e43ly1g0vnm42jo8j20xd0nx76s.jpg" alt="image"></p>
+<p>执行第二个<code>for</code>循环后，变成了<code>20</code>保存在下标为<code>70</code>的<code>Entry</code>中，因为Hashtable扩容了4次，分别是从容量为默认的11-&gt;23-&gt;47-&gt;95-&gt;191，然后此时容量是191，所以<code>(hash &amp;0x7FFFFFFF) % 容量 -&gt; (1598 &amp;0x7FFFFFFF) % 191 = 70</code><br><img src="http://wx1.sinaimg.cn/large/e0e01e43ly1g0vnmd81wyj20u40of0va.jpg" alt="image"></p>
+<h2 id="HashMap和Hashtable区别"><a href="#HashMap和Hashtable区别" class="headerlink" title="HashMap和Hashtable区别"></a>HashMap和Hashtable区别</h2><p>到这里我们分析了HashMap和Hashtable的原理，现在比较以下他们的区别。  </p>
+<h3 id="不同点"><a href="#不同点" class="headerlink" title="不同点"></a>不同点</h3><ul>
+<li><strong>继承的类不一样</strong>：HashMap继承的<code>AbstractMap</code>抽象类，Hashtable继承的<code>Dictionay</code>抽象类</li>
+<li><strong>应对多线程处理方式不一样</strong>：HashMap是非线程安全的，Hashtable是线程安全的，所以Hashtable效率比较低</li>
+<li><strong>定位算法不一样</strong>：HashMap通过<code>key</code>的hashCode()进行hash()得到哈希地址，数组下标=哈希地址 &amp; (容量 - 1)，采用的是与运算，所以<strong>容量需要是2的幂次方结果才和取模运算结果一样</strong>。而Hashtable则是：数组下标=(key的hashCode() &amp; 0x7FFFFFFF ) % 容量，采用的取模运算，所以容量没要求</li>
+<li><strong>键值对规则不一样</strong>：HashMap允许键值为<code>null</code>，而Hashtable不允许键值为<code>null</code></li>
+<li><strong>哈希表扩容算法不一样</strong>：HashMap的容量扩容按照原来的容量*2，而Hashtable的容量扩容按照原来的容量*2+1</li>
+<li><strong>容量(capacity)默认值不一样</strong>：HashMap的容量默认值为16，而Hashtable的默认值是11</li>
+<li><strong>put方法实现不一样</strong>：HashMap是将节点插入到链表的尾部，而Hashtable是将节点插入到链表的头部</li>
+</ul>
+<h3 id="相同点"><a href="#相同点" class="headerlink" title="相同点"></a>相同点</h3><ul>
+<li><strong>实现相同的接口</strong>：HashMap和Hashtable均实现了<code>Map</code>接口</li>
+<li><strong>负载因子(loadFactor)默认值一样</strong>：HashMap和Hashtable的负载因子默认都是0.75</li>
+<li><strong>采用相同的方法处理哈希冲突</strong>：都是采用链地址法即拉链法处理哈希冲突</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://www.yuanrengu.com/index.php/2017-01-17.html" target="_blank" rel="noopener">HashMap、HashTable、ConcurrentHashMap的原理与区别</a><br><a href="https://juejin.im/post/5a03b258518825188e515d89" target="_blank" rel="noopener">Java集合之Hashtable源码解析</a></p>
+
       
 
       
@@ -206,7 +246,29 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">HashTable</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Java-Programming//" class="article-tag-list-link color4">Java编程基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
 
@@ -270,7 +332,7 @@
             -->       
       <div class="article-tag tagcloud">
         <div class="category-list-link" style="font-weight: 200">
-					0字
+					2.4k字
       	</div>
       </div>
       <div class="clearfix"></div>
@@ -442,6 +504,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Spring-MVC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">HashTable</a>
               </li>
              
               <li class="article-tag-list-item">

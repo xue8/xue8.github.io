@@ -22,7 +22,7 @@
 <meta property="og:image" content="http://ws4.sinaimg.cn/large/e0e01e43ly1g0vf07q9plj20vt0ldacm.jpg">
 <meta property="og:image" content="http://wx4.sinaimg.cn/large/e0e01e43ly1g0vf0g8sq8j20q10netbf.jpg">
 <meta property="og:image" content="http://ws2.sinaimg.cn/large/e0e01e43ly1g0vf0lbaphj20fo0b0ab8.jpg">
-<meta property="og:updated_time" content="2019-03-08T07:48:14.306Z">
+<meta property="og:updated_time" content="2019-03-08T08:40:41.797Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HashMap从认识到源码分析">
 <meta name="twitter:image" content="http://wx3.sinaimg.cn/large/e0e01e43ly1g0vf2bq3xgj21g80ytkjm.jpg">
@@ -193,11 +193,11 @@
 <ol>
 <li><strong>链地址法(拉链法)</strong><br>采用数组和链表结合的方法，对哈希表中每个哈希地址建立一个线性表，将哈希地址相同的数据储存在线性表中，并将<strong>链表的头指针保存在数组中</strong>，哈希地址、键、值等信息一般保存在链表节点中。一般通过哈希地址计算出数组的下标，将哈希值相同的保存在下标相同的数组中的。拉链法适合经常进行插入、删除操作的情况。<br><img src="https://user-gold-cdn.xitu.io/2019/3/7/16957dc37460bcb7?w=541&amp;h=336&amp;f=png&amp;s=15864" alt=""></li>
 <li><strong>开放定址法</strong><br>开放定址法也称线性探测法，基本思想是：将哈希表T[0…m-1]看成是个循环向量，若初始探测地址为d，则最长的探测路径为：d，d+i，d+2i，…，m-1。即探测时候从地址d开始，首先探测T[d]，如果T[d]发生哈希冲突则继续探测下一个T[d+1]…直到探测到T[m-1]为止，i为自定义的常数。开放定址法很容易产生<strong>堆聚现象</strong>，所谓堆聚现象就是哈希表中的数据连成一片，在加入新元素的时候就容易产生哈希冲突。</li>
-<li><strong>拉链法和开放定址比较</strong><br>拉链法：处理冲突简单，无堆聚现象，同时链表插入、删除操作简单，所以拉链法适合经常进行插入、删除操作的情况。<br>开放定址法：为了减少冲突，要求<strong>负载因子(装填因子)</strong>较小，当节点规模较大时候会浪费很多空间。且开放定址法在删除节点的时候，不能简单的将节点所在的空间置为空，否则将截断在它之后的节点的查找路径，这是因为各种开放定址法中，<strong>空地址单元都是查找失败的条件</strong>。因此在进行删除节点操作的时候，需要使用逻辑删除，即在被删除的节点上做删除标记。   <blockquote>
-<p>负载因子 = 填入哈希表中的元素个数 / 哈希表的数组长度</p>
-</blockquote>
-</li>
+<li><strong>拉链法和开放定址比较</strong><br>拉链法：处理冲突简单，无堆聚现象，同时链表插入、删除操作简单，所以拉链法适合经常进行插入、删除操作的情况。<br>开放定址法：为了减少冲突，要求<strong>负载因子(装填因子)</strong>较小，当节点规模较大时候会浪费很多空间。且开放定址法在删除节点的时候，不能简单的将节点所在的空间置为空，否则将截断在它之后的节点的查找路径，这是因为各种开放定址法中，<strong>空地址单元都是查找失败的条件</strong>。因此在进行删除节点操作的时候，需要使用逻辑删除，即在被删除的节点上做删除标记。                   </li>
 </ol>
+<blockquote>
+<p>负载因子 = 填入哈希表中的元素个数 / 哈希表的数组长度   </p>
+</blockquote>
 <h2 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h2><h3 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h3><p><code>HashMap</code>采用上述的<strong>拉链法</strong>解决哈希冲突.HashMap是非线程安全的，允许键、值为<code>null</code>，不保证有序(比如插入的顺序)，也不保证顺序不随时间变化(哈希表加倍扩容后，数据会有迁移)。<br>我们创建个HashMap运行看看<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">HashMap&lt;String, Integer&gt; map = new HashMap();</span><br><span class="line">map.put(&quot;语文&quot;, 1);</span><br><span class="line">map.put(&quot;数学&quot;, 2);</span><br><span class="line">map.put(&quot;英语&quot;, 3);</span><br><span class="line">map.put(&quot;历史&quot;, 4);</span><br><span class="line">map.put(&quot;政治&quot;, 5);</span><br><span class="line">map.put(&quot;地理&quot;, 6);</span><br><span class="line">map.put(&quot;生物&quot;, 7);</span><br><span class="line">map.put(&quot;化学&quot;, 8);</span><br></pre></td></tr></table></figure></p>
 <p><img src="http://ws4.sinaimg.cn/large/e0e01e43ly1g0vezgvmdvj211l0jnq8d.jpg" alt="image"><br>通过图可以看到HashMap并不是按照插入顺序存储的(无序的)。<br>接下来我们看看HashMap的<strong>数据结构</strong><br><img src="http://ws2.sinaimg.cn/large/e0e01e43ly1g0vezylsa5j20he0dhwg2.jpg" alt="image"><br>HashMap有几个重要的成员变量，<code>table</code>，<code>size</code>，<code>threshold</code>，<code>loadFactor</code>，<code>modCount</code>。</p>
 <ul>
@@ -205,7 +205,7 @@
 <li>size：是HashMap的大小，为保存的键值对的数量</li>
 <li>DEFAULT_INITIAL_CAPACITY：HashMap默认容量(数组的大小) 默认为16</li>
 <li>MAXIMUM_CAPACITY：HashMap的最大容量(2的30)，如果传入的容量大于这个值，则被最大容量替换</li>
-<li>threshold：是HashMap的阈值，用于判断是否需要调整HashMap的容量。threshol=容量*负载因子，当HashMap中储存的键值对数量到达threshold时，HashMap就会将容量<strong>加倍</strong>的扩容</li>
+<li>threshold：是HashMap的阈值，用于判断是否需要调整HashMap的容量。threshold=容量*负载因子，当HashMap中储存的键值对数量到达threshold时，HashMap就会将容量<strong>加倍</strong>的扩容</li>
 <li>loadFactor：即负载因子</li>
 <li>modCount：用来实现<strong>快速失败(fail-fast)机制</strong>的<blockquote>
 <p>快速失败机制：对于<strong>线程不安全</strong>(注意是线程不安全的集合才有这个机制)的集合对象的迭代器，如果在使用迭代器的过程中有其他的线程修改了集合对象的结构或者元素数量，那么迭代立刻结束，迭代器将抛出<code>ConcurrentModificationException</code>。</p>
@@ -382,6 +382,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2019/03/08/jdk1-8-hashtable/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          jdk1.8-hashtable
+        
+      </div>
+    </a>
   
   
     <a href="/2019/02/16/byte-hex-ascii/" id="article-nav-older" class="article-nav-link-wrap">

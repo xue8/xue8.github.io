@@ -158,6 +158,113 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-jdk1-8-concurrenthashmap" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/10/jdk1-8-concurrenthashmap/">10分钟掌握ConcurrentHashMap 3分钟清楚HashMap、Hashtable、ConcurrentHashMap的区别</a>
+    </h1>
+  
+
+        
+        <a href="/2019/03/10/jdk1-8-concurrenthashmap/" class="archive-article-date">
+  	<time datetime="2019-03-10T14:02:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://wx3.sinaimg.cn/large/e0e01e43ly1g0y4kkt2k3j21y013bb2b.jpg" alt="image" width="100%"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><code>ConcurrentHashMap</code>顾名思义就是同步的HashMap，也就是线程安全的HashMap，所以本篇介绍的ConcurrentHashMap和HashMap有着很重要的关系，所以建议之前没有了解过HashMap的可以先看看这篇关于HashMap的原理分析<a href="https://ddnd.cn/2019/03/07/jdk1.8-hashmap/">《HashMap从认识到源码分析》</a>，本篇继续以<code>JDK1.8</code>版本的源码进行分析，最后在介绍完ConcurrentHashMap之后会对ConcurrentHashMap、Hashtable和HashMap做一个比较和总结。</p>
+        
+          <a class="article-more-a" href="/2019/03/10/jdk1-8-concurrenthashmap/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Hashtable</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">HashMap</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ConcurrentHashMap</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Java-Programming//" class="article-tag-list-link color4">Java编程基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/03/10/jdk1-8-concurrenthashmap/">展开全文 >></a>
+        </p>
+      
+
+      
+      
+			<!--
+            	作者：3788837@qq.com
+            	时间：2018-11-30
+            	描述：添加字数统计
+            -->       
+      <div class="article-tag tagcloud">
+        <div class="category-list-link" style="font-weight: 200">
+					8k字
+      	</div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-jdk1-8-hashtable" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -229,7 +336,7 @@
             -->       
       <div class="article-tag tagcloud">
         <div class="category-list-link" style="font-weight: 200">
-					2.6k字
+					2.8k字
       	</div>
       </div>
       <div class="clearfix"></div>
@@ -327,7 +434,7 @@
             -->       
       <div class="article-tag tagcloud">
         <div class="category-list-link" style="font-weight: 200">
-					5.7k字
+					5.9k字
       	</div>
       </div>
       <div class="clearfix"></div>
@@ -1009,102 +1116,6 @@
 
 
   
-    <article id="post-shiro-unavailablesecuritymanagerexception" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/01/shiro-unavailablesecuritymanagerexception/">Shiro抛出异常UnavailableSecurityManagerException</a>
-    </h1>
-  
-
-        
-        <a href="/2019/02/01/shiro-unavailablesecuritymanagerexception/" class="archive-article-date">
-  	<time datetime="2019-02-01T11:20:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Shiro报错<code>org.apache.shiro.UnavailableSecurityManagerException: No SecurityManager accessible to the calling code, either bound to the org.apache.shiro.util.ThreadContext or as a vm static singleton.  This is an invalid application configuration.</code>。<br>解决方法，修改<code>web.xml</code>的filter，将<code>&lt;url-pattern&gt;/&lt;/url-pattern&gt;</code>改成<code>&lt;url-pattern&gt;/*&lt;/url-pattern&gt;</code>，即：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;filter&gt;</span><br><span class="line">&lt;filter-name&gt;shiroFilter&lt;/filter-name&gt;</span><br><span class="line">&lt;filter-class&gt;org.springframework.web.filter.DelegatingFilterProxy&lt;/filter-class&gt;</span><br><span class="line">&lt;/filter&gt;</span><br><span class="line"></span><br><span class="line">&lt;filter-mapping&gt;</span><br><span class="line">&lt;filter-name&gt;shiroFilter&lt;/filter-name&gt;</span><br><span class="line">&lt;url-pattern&gt;/&lt;/url-pattern&gt;</span><br><span class="line">&lt;/filter-mapping&gt;</span><br></pre></td></tr></table></figure></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Shiro</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Shiro//" class="article-tag-list-link color1">Shiro</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/02/01/shiro-unavailablesecuritymanagerexception/">展开全文 >></a>
-        </p>
-      
-
-      
-      
-			<!--
-            	作者：3788837@qq.com
-            	时间：2018-11-30
-            	描述：添加字数统计
-            -->       
-      <div class="article-tag tagcloud">
-        <div class="category-list-link" style="font-weight: 200">
-					117字
-      	</div>
-      </div>
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1229,6 +1240,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RPC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">RESTful</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">TomcatDBCP</a>
               </li>
              
@@ -1238,14 +1257,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hashtable</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RPC</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">RESTful</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1261,15 +1272,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">TEA算法</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">HashMap</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">ConcurrentHashMap</a>
               </li>
             
             <div class="clearfix"></div>

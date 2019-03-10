@@ -20,7 +20,7 @@
 <meta property="og:image" content="http://ws1.sinaimg.cn/large/e0e01e43ly1g0vnltvf4xj20ct07fwei.jpg">
 <meta property="og:image" content="http://wx1.sinaimg.cn/large/e0e01e43ly1g0vnm42jo8j20xd0nx76s.jpg">
 <meta property="og:image" content="http://wx1.sinaimg.cn/large/e0e01e43ly1g0vnmd81wyj20u40of0va.jpg">
-<meta property="og:updated_time" content="2019-03-08T13:52:59.115Z">
+<meta property="og:updated_time" content="2019-03-10T07:48:09.406Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="五分钟看懂Hashtable源码以及与HashMap的区别">
 <meta name="twitter:description" content="前言上一篇HashMap从认识到源码分析我们认识了什么是Map、Hash，了解了Hash处理哈希冲突的几种常用方法(拉链法、开放定址法)，以及分析了JDK1.8版本的HashMap源码，对Java集合框架有了初步的认识，我们本篇继续分析JDK1.8版本的Hashtable源码，最后比较HashMap和Hashtable的区别。">
@@ -185,7 +185,7 @@
         <p><img src="http://ws3.sinaimg.cn/large/e0e01e43ly1g0vnl8sswvj21y013e7wl.jpg" alt="image" width="100%" data-width="2520" data-height="1418"></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>上一篇<a href="https://ddnd.cn/2019/03/07/jdk1.8-hashmap/">HashMap从认识到源码分析</a>我们认识了什么是<code>Map</code>、<code>Hash</code>，了解了<code>Hash</code>处理哈希冲突的几种常用方法(拉链法、开放定址法)，以及分析了JDK1.8版本的<code>HashMap</code>源码，对Java集合框架有了初步的认识，我们本篇继续分析JDK1.8版本的<code>Hashtable</code>源码，最后比较<code>HashMap</code>和<code>Hashtable</code>的区别。 </p>
 <a id="more"></a>
-<h2 id="Hashtable"><a href="#Hashtable" class="headerlink" title="Hashtable"></a>Hashtable</h2><p>注意是Hashtable不是HashTable(t为小写)，这不是违背了驼峰定理了嘛？这还得从Hashtable的出生说起，Hashtable是在<code>Java1.0</code>的时候创建的，而集合的统一规范命名是在后来的<code>Java2</code>开始约定的，而当时又发布了新的集合代替它，所以这个命名也一直使用到现在，所以Hashtable是一个<strong>过时</strong>的集合了，不推崇大家使用这个类，虽说Hashtable是过时的了，我们还是有必要分析一下它，以便对Java集合框架有一个整体的认知。<br>首先<code>Hashtable</code>采用<strong>拉链法</strong>处理哈希冲突，是<strong>线程安全</strong>的，键值不允许为<code>null</code>，然后Hashtable继承自Dictionary，实现Map接口，Hashtable有几个重要的成员变量<code>table</code>、<code>count</code>、<code>threshold</code>、<code>loadFactor</code></p>
+<h2 id="Hashtable"><a href="#Hashtable" class="headerlink" title="Hashtable"></a>Hashtable</h2><p>注意是Hashtable不是HashTable(t为小写)，这不是违背了驼峰定理了嘛？这还得从Hashtable的出生说起，Hashtable是在<code>Java1.0</code>的时候创建的，而集合的统一规范命名是在后来的<code>Java2</code>开始约定的，而当时又发布了新的集合代替它，所以这个命名也一直使用到现在，所以Hashtable是一个<strong>过时</strong>的集合了，不推崇大家使用这个类，虽说Hashtable是过时的了，我们还是有必要分析一下它，以便对Java集合框架有一个整体的认知。<br>首先<code>Hashtable</code>采用<strong>拉链法</strong>处理哈希冲突，是<strong>线程安全</strong>的，键值不允许为<code>null</code>，不保证顺序，然后Hashtable继承自Dictionary，实现Map接口，Hashtable有几个重要的成员变量<code>table</code>、<code>count</code>、<code>threshold</code>、<code>loadFactor</code></p>
 <ul>
 <li>table：是一个<code>Entry[]</code>数据类型，而<code>Entry</code>实际是一个单链表</li>
 <li>count：Hashtable的大小，即Hashtable中保存的键值对数量</li>
@@ -213,7 +213,11 @@
 <li><strong>哈希表扩容算法不一样</strong>：HashMap的容量扩容按照原来的容量*2，而Hashtable的容量扩容按照原来的容量*2+1</li>
 <li><strong>容量(capacity)默认值不一样</strong>：HashMap的容量默认值为16，而Hashtable的默认值是11</li>
 <li><strong>put方法实现不一样</strong>：HashMap是将节点插入到链表的尾部，而Hashtable是将节点插入到链表的头部</li>
+<li><strong>底层结构不一样</strong>：HashMap采用了<strong>数组+链表+红黑树</strong>，而Hashtable采用<strong>数组+链表</strong></li>
 </ul>
+<blockquote>
+<p>为什么HashMap允许<code>null</code>键值呢，而Hashtable不允许<code>null</code>键值呢？这里还得先介绍一下什么是<code>null</code>，我们知道Java语言中有两种类型，一种是<strong>基本类型</strong>还有一种是<strong>引用类型</strong>，其实还有一种特殊的类型就是<code>null</code>类型，它不代表一个对象(Object)也不是一个对象(Object)，然后在HashMap和Hashtable对键的操作中使用到了<strong>Object</strong>类中的<code>equals</code>方法，所以如果在Hashtable中置键值为<code>null</code>的话就可想而知会报错了，但是为什么HashMap可以呢？因为HashMap采用了特殊的方式，将<code>null</code>转为了对象(Object)，具体怎么转的，这里就不深究了。</p>
+</blockquote>
 <h3 id="相同点"><a href="#相同点" class="headerlink" title="相同点"></a>相同点</h3><ul>
 <li><strong>实现相同的接口</strong>：HashMap和Hashtable均实现了<code>Map</code>接口</li>
 <li><strong>负载因子(loadFactor)默认值一样</strong>：HashMap和Hashtable的负载因子默认都是0.75</li>
@@ -336,7 +340,7 @@
             -->       
       <div class="article-tag tagcloud">
         <div class="category-list-link" style="font-weight: 200">
-					2.6k字
+					2.8k字
       	</div>
       </div>
       <div class="clearfix"></div>
@@ -346,6 +350,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2019/03/10/jdk1-8-concurrenthashmap/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          10分钟掌握ConcurrentHashMap 3分钟清楚HashMap、Hashtable、ConcurrentHashMap的区别
+        
+      </div>
+    </a>
   
   
     <a href="/2019/03/07/jdk1.8-hashmap/" id="article-nav-older" class="article-nav-link-wrap">
@@ -511,6 +524,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RPC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">RESTful</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">TomcatDBCP</a>
               </li>
              
@@ -520,14 +541,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hashtable</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RPC</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">RESTful</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -543,15 +556,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">TEA算法</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">HashMap</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">ConcurrentHashMap</a>
               </li>
             
             <div class="clearfix"></div>

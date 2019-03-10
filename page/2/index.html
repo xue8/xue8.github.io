@@ -158,6 +158,102 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-shiro-unavailablesecuritymanagerexception" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/01/shiro-unavailablesecuritymanagerexception/">Shiro抛出异常UnavailableSecurityManagerException</a>
+    </h1>
+  
+
+        
+        <a href="/2019/02/01/shiro-unavailablesecuritymanagerexception/" class="archive-article-date">
+  	<time datetime="2019-02-01T11:20:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Shiro报错<code>org.apache.shiro.UnavailableSecurityManagerException: No SecurityManager accessible to the calling code, either bound to the org.apache.shiro.util.ThreadContext or as a vm static singleton.  This is an invalid application configuration.</code>。<br>解决方法，修改<code>web.xml</code>的filter，将<code>&lt;url-pattern&gt;/&lt;/url-pattern&gt;</code>改成<code>&lt;url-pattern&gt;/*&lt;/url-pattern&gt;</code>，即：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;filter&gt;</span><br><span class="line">&lt;filter-name&gt;shiroFilter&lt;/filter-name&gt;</span><br><span class="line">&lt;filter-class&gt;org.springframework.web.filter.DelegatingFilterProxy&lt;/filter-class&gt;</span><br><span class="line">&lt;/filter&gt;</span><br><span class="line"></span><br><span class="line">&lt;filter-mapping&gt;</span><br><span class="line">&lt;filter-name&gt;shiroFilter&lt;/filter-name&gt;</span><br><span class="line">&lt;url-pattern&gt;/&lt;/url-pattern&gt;</span><br><span class="line">&lt;/filter-mapping&gt;</span><br></pre></td></tr></table></figure></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Shiro</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Shiro//" class="article-tag-list-link color1">Shiro</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/02/01/shiro-unavailablesecuritymanagerexception/">展开全文 >></a>
+        </p>
+      
+
+      
+      
+			<!--
+            	作者：3788837@qq.com
+            	时间：2018-11-30
+            	描述：添加字数统计
+            -->       
+      <div class="article-tag tagcloud">
+        <div class="category-list-link" style="font-weight: 200">
+					117字
+      	</div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-spring-websocket" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -1083,114 +1179,6 @@
 
 
   
-    <article id="post-Spring-Jdbc-JdbcTemplate" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/19/Spring-Jdbc-JdbcTemplate/">Spring和JdbcTemplate实现数据库操作</a>
-    </h1>
-  
-
-        
-        <a href="/2018/11/19/Spring-Jdbc-JdbcTemplate/" class="archive-article-date">
-  	<time datetime="2018-11-19T09:49:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>看完<a href="http://ddnd.cn/2018/11/19/Spring-Jdbc-CRUD/">Srping和传统JDBC实现数据库操作</a>之后，是否觉得传统的JDBC太繁琐了，就算是只写一个简单的数据库插入功能都要写好多与业务无关的代码，那么使用spring封装的<code>JdbcTemplate</code>就很有必要了，当然JdbcTemplate也是<strong>直连的数据源</strong>。<a href="http://ddnd.cn/2018/11/18/Spring-Jdbc-Support/">传统JDBC和JdbcTemplate区别</a></p>
-<h1 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h1><p>首先创建我们的数据库（这里我使用的是Mysql），为了演示方便，我这里简单的创建一个spring数据库，然后数据库有一个user用户表：</p>
-<ol>
-<li>创建一个名为<code>spring</code>的数据库。</li>
-<li>创建一个名为user的数据表，表包括id、email、name、password四个字段。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `user` (</span><br><span class="line">  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,</span><br><span class="line">  `email` varchar(255) DEFAULT NULL,</span><br><span class="line">  `name` varchar(255) DEFAULT NULL,</span><br><span class="line">  `password` varchar(255) DEFAULT NULL,</span><br><span class="line">  PRIMARY KEY (`id`)</span><br><span class="line">) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-        
-          <a class="article-more-a" href="/2018/11/19/Spring-Jdbc-JdbcTemplate/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Jdbc</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Spring-Programming//" class="article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/19/Spring-Jdbc-JdbcTemplate/">展开全文 >></a>
-        </p>
-      
-
-      
-      
-			<!--
-            	作者：3788837@qq.com
-            	时间：2018-11-30
-            	描述：添加字数统计
-            -->       
-      <div class="article-tag tagcloud">
-        <div class="category-list-link" style="font-weight: 200">
-					1.1k字
-      	</div>
-      </div>
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1315,6 +1303,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RPC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">RESTful</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">TomcatDBCP</a>
               </li>
              
@@ -1324,14 +1320,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hashtable</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RPC</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">RESTful</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1347,15 +1335,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">TEA算法</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">HashMap</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">ConcurrentHashMap</a>
               </li>
             
             <div class="clearfix"></div>

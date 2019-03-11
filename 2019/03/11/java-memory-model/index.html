@@ -6,19 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://ddnd.cn">
-  <title>Category: Spring MVC | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
+  <title>什么是Java内存模型？ | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
-<meta name="keywords" content="Java,xue8,薛8,DDND,程序员,">
-<meta property="og:type" content="website">
-<meta property="og:title" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
-<meta property="og:url" content="http://ddnd.cn/categories/Spring-MVC/index.html">
+  <meta name="description" content="前言要想深入了解Java并发编程，就要先理解好Java内存模型，而要理解Java内存模型又不得不从硬件、计算机内存模型说起，本文从计算机内存模型产生的原因、解决的问题谈起，然后再对Java模型进行介绍，最后对计算机内存模型和Java内存模型进行总结，希望大家看完本文之后有所收获！">
+<meta name="keywords" content="Java内存模型,计算机内存模型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="什么是Java内存模型？">
+<meta property="og:url" content="http://ddnd.cn/2019/03/11/java-memory-model/index.html">
 <meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
-<meta property="og:description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
+<meta property="og:description" content="前言要想深入了解Java并发编程，就要先理解好Java内存模型，而要理解Java内存模型又不得不从硬件、计算机内存模型说起，本文从计算机内存模型产生的原因、解决的问题谈起，然后再对Java模型进行介绍，最后对计算机内存模型和Java内存模型进行总结，希望大家看完本文之后有所收获！">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://ws3.sinaimg.cn/large/e0e01e43ly1g0z8ongt9yj21qi15okjn.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/large/e0e01e43ly1g0z8qqzxgmj20p70kjwgk.jpg">
+<meta property="og:image" content="http://ws3.sinaimg.cn/large/e0e01e43ly1g0z8qyxhv7j20qc092757.jpg">
+<meta property="og:image" content="http://ws1.sinaimg.cn/large/e0e01e43ly1g0z8r8km5kj20q20bs40h.jpg">
+<meta property="og:image" content="http://ws2.sinaimg.cn/large/e0e01e43ly1g0z8rfihfkj20qk09ft9l.jpg">
+<meta property="og:image" content="http://ws1.sinaimg.cn/large/e0e01e43ly1g0z8rlifrqj20zb0cbjsz.jpg">
+<meta property="og:updated_time" content="2019-03-11T14:52:07.529Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
-<meta name="twitter:description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
+<meta name="twitter:title" content="什么是Java内存模型？">
+<meta name="twitter:description" content="前言要想深入了解Java并发编程，就要先理解好Java内存模型，而要理解Java内存模型又不得不从硬件、计算机内存模型说起，本文从计算机内存模型产生的原因、解决的问题谈起，然后再对Java模型进行介绍，最后对计算机内存模型和Java内存模型进行总结，希望大家看完本文之后有所收获！">
+<meta name="twitter:image" content="http://ws3.sinaimg.cn/large/e0e01e43ly1g0z8ongt9yj21qi15okjn.jpg">
   
     <link rel="alternative" href="/atom.xml" title="薛8的个人网站 - xue8&#39;s Blog - DDND.CN" type="application/atom+xml">
   
@@ -156,80 +164,239 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-java-memory-model" class="article article-type-post " itemscope="" itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/12/25/springmvc-view-webxml/" class="archive-article-date">
-  	<time datetime="2018-12-25T10:09:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-25</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/25/springmvc-view-webxml/">我是如何一步步解决问题 让Spring MVC返回HTML类型的视图</a>
+    <h1 class="article-title" itemprop="name">
+      什么是Java内存模型？
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2019/03/11/java-memory-model/" class="archive-article-date">
+  	<time datetime="2019-03-11T08:24:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://ws3.sinaimg.cn/large/e0e01e43ly1g0z8ongt9yj21qi15okjn.jpg" alt="image" width="100%"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>要想深入了解Java并发编程，就要先理解好<strong>Java内存模型</strong>，而要理解Java内存模型又不得不从硬件、计算机内存模型说起，本文从计算机内存模型产生的原因、解决的问题谈起，然后再对Java模型进行介绍，最后对计算机内存模型和Java内存模型进行总结，希望大家看完本文之后有所收获！</p>
+<a id="more"></a>
+<h2 id="CPU工作过程及出现的问题"><a href="#CPU工作过程及出现的问题" class="headerlink" title="CPU工作过程及出现的问题"></a>CPU工作过程及出现的问题</h2><h3 id="CPU执行过程"><a href="#CPU执行过程" class="headerlink" title="CPU执行过程"></a>CPU执行过程</h3><p>大家都知道，计算机在执行程序时，每条指令都是在CPU中执行的，而执行的时候，又免不了要和数据打交道，而计算机上面的临时数据，是储存在<strong>主存</strong>中的。    </p>
+<blockquote>
+<p>计算机内存包括<strong>高速缓存</strong>和<strong>主存</strong>。</p>
+</blockquote>
+<p>我们知道CPU执行指令的速度比从主存读取数据和向主存写入数据快很多，所以为了高效利用CPU，CPU增加了<strong>高速缓存(cache)</strong>来匹配CPU的执行速度，最终程序的执行过程如下</p>
+<ol>
+<li>首先会将数据从主存中复制一份到CPU的高速缓存中</li>
+<li>当CPU执行计算的时候就可以直接从高速缓存中读取数据和写入数据</li>
+<li>当运算结束后，再将高速缓存的数据更新到主存中    </li>
+</ol>
+<h3 id="缓存一致性问题"><a href="#缓存一致性问题" class="headerlink" title="缓存一致性问题"></a>缓存一致性问题</h3><p>上面的执行过程在单线程情况下并没有问题，但是在多线程情况下就会出现问题，<strong>因为CPU如果含有多个核心，则每个核心都有自己独占高速缓存</strong>，如果出现多个线程同时执行同一个操作，那么结果是无法预知。例如<code>2</code>个线程同时执行<code>i++</code>，假设i的初始值是<code>0</code>，那么我们希望<code>2</code>个线程执行完成之后<code>i</code>的值变为<code>2</code>，但是事实会是这样吗？<br><img src="http://wx2.sinaimg.cn/large/e0e01e43ly1g0z8qqzxgmj20p70kjwgk.jpg" alt="image"></p>
+<p>可能出现的情况有：    </p>
+<ol>
+<li>线程1先将<code>i=0</code>从主存中读取到线程1的高速缓存中，然后CPU完成运算，再将<code>i=1</code>写入到主存中，然后线程2开始从主存中读取<code>i=1</code>到线程2的高速缓存中，然后CPU完成运算，再将<code>i=2</code>写入到主存中，那么<code>i=2</code>即为我们想要的结果。</li>
+<li>线程1将<code>i=0</code>从主存中读取到线程1的高速缓存中的同时线程2也从主存中读取<code>i=0</code>到线程2的高速缓存中，然后线程1和线程2完成运算后，也都将<code>i=1</code>写入到主存中，那么结果<code>i=1</code>，结果就不是我们想要的了。出现这个情况，我们称为<strong>缓存不一致问题</strong>。</li>
+</ol>
+<p>那么如何解决CPU出现的<strong>缓存不一致问题</strong>呢？通常使用的解决方法有2种：     </p>
+<ol>
+<li>通过给总线加锁</li>
+<li>使用<strong>缓存一致性协议</strong></li>
+</ol>
+<p><img src="http://ws3.sinaimg.cn/large/e0e01e43ly1g0z8qyxhv7j20qc092757.jpg" alt="image"><br>第<code>1</code>种方法虽然也达到了目的，但是在总线被锁住的期间，其他的CPU也无法访问主存，<strong>效率很低</strong>，所以就出现了缓存一致性协议即第<code>2</code>种方法，其中最出名的就是<code>Intel</code>的MESI协议，MESI协议保证每个CPU高速缓存中的变量都是一致的。它的核心思想是，当CPU写数据时候，如果发现操作的变量是共享变量(即其他CPU上也存在该变量)，就会发出信号通知<strong>其他CPU</strong>将它高速缓存中缓存这个变量的缓存行置为<strong>无效状态</strong>，因此当其他CPU需要读取这个变量时，发现自己高速缓存中缓存该变量的缓存行为无效状态，那么它就会从主存中<strong>重新读取</strong>。<br><img src="http://ws1.sinaimg.cn/large/e0e01e43ly1g0z8r8km5kj20q20bs40h.jpg" alt="image"></p>
+<h3 id="处理器重排序问题"><a href="#处理器重排序问题" class="headerlink" title="处理器重排序问题"></a>处理器重排序问题</h3><p>在多线程场景下，CPU除了会出现缓存一致性问题，还会出现因为<strong>处理器重排序</strong>即<strong>处理器(CPU)为了提高效率可能会对输入的代码进行乱序执行</strong>，而造成多线程的情况下出现问题。<br>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//线程1:</span><br><span class="line">context = loadContext();   //语句1</span><br><span class="line">inited = true;             //语句2</span><br><span class="line"> </span><br><span class="line">//线程2:</span><br><span class="line">while(!inited )&#123;</span><br><span class="line">  sleep()</span><br><span class="line">&#125;</span><br><span class="line">doSomethingwithconfig(context);</span><br></pre></td></tr></table></figure></p>
+<p>线程1由于处理器重排序，先执行性了语句2，那么此时线程2会认为<code>context</code>已经初始化完成，那么跳出循环，去执行<code>doSomethingwithconfig(context)</code>方法，实际上此时context并未初始化(即线程1的语句1还未执行)，而导致程序出错。</p>
+<h2 id="什么是计算机内存模型"><a href="#什么是计算机内存模型" class="headerlink" title="什么是计算机内存模型"></a>什么是计算机内存模型</h2><p>上面提到的<strong>缓存一致性问题</strong>、<strong>处理器重排序问题</strong>都是在多线程情况下CPU可能出现的问题，那我们应该怎么处理这些问题？实际上这些问题并不需要我们考虑，这些问题CPU都会处理好，而CPU处理这些问题的时候是按照特定的<strong>操作规范</strong>，对特定的主存进行访问或告诉CPU高速缓存怎么访问主存，保证了多线程场景下的<strong>原子性、可见性、有序性</strong>，这个操作规范就称为<strong>计算机内存模型</strong>。      </p>
+<blockquote>
+<p>可见性即当一个变量修改后，这个变量会马上更新到主存中，其他线程会收到通知这个变量修改过了，使用这个变量的时候重新去主存获取</p>
+</blockquote>
+<h2 id="什么是Java内存模型"><a href="#什么是Java内存模型" class="headerlink" title="什么是Java内存模型"></a>什么是Java内存模型</h2><p>从前面的介绍了解到计算机内存模型是一种解决多线程场景下的一个主存操作规范，既然是规范，那么不同的编程语言都可以遵循这种操作规范，在多线程场景下访问主存保证原子性、可见性、有序性。<br><strong>Java内存模型(Java Memory Model，JMM)</strong>即是Java语言对这个操作规范的遵循，<code>JMM</code>规定了所有的变量都存储在<strong>主存</strong>中，每个线程都有自己的<strong>工作区</strong>，线程将使用到的变量从主存中<strong>复制</strong>一份到自己的工作区，线程对变量的<strong>所有操作</strong>(读取、赋值等)都必须在工作区，不同的线程也无法直接访问对方工作区，线程之间的消息传递都需要通过主存来完成。<strong>可以把这里主存类比成计算机内存模型中的主存，工作区类比成计算机内存模型中的高速缓存</strong>。</p>
+<p><img src="http://ws2.sinaimg.cn/large/e0e01e43ly1g0z8rfihfkj20qk09ft9l.jpg" alt="image"></p>
+<p>而我们知道<code>JMM</code>其实是工作主存中的，Java内存模型中的工作区也是主存中的一部分，所以可以这样说Java内存模型解决的是<strong>内存一致性问题(主存和主存)</strong>而计算机内存模型解决的是<strong>缓存一致性问题(CPU高速缓存和主存)</strong>，这两个模型类似，但是作用域不一样，Java内存模型保证的是主存和主存之间的原子性、可见性、有序性，而计算机内存模型保证的是CPU高速缓存和主存之间的原子性、可见性、有序性。</p>
+<p><img src="http://ws1.sinaimg.cn/large/e0e01e43ly1g0z8rlifrqj20zb0cbjsz.jpg" alt="image"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文很多观点都是按照笔者自己的理解然后总结出来的，若有偏颇，欢迎指正！</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.cnblogs.com/dolphin0520/p/3920373.html" target="_blank" rel="noopener">Java并发编程：volatile关键字解析</a><br><a href="https://blog.csdn.net/u013256816/article/details/51510815" target="_blank" rel="noopener">Java内存模型</a><br><a href="http://developer.51cto.com/art/201807/579744.htm" target="_blank" rel="noopener">【教程】终于有人把Java内存模型说清楚了！</a><br><a href="https://www.zhihu.com/question/268021813" target="_blank" rel="noopener">关于JAVA内存模型与MESI协议？</a><br><a href="https://www.zhihu.com/question/277395220" target="_blank" rel="noopener">有了缓存一致性协议为什么还需要多线程同步？</a>  </p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Spring MVC</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Java内存模型</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">web.xml</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">servlet</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">计算机内存模型</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Spring-MVC//" class="article-tag-list-link color1">Spring MVC</a>
+        			<a href="/categories/Java-Programming//" class="article-tag-list-link color4">Java编程基础</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://ddnd.cn/2019/03/11/java-memory-model/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      
+			<!--
+            	作者：3788837@qq.com
+            	时间：2018-11-30
+            	描述：添加字数统计
+            -->       
+      <div class="article-tag tagcloud">
+        <div class="category-list-link" style="font-weight: 200">
+					1.9k字
+      	</div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2019/03/11/java-volatile/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">java-volatile</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+  <div id="SOHUCS" sid="java-memory-model"></div> 
+<script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js"></script>
+<script type="text/javascript">
+    window.changyan.api.config({
+        appid: "cysQyVYbf",
+        conf: "prod_4c3fdac1045cd48f184b31bc47ce864e"
+    });
+</script>
 
+  
+
+  
+
+  
 
 
           </div>
@@ -254,10 +421,10 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
-		isCategory: true,
+		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
 		root: "/",

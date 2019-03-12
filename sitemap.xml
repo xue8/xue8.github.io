@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>http://ddnd.cn/2018/11/14/Technique-Mvc-3ta/</loc>
+    
+    <lastmod>2019-03-12T10:15:54.548Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2018/12/16/SSM-integration/</loc>
+    
+    <lastmod>2019-03-12T10:15:51.531Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2019/01/19/spring-websocket/</loc>
+    
+    <lastmod>2019-03-12T10:15:48.648Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2018/11/26/Spring-Tomcat-DBCP/</loc>
+    
+    <lastmod>2019-03-12T10:15:45.494Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2018/12/01/Spring-Mybatis/</loc>
+    
+    <lastmod>2019-03-12T10:15:42.404Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2018/12/25/springmvc-view-webxml/</loc>
+    
+    <lastmod>2019-03-12T10:15:39.236Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2019/02/02/springmvc-mybatis-shiro/</loc>
+    
+    <lastmod>2019-03-12T10:15:16.032Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2018/11/18/Spring-Jdbc-Support/</loc>
+    
+    <lastmod>2019-03-12T10:15:12.886Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2018/11/19/Spring-Jdbc-JdbcTemplate/</loc>
+    
+    <lastmod>2019-03-12T10:15:09.165Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2018/11/19/Spring-Jdbc-CRUD/</loc>
+    
+    <lastmod>2019-03-12T10:15:04.288Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2018/11/17/Spring-Bean-Automatic/</loc>
+    
+    <lastmod>2019-03-12T10:15:01.315Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2018/11/17/Spring-Bean-Annotation/</loc>
+    
+    <lastmod>2019-03-12T10:14:58.417Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2019/02/01/shiro-unavailablesecuritymanagerexception/</loc>
+    
+    <lastmod>2019-03-12T10:14:54.313Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2019/02/01/shiro-password-char-authenticationexception/</loc>
+    
+    <lastmod>2019-03-12T10:14:51.471Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2018/12/19/rpc-and-restful/</loc>
+    
+    <lastmod>2019-03-12T10:14:48.009Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2019/02/15/redis-chapter-3/</loc>
+    
+    <lastmod>2019-03-12T10:14:44.545Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2019/02/13/redis-chapter-2/</loc>
+    
+    <lastmod>2019-03-12T10:14:40.485Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2019/02/08/redis-chapter-1/</loc>
+    
+    <lastmod>2019-03-12T10:14:35.033Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2019/02/07/qq-tea-algorithm/</loc>
+    
+    <lastmod>2019-03-12T10:14:31.747Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2018/11/30/Mybatis-Proxy/</loc>
+    
+    <lastmod>2019-03-12T10:14:28.246Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2018/11/29/Mybatis-Introduction/</loc>
+    
+    <lastmod>2019-03-12T10:14:23.781Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2018/11/30/Mybatis-Annotation/</loc>
+    
+    <lastmod>2019-03-12T10:14:19.380Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2019/03/08/jdk1-8-hashtable/</loc>
+    
+    <lastmod>2019-03-12T10:14:15.266Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2019/03/10/jdk1-8-concurrenthashmap/</loc>
+    
+    <lastmod>2019-03-12T10:14:11.690Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2019/03/07/jdk1.8-hashmap/</loc>
+    
+    <lastmod>2019-03-12T10:14:08.150Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2019/03/11/java-volatile/</loc>
+    
+    <lastmod>2019-03-12T10:14:03.979Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2018/11/17/Java-Interface/</loc>
+    
+    <lastmod>2019-03-12T10:13:58.885Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2018/11/18/Java-DataSource/</loc>
+    
+    <lastmod>2019-03-12T10:13:54.642Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2019/02/16/byte-hex-ascii/</loc>
+    
+    <lastmod>2019-03-12T10:13:49.996Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/about/index.html</loc>
+    
+    <lastmod>2019-03-12T09:51:21.099Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2019/03/11/java-memory-model/</loc>
+    
+    <lastmod>2019-03-12T09:40:16.167Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/tags/index.html</loc>
+    
+    <lastmod>2019-03-12T08:50:41.610Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/links/index.html</loc>
+    
+    <lastmod>2019-03-12T08:50:41.609Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/categories/index.html</loc>
+    
+    <lastmod>2019-03-12T08:50:41.608Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn//404.html</loc>
+    
+    <lastmod>2019-03-12T08:50:41.570Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/categories/index_yilia.html</loc>
+    
+    <lastmod>2018-11-30T05:22:52.763Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/tags/index_yilia.html</loc>
+    
+    <lastmod>2018-11-25T04:59:04.119Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/archives/index.html</loc>
+    
+    <lastmod>2018-11-25T04:48:02.817Z</lastmod>
+    
+  </url>
+  
+</urlset>

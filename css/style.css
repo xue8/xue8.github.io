@@ -1631,7 +1631,7 @@ input[type="button"].btn-block {
 }
 
 .collapse {
-  display: block;
+  display: none;
 }
 
 .collapse.in {
@@ -6394,11 +6394,11 @@ body.no-sidebar .sidebar {
 }
 
 .collapsed .text-collapsed {
-  display: none;
+  display: inline-block;
 }
 
 .collapsed .text-in {
-  display: inline-block;
+  display: none;
 }
 
 .sub-header {

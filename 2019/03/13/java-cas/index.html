@@ -17,27 +17,24 @@
   <meta http-equiv="window-target" content="_top">
   
   
-  <title>第一章 认识Redis 【Redis入门教程】 | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
-  <meta name="description" content="Redis入门教程目录：【Redis入门教程目录】 简介Redis是由C语言编写的开源、基于内存、支持多种数据结构、高性能的Key-Value数据库。">
-<meta name="keywords" content="Java,xue8,薛8,DDND,程序员,">
+  <title>CAS原理分析及ABA问题详解 | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
+  <meta name="description" content="什么是CASCAS即Compare And Swap的缩写，翻译成中文就是比较并交换，其作用是让CPU比较内存中某个值是否和预期的值相同，如果相同则将这个值更新为新值，不相同则不做更新，也就是CAS是原子性的操作，其实现方式是通过借助C/C++调用CPU指令完成的，所以效率很高。CAS的原理很简单，这里使用一段Java代码来描述123456789public boolean compareAn">
+<meta name="keywords" content="CAS,多线程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="第一章 认识Redis 【Redis入门教程】">
-<meta property="og:url" content="http://ddnd.cn/2019/02/08/redis-chapter-1/index.html">
+<meta property="og:title" content="CAS原理分析及ABA问题详解">
+<meta property="og:url" content="http://ddnd.cn/2019/03/13/java-cas/index.html">
 <meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
-<meta property="og:description" content="Redis入门教程目录：【Redis入门教程目录】 简介Redis是由C语言编写的开源、基于内存、支持多种数据结构、高性能的Key-Value数据库。">
+<meta property="og:description" content="什么是CASCAS即Compare And Swap的缩写，翻译成中文就是比较并交换，其作用是让CPU比较内存中某个值是否和预期的值相同，如果相同则将这个值更新为新值，不相同则不做更新，也就是CAS是原子性的操作，其实现方式是通过借助C/C++调用CPU指令完成的，所以效率很高。CAS的原理很简单，这里使用一段Java代码来描述123456789public boolean compareAn">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://ws1.sinaimg.cn/large/e0e01e43gy1fzz559f0n2j21d80gf3zh.jpg">
-<meta property="og:image" content="http://wx4.sinaimg.cn/large/e0e01e43gy1fzzbt51xfuj20w30cvag3.jpg">
-<meta property="og:image" content="http://wx2.sinaimg.cn/large/e0e01e43gy1fzzfhx264oj20oc0awq52.jpg">
-<meta property="og:image" content="http://wx2.sinaimg.cn/large/e0e01e43gy1fzzgkys41kj20pc0hrq7u.jpg">
-<meta property="og:image" content="http://ws1.sinaimg.cn/large/e0e01e43gy1fzzymliocdj20dr0fun32.jpg">
-<meta property="og:updated_time" content="2019-03-12T10:14:35.033Z">
+<meta property="og:image" content="http://ws2.sinaimg.cn/large/e0e01e43ly1g11dcysv30j20t60jh1kx.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/large/e0e01e43ly1g11dbvrjwoj21ay0bujtl.jpg">
+<meta property="og:updated_time" content="2019-03-13T11:08:25.762Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="第一章 认识Redis 【Redis入门教程】">
-<meta name="twitter:description" content="Redis入门教程目录：【Redis入门教程目录】 简介Redis是由C语言编写的开源、基于内存、支持多种数据结构、高性能的Key-Value数据库。">
-<meta name="twitter:image" content="http://ws1.sinaimg.cn/large/e0e01e43gy1fzz559f0n2j21d80gf3zh.jpg">
+<meta name="twitter:title" content="CAS原理分析及ABA问题详解">
+<meta name="twitter:description" content="什么是CASCAS即Compare And Swap的缩写，翻译成中文就是比较并交换，其作用是让CPU比较内存中某个值是否和预期的值相同，如果相同则将这个值更新为新值，不相同则不做更新，也就是CAS是原子性的操作，其实现方式是通过借助C/C++调用CPU指令完成的，所以效率很高。CAS的原理很简单，这里使用一段Java代码来描述123456789public boolean compareAn">
+<meta name="twitter:image" content="http://ws2.sinaimg.cn/large/e0e01e43ly1g11dcysv30j20t60jh1kx.jpg">
   <!-- Canonical links -->
-  <link rel="canonical" href="http://ddnd.cn/2019/02/08/redis-chapter-1/index.html">
+  <link rel="canonical" href="http://ddnd.cn/2019/03/13/java-cas/index.html">
   
     <link rel="alternate" href="/atom.xml" title="薛8的个人网站 - xue8&#39;s Blog - DDND.CN" type="application/atom+xml">
   
@@ -328,21 +325,21 @@
   <div class="slimContent">
     <nav id="toc" class="article-toc">
       <h3 class="toc-title">Catalogue</h3>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#特性"><span class="toc-number">2.</span> <span class="toc-text">特性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#速度快"><span class="toc-number">2.1.</span> <span class="toc-text">速度快</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#持久化"><span class="toc-number">2.2.</span> <span class="toc-text">持久化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多种数据结构"><span class="toc-number">2.3.</span> <span class="toc-text">多种数据结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多语言客户端"><span class="toc-number">2.4.</span> <span class="toc-text">多语言客户端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#功能丰富"><span class="toc-number">2.5.</span> <span class="toc-text">功能丰富</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主从复制"><span class="toc-number">2.6.</span> <span class="toc-text">主从复制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#高可用和集群"><span class="toc-number">2.7.</span> <span class="toc-text">高可用和集群</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装和启动"><span class="toc-number">3.</span> <span class="toc-text">安装和启动</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是CAS"><span class="toc-number">1.</span> <span class="toc-text">什么是CAS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unsafe源码分析"><span class="toc-number">2.</span> <span class="toc-text">Unsafe源码分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CAS的缺点"><span class="toc-number">3.</span> <span class="toc-text">CAS的缺点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ABA问题"><span class="toc-number">3.1.</span> <span class="toc-text">ABA问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#循环时间长开销大"><span class="toc-number">3.2.</span> <span class="toc-text">循环时间长开销大</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#只能保证一个共享变量的原子操作"><span class="toc-number">3.3.</span> <span class="toc-text">只能保证一个共享变量的原子操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CAS的应用"><span class="toc-number">4.</span> <span class="toc-text">CAS的应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">5.</span> <span class="toc-text">参考</span></a></li></ol>
     </nav>
   </div>
 </aside>
 
 <main class="main" role="main">
   <div class="content">
-  <article id="post-redis-chapter-1" class="article article-type-post" itemscope="" itemtype="http://schema.org/BlogPosting">
+  <article id="post-java-cas" class="article article-type-post" itemscope="" itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      第一章 认识Redis 【Redis入门教程】
+      CAS原理分析及ABA问题详解
     </h1>
   
 
@@ -350,17 +347,22 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/2019/02/08/redis-chapter-1/" class="article-date">
-	  <time datetime="2019-02-08T09:19:29.000Z" itemprop="datePublished">2019-02-08</time>
+	<a href="/2019/03/13/java-cas/" class="article-date">
+	  <time datetime="2019-03-13T09:09:33.000Z" itemprop="datePublished">2019-03-13</time>
 	</a>
 </span>
         
   <span class="article-category">
     <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/categories/Redis/">Redis</a>
+    <a class="article-category-link" href="/categories/Java-Programming/">Java编程基础</a>
   </span>
 
         
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/CAS/">CAS</a>, <a class="article-tag-link" href="/tags/多线程/">多线程</a>
+  </span>
+
 
         
 	<span class="article-read hidden-xs">
@@ -371,43 +373,62 @@
 	</span>
 
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/02/08/redis-chapter-1/#comments" class="article-comment-link">Comments</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/03/13/java-cas/#comments" class="article-comment-link">Comments</a></span>
         
 	
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 1.1k(words)</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 1.9k(words)</span>
 	
 	
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 4(minutes)</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 6(minutes)</span>
 	
 
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <p><img src="http://ws1.sinaimg.cn/large/e0e01e43gy1fzz559f0n2j21d80gf3zh.jpg" alt="image" width="100%"></p>
-<p><strong>Redis入门教程目录</strong>：<a href="https://ddnd.cn/categories/Redis/">【Redis入门教程目录】</a></p>
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><strong>Redis</strong>是由C语言编写的开源、基于内存、支持多种数据结构、高性能的<strong>Key-Value</strong>数据库。<br><a id="more"></a></p>
-<h2 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h2><h3 id="速度快"><a href="#速度快" class="headerlink" title="速度快"></a>速度快</h3><p><strong>首先</strong>Redis是将数据储存在内存中的，通常情况下每秒读写次数达到<strong>千万级别</strong>。<strong>其次</strong>Redis使用<code>ANSI C</code>编写，因为C语言接近操作系统，所以Redis的执行效率很高。<strong>最后</strong>Redis的处理网络请求部分采用的是<strong>单线程</strong>，如果想充分利用CPU资源的话，可以多开几个Redis实例来达到目的，为什么单线程还是速度快的原因呢？我们知道Redis的读写都是基于内存的，读写速度都是非常快的，不会出现需要等待很长时间，所以瓶颈并不会出现在请求读写上，所以没必要使用多线程来利用CPU，如果使用多线程的话（<strong>线程数&gt;CPU数情况下</strong>），多线程的创建、销毁、线程切换、线程竞争等开销所需要的时间会比执行读写所损耗的时间还多，那就南辕北辙了，当然这是在数据量小的时候才会这样，如果数据量到达一定量级了，那肯定是多线程比单线程快（<strong>线程数&lt;=CPU数情况下</strong>）。<br><img src="http://wx4.sinaimg.cn/large/e0e01e43gy1fzzbt51xfuj20w30cvag3.jpg" alt="image"></p>
-<h3 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h3><p>Redis可以通过<code>RDB</code>和<code>AOF</code>两种方式将数据持久化到磁盘上，其中这两种方式的区别如下：</p>
-<ul>
-<li><strong>RDB</strong>：是在指定的时间间隔内将内存中的数据通过<strong>异步</strong>生成数据快照并且保存到磁盘中。</li>
-<li><strong>AOF</strong>：相对于<code>RDB</code>方式，<code>AOF</code>方式的持久化更细粒度，把每次数据变化（写、删除操作）都记录<strong>AOF文件</strong>中，其中AOF又可以配置为<code>always</code>即实时将记录写到AOF文件中，<code>everysec</code>每隔一秒将记录写到AOF文件中，<code>no</code>由系统决定何时将记录写到AOF文件中。<h3 id="多种数据结构"><a href="#多种数据结构" class="headerlink" title="多种数据结构"></a>多种数据结构</h3>Redis支持五种基本的数据结构，分别是String（字符串），Hash（哈希），List（列表），Set（集合），Zset（即Sorted Set有序集合）,这些数据结构类型和我们使用的开发语言的数据结构类型其实是相对应的。<br><img src="http://wx2.sinaimg.cn/large/e0e01e43gy1fzzfhx264oj20oc0awq52.jpg" alt="image"><h3 id="多语言客户端"><a href="#多语言客户端" class="headerlink" title="多语言客户端"></a>多语言客户端</h3>Redis支持多种语言，诸如Ruby,Python, Twisted Python, PHP, Erlang, Tcl, Perl, Lua, Java, Scala, Clojure等。<h3 id="功能丰富"><a href="#功能丰富" class="headerlink" title="功能丰富"></a>功能丰富</h3>Redis支持发布订阅、Lua脚本、事务、Pipeline等功能。<h3 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h3>在Redis中，用户可以通过执行SLAVEOF命令或者SLAVEOF选项，让从服务器去复制主服务器，为<strong>高可用</strong>和<strong>分布式</strong>提供了基础。<br><img src="http://wx2.sinaimg.cn/large/e0e01e43gy1fzzgkys41kj20pc0hrq7u.jpg" alt="image"><h3 id="高可用和集群"><a href="#高可用和集群" class="headerlink" title="高可用和集群"></a>高可用和集群</h3></li>
-</ul>
+        <a id="more"></a>
+<p><img src="http://ws2.sinaimg.cn/large/e0e01e43ly1g11dcysv30j20t60jh1kx.jpg" alt="image" width="100%"></p>
+<h2 id="什么是CAS"><a href="#什么是CAS" class="headerlink" title="什么是CAS"></a>什么是CAS</h2><p><code>CAS</code>即<code>Compare And Swap</code>的缩写，翻译成中文就是<strong>比较并交换</strong>，其作用是让CPU比较内存中某个值是否和预期的值相同，如果相同则将这个值更新为新值，不相同则不做更新，也就是CAS是<strong>原子性</strong>的操作，其实现方式是通过借助<code>C/C++</code>调用CPU指令完成的，所以效率很高。<br><code>CAS</code>的原理很简单，这里使用一段<code>Java</code>代码来描述<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public boolean compareAndSwap(int value, int expect, int update) &#123;</span><br><span class="line">//        如果内存中的值value和期望值expect一样 则将值更新为新值update</span><br><span class="line">    if (value == expect) &#123;</span><br><span class="line">        value = update;</span><br><span class="line">        return true;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>大致过程是将内存中的值、我们的期望值、新值交给CPU进行运算，如果内存中的值和我们的期望值相同则将值更新为新值，否则不做任何操作。这个过程是在CPU中完成的，这里不好描述CPU的工作过程，就拿Java代码来描述了。    </p>
+<h2 id="Unsafe源码分析"><a href="#Unsafe源码分析" class="headerlink" title="Unsafe源码分析"></a>Unsafe源码分析</h2><p>Java是在<code>Unsafe(sun.misc.Unsafe)</code>类实现<code>CAS</code>的操作，而我们知道Java是无法直接访问操作系统底层的API的(原因是Java的跨平台性限制了Java不能和操作系统耦合)，所以Java并没有在<code>Unsafe</code>类直接实现<code>CAS</code>的操作，而是通过<strong>JDI(Java Native Interface)</strong>本地调用<code>C/C++</code>语言来实现<code>CAS</code>操作的。<br><code>Unsafe</code>有很多个<code>CAS</code>操作的相关方法，这里举例几个<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public final native boolean compareAndSwapObject(Object var1, long var2, Object var4, Object var5);</span><br><span class="line"></span><br><span class="line">public final native boolean compareAndSwapInt(Object var1, long var2, int var4, int var5);</span><br><span class="line"></span><br><span class="line">public final native boolean compareAndSwapLong(Object var1, long var2, long var4, long var6);</span><br></pre></td></tr></table></figure></p>
+<p>我们拿<code>public final native boolean compareAndSwapInt(Object var1, long var2, int var4, int var5);</code>进行分析，这个方法是比较内存中的一个值(整型)和我们的期望值(var4)是否一样，如果一样则将内存中的这个值更新为<code>var5</code>，参数中的<code>var1</code>是值所在的对象，<code>var2</code>是值在对象(var1)中的内存偏移量，<strong>参数var1和参数var2是为了定位出值所在内存的地址</strong>。<br><img src="http://wx3.sinaimg.cn/large/e0e01e43ly1g11dbvrjwoj21ay0bujtl.jpg" alt="image"><br><strong>Unsafe.java在这里发挥的作用有：</strong></p>
 <ol>
-<li>高可用<br>有了主从复制之后的实现之后，如果想对服务器进行监控，那么在<code>Redis2.6</code>以后提供了一个<code>Sentinel</code>（哨兵机制）。顾名思义，哨兵的含义就是监控Redis系统的运行状态，可以启动多个哨兵，去监控Redis数据库的运行状态。其功能有以下两点：<br>a.监控所有节点数据库是否正常运行<br>b.<strong>主数据库</strong>出现故障时，可以通过自动投票机制，在<strong>从数据库</strong>选举出新的主数据库，实现将从数据库转为主数据库的自动切换。</li>
-<li>集群<br>Redis在3.0版本正式引入了<code>Redis-Cluster</code>集群这个特征。Redis-Cluster采用无中心架构，每个节点保存完整的数据和整个集群的状态，每个节点都和其他所有节点连接。<br><img src="http://ws1.sinaimg.cn/large/e0e01e43gy1fzzymliocdj20dr0fun32.jpg" alt="image"></li>
+<li>将对象引用、值在对象中的偏移量、期望的值和欲更新的新值传递给<code>Unsafe.cpp</code></li>
+<li>如果值更新成功则返回<code>true</code>给开发者，没有更新则返回<code>false</code></li>
 </ol>
-<h2 id="安装和启动"><a href="#安装和启动" class="headerlink" title="安装和启动"></a>安装和启动</h2><p>使用<code>wget</code>命令下载Redis<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://download.redis.io/releases/redis-5.0.3.tar.gz</span><br></pre></td></tr></table></figure></p>
-<p>解压Redis压缩包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar xzf redis-5.0.3.tar.gz</span><br></pre></td></tr></table></figure></p>
-<p>进入到Redis的文件夹<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd redis-5.0.3</span><br></pre></td></tr></table></figure></p>
-<p>编译Redis<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make</span><br></pre></td></tr></table></figure></p>
-<p>这样我们的Redis就编译好了，为了能全局使用Redis的命令，我们还需要执行安装命令，将可执行文件安装到环境变量中。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make install</span><br></pre></td></tr></table></figure></p>
-<p>这样Redis的安装就完成了，我们来启动Redis，其中Redis的启动有三种方式</p>
+<p><strong>Unsafe.cpp在这里发挥的作用有：</strong></p>
 <ol>
-<li>直接启动<br>直接执行<code>redis-server</code>即可启动Redis，这个方式启动实际上就是读取Redis的默认配置启动。</li>
-<li>动态参数启动<br>执行<code>redis-server --port 6380</code>即可指定端口号启动Redis，更多参数可以参考官方的文档。</li>
-<li>配置文件启动<br>执行<code>redis-server config.conf</code>即可指定名为<code>config.conf</code>的配置文件进行启动Redis。</li>
+<li>接受从<code>Unsafe</code>传递过来的对象引用、偏移量、期望的值和欲更新的新值，根据对象引用和偏移量<strong>计算出值的地址</strong>，然后将值的地址、期望的值、欲更新的新值传递给CPU</li>
+<li>如果值更新成功则返回<code>true</code>给<code>Unsafe.java</code>，没有更新则返回<code>false</code></li>
 </ol>
+<p><strong>CPU在这里发挥的作用：</strong></p>
+<ol>
+<li>接受从<code>Unsafe.cpp</code>传递过来的地址、期望的值和欲更新的新值，执行指令<code>cmpxchg</code>，比较地址中的值是否和期望的值一样，一样则将值更新为新的值，不一样则不做任何操作</li>
+<li>将操作结果返回给<code>Unsafe.cpp</code></li>
+</ol>
+<h2 id="CAS的缺点"><a href="#CAS的缺点" class="headerlink" title="CAS的缺点"></a>CAS的缺点</h2><p><code>CAS</code>虽然高效的实现了原子性操作，但是也存在一些缺点，主要表现在以下三个方面。</p>
+<h3 id="ABA问题"><a href="#ABA问题" class="headerlink" title="ABA问题"></a>ABA问题</h3><p>在多线程场景下<code>CAS</code>会出现<code>ABA</code>问题，关于ABA问题这里简单科普下，例如有2个线程同时对同一个值(初始值为A)进行CAS操作，这三个线程如下    </p>
+<ol>
+<li>线程1，期望值为A，欲更新的值为B</li>
+<li>线程2，期望值为A，欲更新的值为B</li>
+</ol>
+<p>线程<code>1</code>抢先获得CPU时间片，而线程<code>2</code>因为其他原因阻塞了，线程<code>1</code>取值与期望的A值比较，发现相等然后将值更新为B，然后这个时候<strong>出现了线程<code>3</code>，期望值为B，欲更新的值为A</strong>，线程3取值与期望的值B比较，发现相等则将值更新为A，此时线程<code>2</code>从阻塞中恢复，并且获得了CPU时间片，这时候线程<code>2</code>取值与期望的值A比较，发现相等则将值更新为B，虽然线程<code>2</code>也完成了操作，但是线程<code>2</code>并不知道值已经经过了<code>A-&gt;B-&gt;A</code>的变化过程。   </p>
+<p><strong><code>ABA</code>问题带来的危害</strong>：<br>小明在提款机，提取了50元，因为提款机问题，有两个线程，同时把余额从100变为50<br>线程1（提款机）：获取当前值100，期望更新为50，<br>线程2（提款机）：获取当前值100，期望更新为50，<br>线程1成功执行，线程2某种原因block了，这时，某人给小明汇款50<br>线程3（默认）：获取当前值50，期望更新为100，<br>这时候线程3成功执行，余额变为100，<br>线程2从Block中恢复，获取到的也是100，compare之后，继续更新余额为50！！！<br>此时可以看到，实际余额应该为100（100-50+50），但是实际上变为了50（100-50+50-50）这就是ABA问题带来的成功提交。</p>
+<p><strong>解决方法</strong>：<br>在变量前面加上版本号，每次变量更新的时候变量的<strong>版本号都<code>+1</code></strong>，即<code>A-&gt;B-&gt;A</code>就变成了<code>1A-&gt;2B-&gt;3A</code>。</p>
+<h3 id="循环时间长开销大"><a href="#循环时间长开销大" class="headerlink" title="循环时间长开销大"></a>循环时间长开销大</h3><p>如果<code>CAS</code>操作失败，就需要循环进行<code>CAS</code>操作(循环同时将期望值更新为最新的)，如果长时间都不成功的话，那么会造成CPU极大的开销。</p>
+<blockquote>
+<p>这种循环也称为自旋</p>
+</blockquote>
+<p><strong>解决方法</strong>：<br>限制自旋次数，防止进入死循环。</p>
+<h3 id="只能保证一个共享变量的原子操作"><a href="#只能保证一个共享变量的原子操作" class="headerlink" title="只能保证一个共享变量的原子操作"></a>只能保证一个共享变量的原子操作</h3><p><code>CAS</code>的原子操作只能针对一个共享变量。</p>
+<p><strong>解决方法</strong>：<br>如果需要对多个共享变量进行操作，可以使用加锁方式(悲观锁)保证原子性，或者可以把多个共享变量合并成一个共享变量进行<code>CAS</code>操作。</p>
+<h2 id="CAS的应用"><a href="#CAS的应用" class="headerlink" title="CAS的应用"></a>CAS的应用</h2><p>我们知道<code>CAS</code>操作并不会锁住共享变量，也就是一种<strong>非阻塞</strong>的同步机制，<code>CAS</code>就是乐观锁的实现。</p>
+<ol>
+<li>乐观锁<br><strong>乐观锁</strong>总是假设最好的情况，每次去操作数据都认为不会被别的线程修改数据，<strong>所以在每次操作数据的时候都不会给数据加锁</strong>，即在线程对数据进行操作的时候，<strong>别的线程不会阻塞</strong>仍然可以对数据进行操作，只有在需要更新数据的时候才会去判断数据是否被别的线程修改过，如果数据被修改过则会拒绝操作并且返回错误信息给用户。</li>
+<li>悲观锁<br><strong>悲观锁</strong>总是假设最坏的情况，每次去操作数据时候都认为会被的线程修改数据，<strong>所以在每次操作数据的时候都会给数据加锁</strong>，让别的线程无法操作这个数据，别的线程会一直阻塞直到获取到这个数据的锁。这样的话就会影响效率，比如当有个线程发生一个很耗时的操作的时候，别的线程只是想获取这个数据的值而已都要等待很久。</li>
+</ol>
+<p><code>Java</code>利用<code>CAS</code>的乐观锁、原子性的特性高效解决了多线程的安全性问题，例如JDK1.8中的集合类<code>ConcurrentHashMap</code>、关键字<code>volatile</code>、<code>ReentrantLock</code>等。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://zl198751.iteye.com/blog/1848575" target="_blank" rel="noopener">JAVA CAS原理深度分析</a><br><a href="http://objcoding.com/2018/11/29/cas/" target="_blank" rel="noopener">Java并发之CAS原理分析</a><br><a href="https://segmentfault.com/a/1190000014858404#articleHeader3" target="_blank" rel="noopener">Java CAS 原理分析</a><br><a href="https://www.zhihu.com/question/23281499" target="_blank" rel="noopener">什么是ABA问题？</a></p>
 
       
     </div>
@@ -417,7 +438,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="http://ddnd.cn/2019/02/08/redis-chapter-1/" title="第一章 认识Redis 【Redis入门教程】" target="_blank" rel="external">http://ddnd.cn/2019/02/08/redis-chapter-1/</a>
+      <a href="http://ddnd.cn/2019/03/13/java-cas/" title="CAS原理分析及ABA问题详解" target="_blank" rel="external">http://ddnd.cn/2019/03/13/java-cas/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -463,13 +484,9 @@
   
   <ul class="pager pull-left">
     
-    <li class="prev">
-      <a href="/2019/02/13/redis-chapter-2/" title="第二章 Redis API的使用 单线程介绍【Redis入门教程】"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
-    </li>
-    
     
     <li class="next">
-      <a href="/2019/02/07/qq-tea-algorithm/" title="QQ TEA加密算法 JAVA实现"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/2019/03/11/java-memory-model/" title="什么是Java内存模型？"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     

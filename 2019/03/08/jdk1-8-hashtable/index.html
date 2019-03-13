@@ -18,22 +18,22 @@
   
   
   <title>五分钟看懂Hashtable源码以及与HashMap的区别 | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
-  <meta name="description" content="前言上一篇HashMap从认识到源码分析我们认识了什么是Map、Hash，了解了Hash处理哈希冲突的几种常用方法(拉链法、开放定址法)，以及分析了JDK1.8版本的HashMap源码，对Java集合框架有了初步的认识，我们本篇继续分析JDK1.8版本的Hashtable源码，最后比较HashMap和Hashtable的区别。">
+  <meta name="description" content="前言上一篇HashMap从认识到源码分析我们认识了什么是Map、Hash，了解了Hash处理哈希冲突的几种常用方法(拉链法、开放定址法)，以及分析了JDK1.8版本的HashMap源码，对Java集合框架有了初步的认识，我们本篇继续分析JDK1.8版本的Hashtable源码，最后比较HashMap和Hashtable的区别。  Hashtable注意是Hashtable不是HashTable">
 <meta name="keywords" content="Hashtable">
 <meta property="og:type" content="article">
 <meta property="og:title" content="五分钟看懂Hashtable源码以及与HashMap的区别">
 <meta property="og:url" content="http://ddnd.cn/2019/03/08/jdk1-8-hashtable/index.html">
 <meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
-<meta property="og:description" content="前言上一篇HashMap从认识到源码分析我们认识了什么是Map、Hash，了解了Hash处理哈希冲突的几种常用方法(拉链法、开放定址法)，以及分析了JDK1.8版本的HashMap源码，对Java集合框架有了初步的认识，我们本篇继续分析JDK1.8版本的Hashtable源码，最后比较HashMap和Hashtable的区别。">
+<meta property="og:description" content="前言上一篇HashMap从认识到源码分析我们认识了什么是Map、Hash，了解了Hash处理哈希冲突的几种常用方法(拉链法、开放定址法)，以及分析了JDK1.8版本的HashMap源码，对Java集合框架有了初步的认识，我们本篇继续分析JDK1.8版本的Hashtable源码，最后比较HashMap和Hashtable的区别。  Hashtable注意是Hashtable不是HashTable">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://ws3.sinaimg.cn/large/e0e01e43ly1g0vnl8sswvj21y013e7wl.jpg">
 <meta property="og:image" content="http://ws1.sinaimg.cn/large/e0e01e43ly1g0vnltvf4xj20ct07fwei.jpg">
 <meta property="og:image" content="http://wx1.sinaimg.cn/large/e0e01e43ly1g0vnm42jo8j20xd0nx76s.jpg">
 <meta property="og:image" content="http://wx1.sinaimg.cn/large/e0e01e43ly1g0vnmd81wyj20u40of0va.jpg">
-<meta property="og:updated_time" content="2019-03-12T10:14:15.266Z">
+<meta property="og:updated_time" content="2019-03-13T11:12:04.895Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="五分钟看懂Hashtable源码以及与HashMap的区别">
-<meta name="twitter:description" content="前言上一篇HashMap从认识到源码分析我们认识了什么是Map、Hash，了解了Hash处理哈希冲突的几种常用方法(拉链法、开放定址法)，以及分析了JDK1.8版本的HashMap源码，对Java集合框架有了初步的认识，我们本篇继续分析JDK1.8版本的Hashtable源码，最后比较HashMap和Hashtable的区别。">
+<meta name="twitter:description" content="前言上一篇HashMap从认识到源码分析我们认识了什么是Map、Hash，了解了Hash处理哈希冲突的几种常用方法(拉链法、开放定址法)，以及分析了JDK1.8版本的HashMap源码，对Java集合框架有了初步的认识，我们本篇继续分析JDK1.8版本的Hashtable源码，最后比较HashMap和Hashtable的区别。  Hashtable注意是Hashtable不是HashTable">
 <meta name="twitter:image" content="http://ws3.sinaimg.cn/large/e0e01e43ly1g0vnl8sswvj21y013e7wl.jpg">
   <!-- Canonical links -->
   <link rel="canonical" href="http://ddnd.cn/2019/03/08/jdk1-8-hashtable/index.html">
@@ -388,9 +388,9 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <p><img src="http://ws3.sinaimg.cn/large/e0e01e43ly1g0vnl8sswvj21y013e7wl.jpg" alt="image" width="100%" data-width="2520" data-height="1418"></p>
+        <a id="more"></a>
+<p><img src="http://ws3.sinaimg.cn/large/e0e01e43ly1g0vnl8sswvj21y013e7wl.jpg" alt="image" width="100%" data-width="2520" data-height="1418"></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>上一篇<a href="https://ddnd.cn/2019/03/07/jdk1.8-hashmap/">HashMap从认识到源码分析</a>我们认识了什么是<code>Map</code>、<code>Hash</code>，了解了<code>Hash</code>处理哈希冲突的几种常用方法(拉链法、开放定址法)，以及分析了JDK1.8版本的<code>HashMap</code>源码，对Java集合框架有了初步的认识，我们本篇继续分析JDK1.8版本的<code>Hashtable</code>源码，最后比较<code>HashMap</code>和<code>Hashtable</code>的区别。 </p>
-<a id="more"></a>
 <h2 id="Hashtable"><a href="#Hashtable" class="headerlink" title="Hashtable"></a>Hashtable</h2><p>注意是Hashtable不是HashTable(t为小写)，这不是违背了驼峰定理了嘛？这还得从Hashtable的出生说起，Hashtable是在<code>Java1.0</code>的时候创建的，而集合的统一规范命名是在后来的<code>Java2</code>开始约定的，而当时又发布了新的集合代替它，所以这个命名也一直使用到现在，所以Hashtable是一个<strong>过时</strong>的集合了，不推崇大家使用这个类，虽说Hashtable是过时的了，我们还是有必要分析一下它，以便对Java集合框架有一个整体的认知。<br>首先<code>Hashtable</code>采用<strong>拉链法</strong>处理哈希冲突，是<strong>线程安全</strong>的，键值不允许为<code>null</code>，不保证顺序，然后Hashtable继承自Dictionary，实现Map接口，Hashtable有几个重要的成员变量<code>table</code>、<code>count</code>、<code>threshold</code>、<code>loadFactor</code></p>
 <ul>
 <li>table：是一个<code>Entry[]</code>数据类型，而<code>Entry</code>实际是一个单链表</li>

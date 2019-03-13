@@ -18,21 +18,21 @@
   
   
   <title>JAVA数据源 | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
-  <meta name="description" content="前言我们在进行数据访问，声明模板和repository之前【JAVA】Spring对JDBC的支持，都需要配置数据源用来连接数据库。数据源又可以分为两大类：直连的数据源 和 连接池的数据源 ，其中连接池的数据源又有多种，接下来就让我们来学习一下这两种数据源。当然在学习之前，我们首先需要知道连接池、数据源、JNDI是什么，分别从当什么角色，有什么作用。 连接池、数据源、JNDI连接池、数据源Java">
+  <meta name="description" content="前言我们在进行数据访问，声明模板和repository之前【JAVA】Spring对JDBC的支持，都需要配置数据源用来连接数据库。数据源又可以分为两大类：直连的数据源 和 连接池的数据源 ，其中连接池的数据源又有多种，接下来就让我们来学习一下这两种数据源。当然在学习之前，我们首先需要知道连接池、数据源、JNDI是什么，分别从当什么角色，有什么作用。 连接池、数据源、JNDI连接池、数据源Jav">
 <meta name="keywords" content="Java,xue8,薛8,DDND,程序员,">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JAVA数据源">
 <meta property="og:url" content="http://ddnd.cn/2018/11/18/Java-DataSource/index.html">
 <meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
-<meta property="og:description" content="前言我们在进行数据访问，声明模板和repository之前【JAVA】Spring对JDBC的支持，都需要配置数据源用来连接数据库。数据源又可以分为两大类：直连的数据源 和 连接池的数据源 ，其中连接池的数据源又有多种，接下来就让我们来学习一下这两种数据源。当然在学习之前，我们首先需要知道连接池、数据源、JNDI是什么，分别从当什么角色，有什么作用。 连接池、数据源、JNDI连接池、数据源Java">
+<meta property="og:description" content="前言我们在进行数据访问，声明模板和repository之前【JAVA】Spring对JDBC的支持，都需要配置数据源用来连接数据库。数据源又可以分为两大类：直连的数据源 和 连接池的数据源 ，其中连接池的数据源又有多种，接下来就让我们来学习一下这两种数据源。当然在学习之前，我们首先需要知道连接池、数据源、JNDI是什么，分别从当什么角色，有什么作用。 连接池、数据源、JNDI连接池、数据源Jav">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/18/16725f1f2310a0a7?w=1155&h=650&f=png&s=36621">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720ddc3f691cb3?w=896&h=430&f=png&s=45745">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720ddc3f73bc88?w=896&h=490&f=png&s=80470">
-<meta property="og:updated_time" content="2019-03-12T10:13:54.642Z">
+<meta property="og:updated_time" content="2019-03-13T11:11:21.168Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA数据源">
-<meta name="twitter:description" content="前言我们在进行数据访问，声明模板和repository之前【JAVA】Spring对JDBC的支持，都需要配置数据源用来连接数据库。数据源又可以分为两大类：直连的数据源 和 连接池的数据源 ，其中连接池的数据源又有多种，接下来就让我们来学习一下这两种数据源。当然在学习之前，我们首先需要知道连接池、数据源、JNDI是什么，分别从当什么角色，有什么作用。 连接池、数据源、JNDI连接池、数据源Java">
+<meta name="twitter:description" content="前言我们在进行数据访问，声明模板和repository之前【JAVA】Spring对JDBC的支持，都需要配置数据源用来连接数据库。数据源又可以分为两大类：直连的数据源 和 连接池的数据源 ，其中连接池的数据源又有多种，接下来就让我们来学习一下这两种数据源。当然在学习之前，我们首先需要知道连接池、数据源、JNDI是什么，分别从当什么角色，有什么作用。 连接池、数据源、JNDI连接池、数据源Jav">
 <meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/11/18/16725f1f2310a0a7?w=1155&h=650&f=png&s=36621">
   <!-- Canonical links -->
   <link rel="canonical" href="http://ddnd.cn/2018/11/18/Java-DataSource/index.html">
@@ -382,8 +382,9 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>我们在进行数据访问，声明模板和repository之前<a href="http://ddnd.cn/2018/11/18/Spring-Jdbc-Support/">【JAVA】Spring对JDBC的支持</a>，都需要配置<strong>数据源</strong>用来连接数据库。数据源又可以分为两大类：<strong><em>直连的数据源</em></strong> 和 <strong><em>连接池的数据源</em></strong> ，其中连接池的数据源又有多种，接下来就让我们来学习一下这两种数据源。当然在学习之前，我们首先需要知道<strong>连接池</strong>、<strong>数据源</strong>、<strong>JNDI</strong>是什么，分别从当什么角色，有什么作用。</p>
-<h1 id="连接池、数据源、JNDI"><a href="#连接池、数据源、JNDI" class="headerlink" title="连接池、数据源、JNDI"></a>连接池、数据源、JNDI</h1><h2 id="连接池、数据源"><a href="#连接池、数据源" class="headerlink" title="连接池、数据源"></a>连接池、数据源</h2><p>Java中的数据源就是连接到数据库的一条<strong>路径</strong>，数据源中并无真正的数据，它仅仅记录的是你连接到<strong>哪个数据库</strong>，以及<strong>如何连接</strong>。<code>DataSource</code>的创建可以有不同的实现。<code>DataSource</code>通常被称为数据源，它包含<strong>连接池</strong> 和<strong>连接池管理</strong> 两部分，习惯上也经常把<code>DataSource</code>称为连接池。<br><a id="more"></a></p>
+        <a id="more"></a>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>我们在进行数据访问，声明模板和repository之前<a href="http://ddnd.cn/2018/11/18/Spring-Jdbc-Support/">【JAVA】Spring对JDBC的支持</a>，都需要配置<strong>数据源</strong>用来连接数据库。数据源又可以分为两大类：<strong><em>直连的数据源</em></strong> 和 <strong><em>连接池的数据源</em></strong> ，其中连接池的数据源又有多种，接下来就让我们来学习一下这两种数据源。当然在学习之前，我们首先需要知道<strong>连接池</strong>、<strong>数据源</strong>、<strong>JNDI</strong>是什么，分别从当什么角色，有什么作用。</p>
+<h1 id="连接池、数据源、JNDI"><a href="#连接池、数据源、JNDI" class="headerlink" title="连接池、数据源、JNDI"></a>连接池、数据源、JNDI</h1><h2 id="连接池、数据源"><a href="#连接池、数据源" class="headerlink" title="连接池、数据源"></a>连接池、数据源</h2><p>Java中的数据源就是连接到数据库的一条<strong>路径</strong>，数据源中并无真正的数据，它仅仅记录的是你连接到<strong>哪个数据库</strong>，以及<strong>如何连接</strong>。<code>DataSource</code>的创建可以有不同的实现。<code>DataSource</code>通常被称为数据源，它包含<strong>连接池</strong> 和<strong>连接池管理</strong> 两部分，习惯上也经常把<code>DataSource</code>称为连接池。</p>
 <h3 id="连接池思想"><a href="#连接池思想" class="headerlink" title="连接池思想"></a>连接池思想</h3><p>在系统<strong>初始化</strong>的时候，将数据库<strong>连接对象（Connection）</strong> 存储在内存中，当用户需要访问数据库时候，并不是建立一个新的连接，而是从连接池中取出一个已经建立好的空闲连接对象。而连接池负责分配、管理、释放数据库连接对象。注意的是：连接池是由<strong>容器（比如tomcat）</strong> 提供的，同时容器也管理着连接池。</p>
 <h2 id="JNDI"><a href="#JNDI" class="headerlink" title="JNDI"></a>JNDI</h2><p><strong>JNDI（Java Naming and Directory Interface，Java命名和目录接口）</strong>，JNDI是Java平台的一个标准扩展，提供一组接口、类和关于命名空间的概念。<strong><em>其功能通俗的来说，就是提供一个类似全局的map，key保存JNDI的名称，value保存你要放到里面的资源的引用（如Java对象），以后要想要获取value的资源即可通过<code>lookup</code>名称检索</em></strong>。<br>注意：需要区分开JNDI和通过JNDI查找的数据源的概念，不能将JNDI和连接池混为一谈。</p>
 <ul>

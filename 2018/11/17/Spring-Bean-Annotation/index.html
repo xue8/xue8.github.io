@@ -18,22 +18,22 @@
   
   
   <title>Spring 注解自动装配Bean | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
-  <meta name="description" content="引言上文：Spring自动装配Bean实现hello world 介绍了Spring使用xml配置实现自动装配Bean，但是通过xml配置自动装配的方式，会显得比较累赘、比较麻烦，那接下来的注解自动装配将会改善这个问题。 开启自动化装配Bean通过xml开启需要开启注解装配功能，则需要在web.xml中加入配置&amp;lt;context:annotation-config /&amp;gt;或者&amp;lt; co">
+  <meta name="description" content="引言上文：Spring自动装配Bean实现hello world 介绍了Spring使用xml配置实现自动装配Bean，但是通过xml配置自动装配的方式，会显得比较累赘、比较麻烦，那接下来的注解自动装配将会改善这个问题。 开启自动化装配Bean通过xml开启需要开启注解装配功能，则需要在web.xml中加入配置&amp;lt;context:annotation-config /&amp;gt;或者&amp;lt; c">
 <meta name="keywords" content="Spring">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring 注解自动装配Bean">
 <meta property="og:url" content="http://ddnd.cn/2018/11/17/Spring-Bean-Annotation/index.html">
 <meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
-<meta property="og:description" content="引言上文：Spring自动装配Bean实现hello world 介绍了Spring使用xml配置实现自动装配Bean，但是通过xml配置自动装配的方式，会显得比较累赘、比较麻烦，那接下来的注解自动装配将会改善这个问题。 开启自动化装配Bean通过xml开启需要开启注解装配功能，则需要在web.xml中加入配置&amp;lt;context:annotation-config /&amp;gt;或者&amp;lt; co">
+<meta property="og:description" content="引言上文：Spring自动装配Bean实现hello world 介绍了Spring使用xml配置实现自动装配Bean，但是通过xml配置自动装配的方式，会显得比较累赘、比较麻烦，那接下来的注解自动装配将会改善这个问题。 开启自动化装配Bean通过xml开启需要开启注解装配功能，则需要在web.xml中加入配置&amp;lt;context:annotation-config /&amp;gt;或者&amp;lt; c">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720dc36cf86506?w=1402&h=601&f=png&s=112504">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720dc36d6582ec?w=1254&h=570&f=png&s=97323">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720dc36d6b5f36?w=1261&h=647&f=png&s=134125">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720dc36f2501b4?w=1383&h=586&f=png&s=129001">
-<meta property="og:updated_time" content="2019-03-12T10:14:58.417Z">
+<meta property="og:updated_time" content="2019-03-13T11:13:25.762Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring 注解自动装配Bean">
-<meta name="twitter:description" content="引言上文：Spring自动装配Bean实现hello world 介绍了Spring使用xml配置实现自动装配Bean，但是通过xml配置自动装配的方式，会显得比较累赘、比较麻烦，那接下来的注解自动装配将会改善这个问题。 开启自动化装配Bean通过xml开启需要开启注解装配功能，则需要在web.xml中加入配置&amp;lt;context:annotation-config /&amp;gt;或者&amp;lt; co">
+<meta name="twitter:description" content="引言上文：Spring自动装配Bean实现hello world 介绍了Spring使用xml配置实现自动装配Bean，但是通过xml配置自动装配的方式，会显得比较累赘、比较麻烦，那接下来的注解自动装配将会改善这个问题。 开启自动化装配Bean通过xml开启需要开启注解装配功能，则需要在web.xml中加入配置&amp;lt;context:annotation-config /&amp;gt;或者&amp;lt; c">
 <meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720dc36cf86506?w=1402&h=601&f=png&s=112504">
   <!-- Canonical links -->
   <link rel="canonical" href="http://ddnd.cn/2018/11/17/Spring-Bean-Annotation/index.html">
@@ -388,9 +388,9 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>上文：<a href="http://ddnd.cn/2018/11/17/Spring-Bean-Automatic/">Spring自动装配Bean实现hello world</a> 介绍了Spring使用xml配置实现自动装配Bean，但是通过xml配置自动装配的方式，会显得比较累赘、比较麻烦，那接下来的注解自动装配将会改善这个问题。</p>
+        <a id="more"></a>
+<h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>上文：<a href="http://ddnd.cn/2018/11/17/Spring-Bean-Automatic/">Spring自动装配Bean实现hello world</a> 介绍了Spring使用xml配置实现自动装配Bean，但是通过xml配置自动装配的方式，会显得比较累赘、比较麻烦，那接下来的注解自动装配将会改善这个问题。</p>
 <h2 id="开启自动化装配Bean"><a href="#开启自动化装配Bean" class="headerlink" title="开启自动化装配Bean"></a>开启自动化装配Bean</h2><h3 id="通过xml开启"><a href="#通过xml开启" class="headerlink" title="通过xml开启"></a>通过xml开启</h3><p>需要开启注解装配功能，则需要在web.xml中加入配置<code>&lt;context:annotation-config /&gt;</code>或者<code>&lt; component-scan /&gt;</code>，配置代码的如下。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;beans </span><br><span class="line">	//...</span><br><span class="line">	xmlns:context=&quot;http://www.springframework.org/schema/context&quot;</span><br><span class="line">	//...</span><br><span class="line">	http://www.springframework.org/schema/context</span><br><span class="line">	http://www.springframework.org/schema/context/spring-context-2.5.xsd&quot;&gt;</span><br><span class="line">	//...</span><br><span class="line"></span><br><span class="line">	&lt;context:annotation-config /&gt; //或者&lt;component-scan /&gt;</span><br><span class="line">	//...</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure></p>
-<a id="more"></a>
 <p>这两者的区别如下：</p>
 <p> &lt;context:annotation-config&gt;：<br> :  是用于<strong>激活</strong>那些已经在spring容器里注册过的bean（无论是通过xml的方式还是通过package sanning的方式），是对已注册Bean的进行操作的配置，也就是说，Bean需要首先通过某种方式（比如Xml配置，或者其他注解）被注册，然后使用这个配置，可以对已注册的Bean进行进一步操作（比如注入到某个类的内部），也就是说，这个配置是用于“激活”已注册的Bean的，让已注册的Bean开始工作。</p>
 <p>&lt;context:component-scan&gt;：<br>:  除了具有<code>&lt;context:annotation-config&gt;</code>的功能之外，<code>&lt;context:component-scan&gt;</code>还可以在指定的package下扫描以及注册javabean</p>

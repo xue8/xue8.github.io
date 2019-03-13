@@ -18,13 +18,13 @@
   
   
   <title>Shiro和Spring MVC、Mybatis整合教程 | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
-  <meta name="description" content="前言Apache Shiro 是Java的安全框架，提供了认证（Authentication）、授权（Authorization）、会话（Session）管理、加密（Cryptography）等功能，且Shiro与Spring Security等安全框架相比具有简单性、灵活性、支持细粒度鉴权、支持一级缓存等，还有Shiro不跟任何容器（Tomcat等）和框架（Sping等）捆绑，可以独立运行，这">
+  <meta name="description" content="前言Apache Shiro 是Java的安全框架，提供了认证（Authentication）、授权（Authorization）、会话（Session）管理、加密（Cryptography）等功能，且Shiro与Spring Security等安全框架相比具有简单性、灵活性、支持细粒度鉴权、支持一级缓存等，还有Shiro不跟任何容器（Tomcat等）和框架（Sping等）捆绑，可以独立运行，">
 <meta name="keywords" content="Mybatis,Spring MVC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Shiro和Spring MVC、Mybatis整合教程">
 <meta property="og:url" content="http://ddnd.cn/2019/02/02/springmvc-mybatis-shiro/index.html">
 <meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
-<meta property="og:description" content="前言Apache Shiro 是Java的安全框架，提供了认证（Authentication）、授权（Authorization）、会话（Session）管理、加密（Cryptography）等功能，且Shiro与Spring Security等安全框架相比具有简单性、灵活性、支持细粒度鉴权、支持一级缓存等，还有Shiro不跟任何容器（Tomcat等）和框架（Sping等）捆绑，可以独立运行，这">
+<meta property="og:description" content="前言Apache Shiro 是Java的安全框架，提供了认证（Authentication）、授权（Authorization）、会话（Session）管理、加密（Cryptography）等功能，且Shiro与Spring Security等安全框架相比具有简单性、灵活性、支持细粒度鉴权、支持一级缓存等，还有Shiro不跟任何容器（Tomcat等）和框架（Sping等）捆绑，可以独立运行，">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/e0e01e43gy1fzsdwjowogj21rf0p0tc4.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/e0e01e43gy1fzses93aygj20dn071q3n.jpg">
@@ -33,10 +33,10 @@
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/e0e01e43gy1fzsi4q8o9qj20ks05pdge.jpg">
 <meta property="og:image" content="https://wx1.sinaimg.cn/large/e0e01e43gy1fzsitjvdxnj20hw04eweh.jpg">
 <meta property="og:image" content="https://wx4.sinaimg.cn/large/e0e01e43gy1fzsiufh2cqj20cj04nmx5.jpg">
-<meta property="og:updated_time" content="2019-03-12T10:15:16.032Z">
+<meta property="og:updated_time" content="2019-03-13T11:14:03.720Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shiro和Spring MVC、Mybatis整合教程">
-<meta name="twitter:description" content="前言Apache Shiro 是Java的安全框架，提供了认证（Authentication）、授权（Authorization）、会话（Session）管理、加密（Cryptography）等功能，且Shiro与Spring Security等安全框架相比具有简单性、灵活性、支持细粒度鉴权、支持一级缓存等，还有Shiro不跟任何容器（Tomcat等）和框架（Sping等）捆绑，可以独立运行，这">
+<meta name="twitter:description" content="前言Apache Shiro 是Java的安全框架，提供了认证（Authentication）、授权（Authorization）、会话（Session）管理、加密（Cryptography）等功能，且Shiro与Spring Security等安全框架相比具有简单性、灵活性、支持细粒度鉴权、支持一级缓存等，还有Shiro不跟任何容器（Tomcat等）和框架（Sping等）捆绑，可以独立运行，">
 <meta name="twitter:image" content="https://ws1.sinaimg.cn/large/e0e01e43gy1fzsdwjowogj21rf0p0tc4.jpg">
   <!-- Canonical links -->
   <link rel="canonical" href="http://ddnd.cn/2019/02/02/springmvc-mybatis-shiro/index.html">
@@ -391,9 +391,9 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <p><img src="https://ws1.sinaimg.cn/large/e0e01e43gy1fzsdwjowogj21rf0p0tc4.jpg" style="width: 100%"></p>
+        <a id="more"></a>
+<p><img src="https://ws1.sinaimg.cn/large/e0e01e43gy1fzsdwjowogj21rf0p0tc4.jpg" style="width: 100%"></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Apache Shiro 是Java的<strong>安全框架</strong>，提供了认证（Authentication）、授权（Authorization）、会话（Session）管理、加密（Cryptography）等功能，且Shiro与Spring Security等安全框架相比具有简单性、灵活性、支持细粒度鉴权、支持一级缓存等，<strong>还有Shiro不跟任何容器（Tomcat等）和框架（Sping等）捆绑，可以独立运行，这也造就了Shiro不仅仅是可以用在Java EE上还可以用在Java SE上</strong>。</p>
-<a id="more"></a>
 <h2 id="Shiro四大功能"><a href="#Shiro四大功能" class="headerlink" title="Shiro四大功能"></a>Shiro四大功能</h2><p>在开始之前，首先了解一下Shiro的四大功能，俗话说“知己知彼百战不殆”。<br><img src="https://ws1.sinaimg.cn/large/e0e01e43gy1fzses93aygj20dn071q3n.jpg" alt="image"></p>
 <h3 id="认证"><a href="#认证" class="headerlink" title="认证"></a>认证</h3><p><strong>认证</strong>就是用户访问系统的时候，系统要验证用户身份的合法性，比如我们通常所说的“登录”就是认证的一种方式，只有登录成功了之后我们才能访问相应的资源。在Shiro中，我们可以将用户理解为<strong>Subject</strong>主体，在用户身份认证的时候，用户需要提供能证明他身份的信息，如用户名、密码等，用户所提供的这些用户名、密码则对应Shiro中的Principal、 Credentials，即在Subject进行身份认证的时候，需要提供相应的Principal、 Credentials，对应的代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UsernamePasswordToken token = new UsernamePasswordToken(username, password);</span><br><span class="line">Subject subject = SecurityUtils.getSubject();</span><br><span class="line">subject.login(token); //提交认证</span><br></pre></td></tr></table></figure></p>
 <p>我们知道Http协议是<strong>无状态</strong>的，所以用户认证成功后怎么才能保持认证成功的状态呢？如果是我们开发的话一般都是登录成功后将Session储存在服务器，然后再将Session返回给用户，之后的请求用户都将这个Session带上，然后服务器根据用户请求携带的Session和服务器储存的Session进行比较来判断用户是否已认证。但是使用Shiro后，<strong>Shiro已经帮我们做好这个了（下面介绍的会话管理），是不是feel爽~</strong></p>

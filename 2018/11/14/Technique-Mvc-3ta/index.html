@@ -18,22 +18,22 @@
   
   
   <title>MVC模式与三层架构关系 | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
-  <meta name="description" content="前言对于许多新手都不明白MVC模式和三层架构的关系，本人也是，特地整合了网上的一些文章对MVC模式和三层架构的关系进行介绍，希望对大家有帮助。 关于三层架构在软件体系架构设计中，分层式结构是最常见，也是最重要的一种结构。微软推荐的分层式结构一般分为三层，从下至上分别为：数据访问层、业务逻辑层（又或称为领域层）、表示层。">
+  <meta name="description" content="前言对于许多新手都不明白MVC模式和三层架构的关系，本人也是，特地整合了网上的一些文章对MVC模式和三层架构的关系进行介绍，希望对大家有帮助。 关于三层架构在软件体系架构设计中，分层式结构是最常见，也是最重要的一种结构。微软推荐的分层式结构一般分为三层，从下至上分别为：数据访问层、业务逻辑层（又或称为领域层）、表示层。  表示层（UI）：通俗讲就是展现给用户的界面，即用户在使用一个系统的时候他的">
 <meta name="keywords" content="MVC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MVC模式与三层架构关系">
 <meta property="og:url" content="http://ddnd.cn/2018/11/14/Technique-Mvc-3ta/index.html">
 <meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
-<meta property="og:description" content="前言对于许多新手都不明白MVC模式和三层架构的关系，本人也是，特地整合了网上的一些文章对MVC模式和三层架构的关系进行介绍，希望对大家有帮助。 关于三层架构在软件体系架构设计中，分层式结构是最常见，也是最重要的一种结构。微软推荐的分层式结构一般分为三层，从下至上分别为：数据访问层、业务逻辑层（又或称为领域层）、表示层。">
+<meta property="og:description" content="前言对于许多新手都不明白MVC模式和三层架构的关系，本人也是，特地整合了网上的一些文章对MVC模式和三层架构的关系进行介绍，希望对大家有帮助。 关于三层架构在软件体系架构设计中，分层式结构是最常见，也是最重要的一种结构。微软推荐的分层式结构一般分为三层，从下至上分别为：数据访问层、业务逻辑层（又或称为领域层）、表示层。  表示层（UI）：通俗讲就是展现给用户的界面，即用户在使用一个系统的时候他的">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720dca8596d4c4?w=633&h=417&f=png&s=23970">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720dca85e74ffa?w=490&h=299&f=png&s=68735">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720dca85d739c1?w=279&h=168&f=png&s=8999">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720dca85bf4a98?w=986&h=345&f=png&s=317075">
-<meta property="og:updated_time" content="2019-03-12T10:15:54.548Z">
+<meta property="og:updated_time" content="2019-03-13T11:14:39.939Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MVC模式与三层架构关系">
-<meta name="twitter:description" content="前言对于许多新手都不明白MVC模式和三层架构的关系，本人也是，特地整合了网上的一些文章对MVC模式和三层架构的关系进行介绍，希望对大家有帮助。 关于三层架构在软件体系架构设计中，分层式结构是最常见，也是最重要的一种结构。微软推荐的分层式结构一般分为三层，从下至上分别为：数据访问层、业务逻辑层（又或称为领域层）、表示层。">
+<meta name="twitter:description" content="前言对于许多新手都不明白MVC模式和三层架构的关系，本人也是，特地整合了网上的一些文章对MVC模式和三层架构的关系进行介绍，希望对大家有帮助。 关于三层架构在软件体系架构设计中，分层式结构是最常见，也是最重要的一种结构。微软推荐的分层式结构一般分为三层，从下至上分别为：数据访问层、业务逻辑层（又或称为领域层）、表示层。  表示层（UI）：通俗讲就是展现给用户的界面，即用户在使用一个系统的时候他的">
 <meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720dca8596d4c4?w=633&h=417&f=png&s=23970">
   <!-- Canonical links -->
   <link rel="canonical" href="http://ddnd.cn/2018/11/14/Technique-Mvc-3ta/index.html">
@@ -388,8 +388,9 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>对于许多新手都不明白<strong>MVC模式</strong>和<strong>三层架构</strong>的关系，本人也是，特地整合了网上的一些文章对MVC模式和三层架构的关系进行介绍，希望对大家有帮助。</p>
-<h1 id="关于三层架构"><a href="#关于三层架构" class="headerlink" title="关于三层架构"></a>关于三层架构</h1><p>在软件体系架构设计中，分层式结构是最常见，也是最重要的一种结构。微软推荐的分层式结构一般分为三层，从下至上分别为：数据访问层、业务逻辑层（又或称为领域层）、表示层。<br><a id="more"></a></p>
+        <a id="more"></a>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>对于许多新手都不明白<strong>MVC模式</strong>和<strong>三层架构</strong>的关系，本人也是，特地整合了网上的一些文章对MVC模式和三层架构的关系进行介绍，希望对大家有帮助。</p>
+<h1 id="关于三层架构"><a href="#关于三层架构" class="headerlink" title="关于三层架构"></a>关于三层架构</h1><p>在软件体系架构设计中，分层式结构是最常见，也是最重要的一种结构。微软推荐的分层式结构一般分为三层，从下至上分别为：数据访问层、业务逻辑层（又或称为领域层）、表示层。</p>
 <ol>
 <li><strong>表示层（UI）</strong>：通俗讲就是展现给用户的界面，即用户在使用一个系统的时候他的所见所得。 　</li>
 <li><strong>业务逻辑层（BLL）</strong>：针对具体问题的操作，也可以说是对数据层的操作，对数据业务逻辑处理。 </li>

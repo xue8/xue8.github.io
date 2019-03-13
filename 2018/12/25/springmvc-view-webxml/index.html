@@ -18,13 +18,13 @@
   
   
   <title>我是如何一步步解决问题 让Spring MVC返回HTML类型的视图 | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
-  <meta name="description" content="前言这两天在折腾SSM，在捣鼓Spring MVC的时候，我想让Spring MVC的前端控制器（DispatcherServlet）给用户返回的是HTML类型的视图而不是JSP类型的视图，于是我按照常规的思路，把Spring MVC配置文件里面的视图解析器配置修改成HTML后缀的，然后就遇上了各种问题了……当然这些问题也都是我对Spring MVC不够了解才导致的，接下来详细说一下我遇到的问题">
+  <meta name="description" content="前言这两天在折腾SSM，在捣鼓Spring MVC的时候，我想让Spring MVC的前端控制器（DispatcherServlet）给用户返回的是HTML类型的视图而不是JSP类型的视图，于是我按照常规的思路，把Spring MVC配置文件里面的视图解析器配置修改成HTML后缀的，然后就遇上了各种问题了……当然这些问题也都是我对Spring MVC不够了解才导致的，接下来详细说一下我遇到的问">
 <meta name="keywords" content="Spring MVC,web.xml,servlet">
 <meta property="og:type" content="article">
 <meta property="og:title" content="我是如何一步步解决问题 让Spring MVC返回HTML类型的视图">
 <meta property="og:url" content="http://ddnd.cn/2018/12/25/springmvc-view-webxml/index.html">
 <meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
-<meta property="og:description" content="前言这两天在折腾SSM，在捣鼓Spring MVC的时候，我想让Spring MVC的前端控制器（DispatcherServlet）给用户返回的是HTML类型的视图而不是JSP类型的视图，于是我按照常规的思路，把Spring MVC配置文件里面的视图解析器配置修改成HTML后缀的，然后就遇上了各种问题了……当然这些问题也都是我对Spring MVC不够了解才导致的，接下来详细说一下我遇到的问题">
+<meta property="og:description" content="前言这两天在折腾SSM，在捣鼓Spring MVC的时候，我想让Spring MVC的前端控制器（DispatcherServlet）给用户返回的是HTML类型的视图而不是JSP类型的视图，于是我按照常规的思路，把Spring MVC配置文件里面的视图解析器配置修改成HTML后缀的，然后就遇上了各种问题了……当然这些问题也都是我对Spring MVC不够了解才导致的，接下来详细说一下我遇到的问">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/e0e01e43gy1fyi08g83uwj20jd05hmxe.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/e0e01e43gy1fyi32ct15hj20ug06qdgc.jpg">
@@ -41,10 +41,10 @@
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/e0e01e43gy1fyj1llbr8zj20br0ceaah.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/e0e01e43gy1fyj7w31ct9j20yx0huwgb.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/e0e01e43gy1fyj817fqjej20nd06rmxg.jpg">
-<meta property="og:updated_time" content="2019-03-12T10:15:39.236Z">
+<meta property="og:updated_time" content="2019-03-13T11:14:11.260Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="我是如何一步步解决问题 让Spring MVC返回HTML类型的视图">
-<meta name="twitter:description" content="前言这两天在折腾SSM，在捣鼓Spring MVC的时候，我想让Spring MVC的前端控制器（DispatcherServlet）给用户返回的是HTML类型的视图而不是JSP类型的视图，于是我按照常规的思路，把Spring MVC配置文件里面的视图解析器配置修改成HTML后缀的，然后就遇上了各种问题了……当然这些问题也都是我对Spring MVC不够了解才导致的，接下来详细说一下我遇到的问题">
+<meta name="twitter:description" content="前言这两天在折腾SSM，在捣鼓Spring MVC的时候，我想让Spring MVC的前端控制器（DispatcherServlet）给用户返回的是HTML类型的视图而不是JSP类型的视图，于是我按照常规的思路，把Spring MVC配置文件里面的视图解析器配置修改成HTML后缀的，然后就遇上了各种问题了……当然这些问题也都是我对Spring MVC不够了解才导致的，接下来详细说一下我遇到的问">
 <meta name="twitter:image" content="https://ws1.sinaimg.cn/large/e0e01e43gy1fyi08g83uwj20jd05hmxe.jpg">
   <!-- Canonical links -->
   <link rel="canonical" href="http://ddnd.cn/2018/12/25/springmvc-view-webxml/index.html">
@@ -399,9 +399,9 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <p><img src="https://ws1.sinaimg.cn/large/e0e01e43gy1fyi08g83uwj20jd05hmxe.jpg" style="width: 100%"></p>
+        <a id="more"></a>
+<p><img src="https://ws1.sinaimg.cn/large/e0e01e43gy1fyi08g83uwj20jd05hmxe.jpg" style="width: 100%"></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这两天在折腾SSM，在捣鼓<code>Spring MVC</code>的时候，我想让Spring MVC的前端控制器（<code>DispatcherServlet</code>）给用户返回的是HTML类型的视图而不是JSP类型的视图，于是我按照常规的思路，把<code>Spring MVC</code>配置文件里面的视图解析器配置修改成HTML后缀的，然后就遇上了各种问题了……当然这些问题也都是我对Spring MVC不够了解才导致的，接下来详细说一下我遇到的问题以及解决过程。</p>
-<a id="more"></a>
 <h1 id="遇上问题"><a href="#遇上问题" class="headerlink" title="遇上问题"></a>遇上问题</h1><p>为了将返回给用户的视图从<code>JSP</code>改成<code>HTML</code>嘛，我就寻思着不就是把<code>Spring MVC</code>配置文件的视图配置改一下，把<code>.jsp</code>改成<code>.html</code>嘛。<br><img src="https://ws1.sinaimg.cn/large/e0e01e43gy1fyi32ct15hj20ug06qdgc.jpg" alt=""></p>
 <p>原来返回JSP的配置 Spring-MVC.xml：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;</span><br><span class="line">    &lt;property name=&quot;prefix&quot; value=&quot;&quot;&gt;&lt;/property&gt;</span><br><span class="line">    &lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot;&gt;&lt;/property&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure></p>
 <p>因为我的JSP文件就是放在<code>web</code>根目录下，所以这里<code>prefix</code>就留空了。</p>

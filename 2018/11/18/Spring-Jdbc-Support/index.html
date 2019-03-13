@@ -18,20 +18,20 @@
   
   
   <title>Spring对JDBC的支持 | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
-  <meta name="description" content="引言企业应用程序经常要访问存储在数据库中的信息，因此JDK提供了一个标准接口 JDBC（Java DataBase Connection，Java数据库连接）来进行数据库访问操作。JDBC为多种关系数据库提供了统一访问方式，作为特定厂商数据库访问API的一种高级抽象，它主要包含一些通用的接口类，所以真正的数据库访问操作实现是由各自数据库厂商提供的。通常把厂商提供的特定于数据库的访问API称为数据库">
+  <meta name="description" content="引言企业应用程序经常要访问存储在数据库中的信息，因此JDK提供了一个标准接口 JDBC（Java DataBase Connection，Java数据库连接）来进行数据库访问操作。JDBC为多种关系数据库提供了统一访问方式，作为特定厂商数据库访问API的一种高级抽象，它主要包含一些通用的接口类，所以真正的数据库访问操作实现是由各自数据库厂商提供的。通常把厂商提供的特定于数据库的访问API称为数据">
 <meta name="keywords" content="Jdbc">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring对JDBC的支持">
 <meta property="og:url" content="http://ddnd.cn/2018/11/18/Spring-Jdbc-Support/index.html">
 <meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
-<meta property="og:description" content="引言企业应用程序经常要访问存储在数据库中的信息，因此JDK提供了一个标准接口 JDBC（Java DataBase Connection，Java数据库连接）来进行数据库访问操作。JDBC为多种关系数据库提供了统一访问方式，作为特定厂商数据库访问API的一种高级抽象，它主要包含一些通用的接口类，所以真正的数据库访问操作实现是由各自数据库厂商提供的。通常把厂商提供的特定于数据库的访问API称为数据库">
+<meta property="og:description" content="引言企业应用程序经常要访问存储在数据库中的信息，因此JDK提供了一个标准接口 JDBC（Java DataBase Connection，Java数据库连接）来进行数据库访问操作。JDBC为多种关系数据库提供了统一访问方式，作为特定厂商数据库访问API的一种高级抽象，它主要包含一些通用的接口类，所以真正的数据库访问操作实现是由各自数据库厂商提供的。通常把厂商提供的特定于数据库的访问API称为数据">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720dd3ac879cb0?w=945&h=382&f=png&s=171916">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720dd3ac78e04c?w=875&h=446&f=png&s=319992">
-<meta property="og:updated_time" content="2019-03-12T10:15:12.886Z">
+<meta property="og:updated_time" content="2019-03-13T11:13:56.450Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring对JDBC的支持">
-<meta name="twitter:description" content="引言企业应用程序经常要访问存储在数据库中的信息，因此JDK提供了一个标准接口 JDBC（Java DataBase Connection，Java数据库连接）来进行数据库访问操作。JDBC为多种关系数据库提供了统一访问方式，作为特定厂商数据库访问API的一种高级抽象，它主要包含一些通用的接口类，所以真正的数据库访问操作实现是由各自数据库厂商提供的。通常把厂商提供的特定于数据库的访问API称为数据库">
+<meta name="twitter:description" content="引言企业应用程序经常要访问存储在数据库中的信息，因此JDK提供了一个标准接口 JDBC（Java DataBase Connection，Java数据库连接）来进行数据库访问操作。JDBC为多种关系数据库提供了统一访问方式，作为特定厂商数据库访问API的一种高级抽象，它主要包含一些通用的接口类，所以真正的数据库访问操作实现是由各自数据库厂商提供的。通常把厂商提供的特定于数据库的访问API称为数据">
 <meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/11/17/16720dd3ac879cb0?w=945&h=382&f=png&s=171916">
   <!-- Canonical links -->
   <link rel="canonical" href="http://ddnd.cn/2018/11/18/Spring-Jdbc-Support/index.html">
@@ -386,8 +386,10 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>企业应用程序经常要访问存储在数据库中的信息，因此JDK提供了一个标准<strong>接口</strong> JDBC（Java DataBase Connection，Java数据库连接）来进行数据库访问操作。JDBC为多种关系数据库提供了统一访问方式，作为特定厂商数据库访问API的一种高级抽象，它主要包含一些通用的<strong>接口类</strong>，所以真正的数据库访问操作实现是由各自数据库厂商提供的。通常把厂商提供的特定于数据库的访问API称为数据库JDBC驱动程序，如：Mysql、Oracle、SQL Server驱动等等。</p>
-<p>利用JDBC虽然可以方便地访问存储在关系数据库中的信息，但是代码比较繁琐，开发人员不得不在<strong>Java对象</strong>与<strong>关系数据</strong>之间进行转换。因此，随着企业应用开发技术的进步。逐渐产生了用来实现Java对象与关系数据之间自动映射的持久化框架，称为<strong>对象-关系映射（Ovject/Relation Mapping，ORM）</strong>。这些持久化框架包括Hibernate、Mybatis等等。为了进一步促进Java EE企业应用开发，进一步规范ORM实现，Java EE 5.0规范中推出了<strong>JPA（Java Persistence API）</strong>。需要注意的是，JPA是一个ORM的标准规范，而不是一个具体的ORM框架。<br><a id="more"></a><br>好了，说了这么多，也是为了大家能清楚JDBC和JPA的区别。回归正题，本文关注的是Spring对JDBC的支持，至于Spring对于JPA的支持往后的文章再介绍。</p>
+        <a id="more"></a>
+<h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>企业应用程序经常要访问存储在数据库中的信息，因此JDK提供了一个标准<strong>接口</strong> JDBC（Java DataBase Connection，Java数据库连接）来进行数据库访问操作。JDBC为多种关系数据库提供了统一访问方式，作为特定厂商数据库访问API的一种高级抽象，它主要包含一些通用的<strong>接口类</strong>，所以真正的数据库访问操作实现是由各自数据库厂商提供的。通常把厂商提供的特定于数据库的访问API称为数据库JDBC驱动程序，如：Mysql、Oracle、SQL Server驱动等等。</p>
+<p>利用JDBC虽然可以方便地访问存储在关系数据库中的信息，但是代码比较繁琐，开发人员不得不在<strong>Java对象</strong>与<strong>关系数据</strong>之间进行转换。因此，随着企业应用开发技术的进步。逐渐产生了用来实现Java对象与关系数据之间自动映射的持久化框架，称为<strong>对象-关系映射（Ovject/Relation Mapping，ORM）</strong>。这些持久化框架包括Hibernate、Mybatis等等。为了进一步促进Java EE企业应用开发，进一步规范ORM实现，Java EE 5.0规范中推出了<strong>JPA（Java Persistence API）</strong>。需要注意的是，JPA是一个ORM的标准规范，而不是一个具体的ORM框架。</p>
+<p>好了，说了这么多，也是为了大家能清楚JDBC和JPA的区别。回归正题，本文关注的是Spring对JDBC的支持，至于Spring对于JPA的支持往后的文章再介绍。</p>
 <h1 id="Spring对JDBC的封装"><a href="#Spring对JDBC的封装" class="headerlink" title="Spring对JDBC的封装"></a>Spring对JDBC的封装</h1><h2 id="传统的JDBC"><a href="#传统的JDBC" class="headerlink" title="传统的JDBC"></a>传统的JDBC</h2><p>首先我们了解一下传统JDBC的工作流程</p>
 <ul>
 <li>加载数据库驱动程序（Mysql、SQL Server等）</li>

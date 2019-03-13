@@ -18,13 +18,13 @@
   
   
   <title>计算机如何储存数字和字符 | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
-  <meta name="description" content="前言最近在学习中涉及到计算机储存、传输数字和字符等操作，由于对字节、2进制、10进制、16进制、ASCII码的概念以及它们之间的关系和转换理解的不够透彻，导致在通讯、MD5消息摘要算法等时候出现问题，是因为数据转成计算机认识的01的这个环节出现问题。由于这个问题并不是那么容易发现，所以我也算是花了挺多时间才解决了这个问题，记录下解决过程，顺便也当复习一下计算机组成原理。">
+  <meta name="description" content="前言最近在学习中涉及到计算机储存、传输数字和字符等操作，由于对字节、2进制、10进制、16进制、ASCII码的概念以及它们之间的关系和转换理解的不够透彻，导致在通讯、MD5消息摘要算法等时候出现问题，是因为数据转成计算机认识的01的这个环节出现问题。由于这个问题并不是那么容易发现，所以我也算是花了挺多时间才解决了这个问题，记录下解决过程，顺便也当复习一下计算机组成原理。 ASCII码在计算机中">
 <meta name="keywords" content="Java,xue8,薛8,DDND,程序员,">
 <meta property="og:type" content="article">
 <meta property="og:title" content="计算机如何储存数字和字符">
 <meta property="og:url" content="http://ddnd.cn/2019/02/16/byte-hex-ascii/index.html">
 <meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
-<meta property="og:description" content="前言最近在学习中涉及到计算机储存、传输数字和字符等操作，由于对字节、2进制、10进制、16进制、ASCII码的概念以及它们之间的关系和转换理解的不够透彻，导致在通讯、MD5消息摘要算法等时候出现问题，是因为数据转成计算机认识的01的这个环节出现问题。由于这个问题并不是那么容易发现，所以我也算是花了挺多时间才解决了这个问题，记录下解决过程，顺便也当复习一下计算机组成原理。">
+<meta property="og:description" content="前言最近在学习中涉及到计算机储存、传输数字和字符等操作，由于对字节、2进制、10进制、16进制、ASCII码的概念以及它们之间的关系和转换理解的不够透彻，导致在通讯、MD5消息摘要算法等时候出现问题，是因为数据转成计算机认识的01的这个环节出现问题。由于这个问题并不是那么容易发现，所以我也算是花了挺多时间才解决了这个问题，记录下解决过程，顺便也当复习一下计算机组成原理。 ASCII码在计算机中">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://ws3.sinaimg.cn/large/e0e01e43gy1g08660xgavj20sg0lc43a.jpg">
 <meta property="og:image" content="http://ws4.sinaimg.cn/large/e0e01e43gy1g08enhtsx1j213s0jjtby.jpg">
@@ -35,10 +35,10 @@
 <meta property="og:image" content="http://ws4.sinaimg.cn/large/e0e01e43gy1g08izqbof9j213w0npjva.jpg">
 <meta property="og:image" content="http://wx3.sinaimg.cn/large/e0e01e43gy1g08j73hvayj21g40jgn3x.jpg">
 <meta property="og:image" content="http://ws1.sinaimg.cn/large/e0e01e43gy1g08jiea66vj213d0njadu.jpg">
-<meta property="og:updated_time" content="2019-03-12T10:13:49.996Z">
+<meta property="og:updated_time" content="2019-03-13T11:11:13.336Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算机如何储存数字和字符">
-<meta name="twitter:description" content="前言最近在学习中涉及到计算机储存、传输数字和字符等操作，由于对字节、2进制、10进制、16进制、ASCII码的概念以及它们之间的关系和转换理解的不够透彻，导致在通讯、MD5消息摘要算法等时候出现问题，是因为数据转成计算机认识的01的这个环节出现问题。由于这个问题并不是那么容易发现，所以我也算是花了挺多时间才解决了这个问题，记录下解决过程，顺便也当复习一下计算机组成原理。">
+<meta name="twitter:description" content="前言最近在学习中涉及到计算机储存、传输数字和字符等操作，由于对字节、2进制、10进制、16进制、ASCII码的概念以及它们之间的关系和转换理解的不够透彻，导致在通讯、MD5消息摘要算法等时候出现问题，是因为数据转成计算机认识的01的这个环节出现问题。由于这个问题并不是那么容易发现，所以我也算是花了挺多时间才解决了这个问题，记录下解决过程，顺便也当复习一下计算机组成原理。 ASCII码在计算机中">
 <meta name="twitter:image" content="http://ws3.sinaimg.cn/large/e0e01e43gy1g08660xgavj20sg0lc43a.jpg">
   <!-- Canonical links -->
   <link rel="canonical" href="http://ddnd.cn/2019/02/16/byte-hex-ascii/index.html">
@@ -388,9 +388,9 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <p><img src="http://ws3.sinaimg.cn/large/e0e01e43gy1g08660xgavj20sg0lc43a.jpg" alt="image" width="100%"></p>
+        <a id="more"></a>
+<p><img src="http://ws3.sinaimg.cn/large/e0e01e43gy1g08660xgavj20sg0lc43a.jpg" alt="image" width="100%"></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近在学习中涉及到计算机储存、传输数字和字符等操作，由于对字节、<code>2</code>进制、<code>10</code>进制、<code>16</code>进制、ASCII码的概念以及它们之间的关系和转换理解的不够透彻，导致在通讯、<code>MD5</code>消息摘要算法等时候出现问题，是因为<strong>数据</strong>转成<strong>计算机认识的01</strong>的这个环节出现问题。由于这个问题并不是那么容易发现，所以我也算是花了挺多时间才解决了这个问题，记录下解决过程，顺便也当复习一下计算机组成原理。</p>
-<a id="more"></a>
 <h2 id="ASCII码"><a href="#ASCII码" class="headerlink" title="ASCII码"></a>ASCII码</h2><p>在计算机中，所有的数据在存储和运算时都要使用<strong>二进制数</strong>表示（因为计算机用高电平和低电平分别表示1和0），例如，像a、b、c、d这样的52个字母（包括大写）以及0、1等数字还有一些常用的符号（例如*、#、@等）在计算机中存储时也要使用二进制数来表示，而具体用哪些二进制数字表示哪个符号，当然每个人都可以约定自己的一套（这就叫编码），而大家如果要想互相通信而不造成混乱，那么大家就必须使用相同的编码规则，于是美国有关的标准化组织就出台了ASCII编码，统一规定了上述常用符号用哪些二进制数来表示。<br>ASCII 码一共规定了<code>128</code>个字符（<code>0000 0000</code>-<code>0111 1111</code>）的编码，比如空格<code>SPACE</code>是32（二进制<code>0010 0000</code>），大写的字母<code>A</code>是65（二进制<code>0100 0001</code> ）。这128个符号（包括32个不能打印出来的控制符号），只占用了一个字节的后面7位（低7位），最前面的一位（高1位）统一规定为<code>0</code>(不要和数字的符号位搞混)。<br>当然除了ASCII码，还有UTF-8、GBK等。</p>
 <h2 id="字节"><a href="#字节" class="headerlink" title="字节"></a>字节</h2><p>字节(Byte)普通计算机系统能读取和定位到最小信息单位，即我们通过计算机储存和传输数据的时候都是先把数据转成字节。<br>字节即<code>Byte</code>，一个字节代表<code>8</code>个比特（Bit），字节通常缩写为B，比特通常缩写为b。字节的大小是<code>8</code>Bit，即字节的范围是<code>0000 0000</code> - <code>1111 1111</code>，对于<strong>无符号型</strong>，它表示的十进制范围是[0,255]，对于<strong>有符号型</strong>，高一位表示符号位，它表示的十进制范围是[-128,127]。</p>
 <h2 id="计算机若何储存数据"><a href="#计算机若何储存数据" class="headerlink" title="计算机若何储存数据"></a>计算机若何储存数据</h2><p>计算机只认识<code>0</code>和<code>1</code>（因为计算机只有高低电平两个状态），数据要想通过计算机储存或者传输，首先是要把数据转成计算机能认识的格式即01数据。<br>我们举个例子，以储存十进制数字<code>28</code>和<code>-28</code>为例，首先将十进制数转成二进制。    </p>

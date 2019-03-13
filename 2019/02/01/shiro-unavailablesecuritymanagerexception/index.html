@@ -18,18 +18,18 @@
   
   
   <title>Shiro抛出异常UnavailableSecurityManagerException | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
-  <meta name="description" content="Shiro报错org.apache.shiro.UnavailableSecurityManagerException: No SecurityManager accessible to the calling code, either bound to the org.apache.shiro.util.ThreadContext or as a vm static singleton.  Th">
+  <meta name="description" content="Shiro报错org.apache.shiro.UnavailableSecurityManagerException: No SecurityManager accessible to the calling code, either bound to the org.apache.shiro.util.ThreadContext or as a vm static singleton.  T">
 <meta name="keywords" content="Shiro">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Shiro抛出异常UnavailableSecurityManagerException">
 <meta property="og:url" content="http://ddnd.cn/2019/02/01/shiro-unavailablesecuritymanagerexception/index.html">
 <meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
-<meta property="og:description" content="Shiro报错org.apache.shiro.UnavailableSecurityManagerException: No SecurityManager accessible to the calling code, either bound to the org.apache.shiro.util.ThreadContext or as a vm static singleton.  Th">
+<meta property="og:description" content="Shiro报错org.apache.shiro.UnavailableSecurityManagerException: No SecurityManager accessible to the calling code, either bound to the org.apache.shiro.util.ThreadContext or as a vm static singleton.  T">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-12T10:14:54.313Z">
+<meta property="og:updated_time" content="2019-03-13T11:13:15.182Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shiro抛出异常UnavailableSecurityManagerException">
-<meta name="twitter:description" content="Shiro报错org.apache.shiro.UnavailableSecurityManagerException: No SecurityManager accessible to the calling code, either bound to the org.apache.shiro.util.ThreadContext or as a vm static singleton.  Th">
+<meta name="twitter:description" content="Shiro报错org.apache.shiro.UnavailableSecurityManagerException: No SecurityManager accessible to the calling code, either bound to the org.apache.shiro.util.ThreadContext or as a vm static singleton.  T">
   <!-- Canonical links -->
   <link rel="canonical" href="http://ddnd.cn/2019/02/01/shiro-unavailablesecuritymanagerexception/index.html">
   
@@ -383,7 +383,8 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <p>Shiro报错<code>org.apache.shiro.UnavailableSecurityManagerException: No SecurityManager accessible to the calling code, either bound to the org.apache.shiro.util.ThreadContext or as a vm static singleton.  This is an invalid application configuration.</code>。<br>解决方法，修改<code>web.xml</code>的filter，将<code>&lt;url-pattern&gt;/&lt;/url-pattern&gt;</code>改成<code>&lt;url-pattern&gt;/*&lt;/url-pattern&gt;</code>，即：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;filter&gt;</span><br><span class="line">&lt;filter-name&gt;shiroFilter&lt;/filter-name&gt;</span><br><span class="line">&lt;filter-class&gt;org.springframework.web.filter.DelegatingFilterProxy&lt;/filter-class&gt;</span><br><span class="line">&lt;/filter&gt;</span><br><span class="line"></span><br><span class="line">&lt;filter-mapping&gt;</span><br><span class="line">&lt;filter-name&gt;shiroFilter&lt;/filter-name&gt;</span><br><span class="line">&lt;url-pattern&gt;/&lt;/url-pattern&gt;</span><br><span class="line">&lt;/filter-mapping&gt;</span><br></pre></td></tr></table></figure></p>
+        <a id="more"></a>
+<p>Shiro报错<code>org.apache.shiro.UnavailableSecurityManagerException: No SecurityManager accessible to the calling code, either bound to the org.apache.shiro.util.ThreadContext or as a vm static singleton.  This is an invalid application configuration.</code>。<br>解决方法，修改<code>web.xml</code>的filter，将<code>&lt;url-pattern&gt;/&lt;/url-pattern&gt;</code>改成<code>&lt;url-pattern&gt;/*&lt;/url-pattern&gt;</code>，即：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;filter&gt;</span><br><span class="line">&lt;filter-name&gt;shiroFilter&lt;/filter-name&gt;</span><br><span class="line">&lt;filter-class&gt;org.springframework.web.filter.DelegatingFilterProxy&lt;/filter-class&gt;</span><br><span class="line">&lt;/filter&gt;</span><br><span class="line"></span><br><span class="line">&lt;filter-mapping&gt;</span><br><span class="line">&lt;filter-name&gt;shiroFilter&lt;/filter-name&gt;</span><br><span class="line">&lt;url-pattern&gt;/&lt;/url-pattern&gt;</span><br><span class="line">&lt;/filter-mapping&gt;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>

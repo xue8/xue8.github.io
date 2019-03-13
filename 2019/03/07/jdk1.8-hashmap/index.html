@@ -18,11 +18,13 @@
   
   
   <title>HashMap从认识到源码分析 | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
-  <meta name="keywords" content="HashMap">
+  <meta name="description" content="MapMap在开发过程中使用频率很高的数据结构，Map是Key-value键值对映射的抽象接口，该映射不包括重复的键，既一个键对应一个值。HashMap、HashTable、ConcurrentHashMap都是Java Collection Framework的重要成员。Map接口提供三种collection视图，允许以键集(keySet())、值集(values())或键-值映射关系集(e">
+<meta name="keywords" content="HashMap">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HashMap从认识到源码分析">
 <meta property="og:url" content="http://ddnd.cn/2019/03/07/jdk1.8-hashmap/index.html">
 <meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
+<meta property="og:description" content="MapMap在开发过程中使用频率很高的数据结构，Map是Key-value键值对映射的抽象接口，该映射不包括重复的键，既一个键对应一个值。HashMap、HashTable、ConcurrentHashMap都是Java Collection Framework的重要成员。Map接口提供三种collection视图，允许以键集(keySet())、值集(values())或键-值映射关系集(e">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://wx3.sinaimg.cn/large/e0e01e43ly1g0vf2bq3xgj21g80ytkjm.jpg">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/3/7/169575a7d1acb827?w=1018&h=636&f=png&s=48415">
@@ -32,9 +34,10 @@
 <meta property="og:image" content="http://ws4.sinaimg.cn/large/e0e01e43ly1g0vf07q9plj20vt0ldacm.jpg">
 <meta property="og:image" content="http://wx4.sinaimg.cn/large/e0e01e43ly1g0vf0g8sq8j20q10netbf.jpg">
 <meta property="og:image" content="http://ws2.sinaimg.cn/large/e0e01e43ly1g0vf0lbaphj20fo0b0ab8.jpg">
-<meta property="og:updated_time" content="2019-03-12T10:14:08.150Z">
+<meta property="og:updated_time" content="2019-03-13T11:11:49.458Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HashMap从认识到源码分析">
+<meta name="twitter:description" content="MapMap在开发过程中使用频率很高的数据结构，Map是Key-value键值对映射的抽象接口，该映射不包括重复的键，既一个键对应一个值。HashMap、HashTable、ConcurrentHashMap都是Java Collection Framework的重要成员。Map接口提供三种collection视图，允许以键集(keySet())、值集(values())或键-值映射关系集(e">
 <meta name="twitter:image" content="http://wx3.sinaimg.cn/large/e0e01e43ly1g0vf2bq3xgj21g80ytkjm.jpg">
   <!-- Canonical links -->
   <link rel="canonical" href="http://ddnd.cn/2019/03/07/jdk1.8-hashmap/index.html">
@@ -389,8 +392,8 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <p><img src="http://wx3.sinaimg.cn/large/e0e01e43ly1g0vf2bq3xgj21g80ytkjm.jpg" alt="image" width="100%"></p>
-<a id="more"></a>
+        <a id="more"></a>
+<p><img src="http://wx3.sinaimg.cn/large/e0e01e43ly1g0vf2bq3xgj21g80ytkjm.jpg" alt="image" width="100%"></p>
 <h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><p>Map在开发过程中使用频率很高的数据结构，Map是<code>Key-value</code>键值对映射的抽象<strong>接口</strong>，该映射不包括重复的键，既一个键对应一个值。<code>HashMap</code>、<code>HashTable</code>、<code>ConcurrentHashMap</code>都是Java Collection Framework的重要成员。Map接口提供三种collection视图，允许以键集(keySet())、值集(values())或键-值映射关系集(entrySet())的形式查看某个映射的内容。<br><img src="https://user-gold-cdn.xitu.io/2019/3/7/169575a7d1acb827?w=1018&amp;h=636&amp;f=png&amp;s=48415" alt=""></p>
 <h2 id="HasH表"><a href="#HasH表" class="headerlink" title="HasH表"></a>HasH表</h2><p>我们知道数组的储存方式是在内存上分配固定的连续的空间，寻址速度快（查询速度快），时间复杂度为<code>O(1)</code>，但是在插入、删除元素时候需要移动数组的元素，所以插入、删除时候速度慢，时间复杂度为<code>O(n)</code>。链表的存储方式在内存上是不连续的，每个元素都保存着下个元素的内存地址，通过这个地址找到下个元素，所以链表在查询的时候速度慢，时间复杂度为<code>O(n)</code>，在插入和删除的时候速度快，时间复杂度为<code>O(1)</code>。<br>如果我们想要一个数据结构既查询速度快，插入和删除速度也要快，那我们应该怎么做呢？这时<strong>哈希(Hash)表</strong>就应时而生了，通过<strong>哈希函数</strong>计算出<strong>键</strong>在哈希表中指定的储存位置(注意这里的储存位置是在表中的位置，并不是内存的地址)，称为哈希地址，然后将值储存在这个哈希地址上，然后通过<strong>键</strong>就可以直接操作到<strong>值</strong>，查询、插入、删除等操作时间复杂度都是<code>O(1)</code>。<br>既然是键通过哈希函数计算出储存位置，那么哈希函数的好坏直接影响到哈希表的操作效率，如会出现浪费储存空间、出现大量冲突(即不同的键计算出来的储存位置一样)。     </p>
 <blockquote>

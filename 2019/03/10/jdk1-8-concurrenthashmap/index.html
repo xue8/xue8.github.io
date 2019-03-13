@@ -18,23 +18,23 @@
   
   
   <title>10分钟掌握ConcurrentHashMap 3分钟清楚和HashMap、Hashtable的区别 | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
-  <meta name="description" content="前言ConcurrentHashMap顾名思义就是同步的HashMap，也就是线程安全的HashMap，所以本篇介绍的ConcurrentHashMap和HashMap有着很重要的关系，所以建议之前没有了解过HashMap的可以先看看这篇关于HashMap的原理分析《HashMap从认识到源码分析》，本篇继续以JDK1.8版本的源码进行分析，最后在介绍完ConcurrentHashMap之后会对">
+  <meta name="description" content="前言ConcurrentHashMap顾名思义就是同步的HashMap，也就是线程安全的HashMap，所以本篇介绍的ConcurrentHashMap和HashMap有着很重要的关系，所以建议之前没有了解过HashMap的可以先看看这篇关于HashMap的原理分析《HashMap从认识到源码分析》，本篇继续以JDK1.8版本的源码进行分析，最后在介绍完ConcurrentHashMap之后会">
 <meta name="keywords" content="Hashtable,HashMap,ConcurrentHashMap">
 <meta property="og:type" content="article">
 <meta property="og:title" content="10分钟掌握ConcurrentHashMap 3分钟清楚和HashMap、Hashtable的区别">
 <meta property="og:url" content="http://ddnd.cn/2019/03/10/jdk1-8-concurrenthashmap/index.html">
 <meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
-<meta property="og:description" content="前言ConcurrentHashMap顾名思义就是同步的HashMap，也就是线程安全的HashMap，所以本篇介绍的ConcurrentHashMap和HashMap有着很重要的关系，所以建议之前没有了解过HashMap的可以先看看这篇关于HashMap的原理分析《HashMap从认识到源码分析》，本篇继续以JDK1.8版本的源码进行分析，最后在介绍完ConcurrentHashMap之后会对">
+<meta property="og:description" content="前言ConcurrentHashMap顾名思义就是同步的HashMap，也就是线程安全的HashMap，所以本篇介绍的ConcurrentHashMap和HashMap有着很重要的关系，所以建议之前没有了解过HashMap的可以先看看这篇关于HashMap的原理分析《HashMap从认识到源码分析》，本篇继续以JDK1.8版本的源码进行分析，最后在介绍完ConcurrentHashMap之后会">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://wx3.sinaimg.cn/large/e0e01e43ly1g0y4kkt2k3j21y013bb2b.jpg">
 <meta property="og:image" content="http://wx1.sinaimg.cn/large/e0e01e43ly1g0y4iof3w1j20qp0hvjsa.jpg">
 <meta property="og:image" content="http://wx4.sinaimg.cn/large/e0e01e43ly1g0y4j0xa3bj20m20j7gmq.jpg">
 <meta property="og:image" content="http://ws4.sinaimg.cn/large/e0e01e43ly1g0y4j8c72lj20zg0g60u3.jpg">
 <meta property="og:image" content="http://wx1.sinaimg.cn/large/e0e01e43ly1g0y4jjmzr3j21640kqwiy.jpg">
-<meta property="og:updated_time" content="2019-03-12T10:14:11.690Z">
+<meta property="og:updated_time" content="2019-03-13T11:11:58.027Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="10分钟掌握ConcurrentHashMap 3分钟清楚和HashMap、Hashtable的区别">
-<meta name="twitter:description" content="前言ConcurrentHashMap顾名思义就是同步的HashMap，也就是线程安全的HashMap，所以本篇介绍的ConcurrentHashMap和HashMap有着很重要的关系，所以建议之前没有了解过HashMap的可以先看看这篇关于HashMap的原理分析《HashMap从认识到源码分析》，本篇继续以JDK1.8版本的源码进行分析，最后在介绍完ConcurrentHashMap之后会对">
+<meta name="twitter:description" content="前言ConcurrentHashMap顾名思义就是同步的HashMap，也就是线程安全的HashMap，所以本篇介绍的ConcurrentHashMap和HashMap有着很重要的关系，所以建议之前没有了解过HashMap的可以先看看这篇关于HashMap的原理分析《HashMap从认识到源码分析》，本篇继续以JDK1.8版本的源码进行分析，最后在介绍完ConcurrentHashMap之后会">
 <meta name="twitter:image" content="http://wx3.sinaimg.cn/large/e0e01e43ly1g0y4kkt2k3j21y013bb2b.jpg">
   <!-- Canonical links -->
   <link rel="canonical" href="http://ddnd.cn/2019/03/10/jdk1-8-concurrenthashmap/index.html">
@@ -389,9 +389,9 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <p><img src="http://wx3.sinaimg.cn/large/e0e01e43ly1g0y4kkt2k3j21y013bb2b.jpg" alt="image" width="100%"></p>
+        <a id="more"></a>
+<p><img src="http://wx3.sinaimg.cn/large/e0e01e43ly1g0y4kkt2k3j21y013bb2b.jpg" alt="image" width="100%"></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><code>ConcurrentHashMap</code>顾名思义就是同步的HashMap，也就是线程安全的HashMap，所以本篇介绍的ConcurrentHashMap和HashMap有着很重要的关系，所以建议之前没有了解过HashMap的可以先看看这篇关于HashMap的原理分析<a href="https://ddnd.cn/2019/03/07/jdk1.8-hashmap/">《HashMap从认识到源码分析》</a>，本篇继续以<code>JDK1.8</code>版本的源码进行分析，最后在介绍完ConcurrentHashMap之后会对ConcurrentHashMap、Hashtable和HashMap做一个比较和总结。</p>
-<a id="more"></a>
 <h2 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h2><p>我们先看一下<code>ConcurrentHashMap</code>实现了哪些接口、继承了哪些类，对<code>ConcurrentHashMap</code>有一个整体认知。<br><img src="http://wx1.sinaimg.cn/large/e0e01e43ly1g0y4iof3w1j20qp0hvjsa.jpg" alt="image"><br><code>ConcurrentHashMap</code>继承<code>AbstractMap</code>接口，这个和<code>HashMap</code>一样，然后实现了<code>ConcurrentMap</code>接口，这个和<code>HashMap</code>不一样，<code>HashMap</code>是直接实现的<code>Map</code>接口。<br>再细看<code>ConcurrentHashMap</code>的结构，这里列举几个重要的成员变量<code>table</code>、<code>nextTable</code>、<code>baseCount</code>、<code>sizeCtl</code>、<code>transferIndex</code>、<code>cellsBusy</code></p>
 <ul>
 <li><strong>table</strong>：数据类型是Node数组，这里的Node和HashMap的Node一样都是内部类且实现了<code>Map.Entry</code>接口</li>

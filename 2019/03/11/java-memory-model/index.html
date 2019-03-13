@@ -18,13 +18,13 @@
   
   
   <title>什么是Java内存模型？ | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
-  <meta name="description" content="前言要想深入了解Java并发编程，就要先理解好Java内存模型，而要理解Java内存模型又不得不从硬件、计算机内存模型说起，本文从计算机内存模型产生的原因、解决的问题谈起，然后再对Java模型进行介绍，最后对计算机内存模型和Java内存模型进行总结，希望大家看完本文之后有所收获！">
+  <meta name="description" content="前言要想深入了解Java并发编程，就要先理解好Java内存模型，而要理解Java内存模型又不得不从硬件、计算机内存模型说起，本文从计算机内存模型产生的原因、解决的问题谈起，然后再对Java模型进行介绍，最后对计算机内存模型和Java内存模型进行总结，希望大家看完本文之后有所收获！ CPU工作过程及出现的问题CPU执行过程大家都知道，计算机在执行程序时，每条指令都是在CPU中执行的，而执行的时候">
 <meta name="keywords" content="Java内存模型,计算机内存模型">
 <meta property="og:type" content="article">
 <meta property="og:title" content="什么是Java内存模型？">
 <meta property="og:url" content="http://ddnd.cn/2019/03/11/java-memory-model/index.html">
 <meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
-<meta property="og:description" content="前言要想深入了解Java并发编程，就要先理解好Java内存模型，而要理解Java内存模型又不得不从硬件、计算机内存模型说起，本文从计算机内存模型产生的原因、解决的问题谈起，然后再对Java模型进行介绍，最后对计算机内存模型和Java内存模型进行总结，希望大家看完本文之后有所收获！">
+<meta property="og:description" content="前言要想深入了解Java并发编程，就要先理解好Java内存模型，而要理解Java内存模型又不得不从硬件、计算机内存模型说起，本文从计算机内存模型产生的原因、解决的问题谈起，然后再对Java模型进行介绍，最后对计算机内存模型和Java内存模型进行总结，希望大家看完本文之后有所收获！ CPU工作过程及出现的问题CPU执行过程大家都知道，计算机在执行程序时，每条指令都是在CPU中执行的，而执行的时候">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://ws3.sinaimg.cn/large/e0e01e43ly1g0z8ongt9yj21qi15okjn.jpg">
 <meta property="og:image" content="http://wx2.sinaimg.cn/large/e0e01e43ly1g0z8qqzxgmj20p70kjwgk.jpg">
@@ -32,10 +32,10 @@
 <meta property="og:image" content="http://ws1.sinaimg.cn/large/e0e01e43ly1g0z8r8km5kj20q20bs40h.jpg">
 <meta property="og:image" content="http://ws2.sinaimg.cn/large/e0e01e43ly1g0z8rfihfkj20qk09ft9l.jpg">
 <meta property="og:image" content="http://ws1.sinaimg.cn/large/e0e01e43ly1g0z8rlifrqj20zb0cbjsz.jpg">
-<meta property="og:updated_time" content="2019-03-12T09:40:16.167Z">
+<meta property="og:updated_time" content="2019-03-13T11:11:43.238Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="什么是Java内存模型？">
-<meta name="twitter:description" content="前言要想深入了解Java并发编程，就要先理解好Java内存模型，而要理解Java内存模型又不得不从硬件、计算机内存模型说起，本文从计算机内存模型产生的原因、解决的问题谈起，然后再对Java模型进行介绍，最后对计算机内存模型和Java内存模型进行总结，希望大家看完本文之后有所收获！">
+<meta name="twitter:description" content="前言要想深入了解Java并发编程，就要先理解好Java内存模型，而要理解Java内存模型又不得不从硬件、计算机内存模型说起，本文从计算机内存模型产生的原因、解决的问题谈起，然后再对Java模型进行介绍，最后对计算机内存模型和Java内存模型进行总结，希望大家看完本文之后有所收获！ CPU工作过程及出现的问题CPU执行过程大家都知道，计算机在执行程序时，每条指令都是在CPU中执行的，而执行的时候">
 <meta name="twitter:image" content="http://ws3.sinaimg.cn/large/e0e01e43ly1g0z8ongt9yj21qi15okjn.jpg">
   <!-- Canonical links -->
   <link rel="canonical" href="http://ddnd.cn/2019/03/11/java-memory-model/index.html">
@@ -390,9 +390,9 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <p><img src="http://ws3.sinaimg.cn/large/e0e01e43ly1g0z8ongt9yj21qi15okjn.jpg" alt="image" width="100%"></p>
+        <a id="more"></a>
+<p><img src="http://ws3.sinaimg.cn/large/e0e01e43ly1g0z8ongt9yj21qi15okjn.jpg" alt="image" width="100%"></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>要想深入了解Java并发编程，就要先理解好<strong>Java内存模型</strong>，而要理解Java内存模型又不得不从硬件、计算机内存模型说起，本文从计算机内存模型产生的原因、解决的问题谈起，然后再对Java模型进行介绍，最后对计算机内存模型和Java内存模型进行总结，希望大家看完本文之后有所收获！</p>
-<a id="more"></a>
 <h2 id="CPU工作过程及出现的问题"><a href="#CPU工作过程及出现的问题" class="headerlink" title="CPU工作过程及出现的问题"></a>CPU工作过程及出现的问题</h2><h3 id="CPU执行过程"><a href="#CPU执行过程" class="headerlink" title="CPU执行过程"></a>CPU执行过程</h3><p>大家都知道，计算机在执行程序时，每条指令都是在CPU中执行的，而执行的时候，又免不了要和数据打交道，而计算机上面的临时数据，是储存在<strong>主存</strong>中的。    </p>
 <blockquote>
 <p>计算机内存包括<strong>高速缓存</strong>和<strong>主存</strong>。</p>

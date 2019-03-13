@@ -331,11 +331,6 @@
 
   </div>
   
-  <div class="article-entry text-muted" itemprop="description">
-    <p><img src="https://ws1.sinaimg.cn/large/e0e01e43gy1fzsdwjowogj21rf0p0tc4.jpg" style="width: 100%"></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Apache Shiro 是Java的<strong>安全框架</strong>，提供了认证（Authentication）、授权（Authorization）、会话（Session）管理、加密（Cryptography）等功能，且Shiro与Spring Security等安全框架相比具有简单性、灵活性、支持细粒度鉴权、支持一级缓存等，<strong>还有Shiro不跟任何容器（Tomcat等）和框架（Sping等）捆绑，可以独立运行，这也造就了Shiro不仅仅是可以用在Java EE上还可以用在Java SE上</strong>。</p>
-  </div>
-  
   <p class="article-meta">
     <span class="article-date">
     <i class="icon icon-calendar-check"></i>
@@ -378,12 +373,6 @@
     </h1>
   
 
-  </div>
-  
-  <div class="article-entry text-muted" itemprop="description">
-    <p><img src="https://wx4.sinaimg.cn/large/e0e01e43gy1fzrauea0ruj20zy0ije81.jpg" alt="image" width="100%"></p>
-<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>在学习Shiro的时候，遇到Shiro抛出<code>org.apache.shiro.authc.AuthenticationException</code>异常，完整异常如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.apache.shiro.authc.AuthenticationException: Authentication failed for token submission [org.apache.shiro.authc.UsernamePasswordToken - xue8, rememberMe=false].  Possible unexpected error? (Typical or expected login exceptions should extend from AuthenticationException).</span><br></pre></td></tr></table></figure></p>
-<p>出现这个异常的原因是因为身份验证出错了，但是我觉得我写的Realm应该没什么错误，最后折腾了一会，翻看了一下Shiro的一些源码，终于知道出现这个问题的原因了，于是想将过程记录下来。</p>
   </div>
   
   <p class="article-meta">
@@ -474,11 +463,6 @@
 
   </div>
   
-  <div class="article-entry text-muted" itemprop="description">
-    <p><img src="http://wx4.sinaimg.cn/mw690/0060lm7Tly1fzc67i7oooj30b404cgll.jpg" style="width: 100%"></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>我们知道<code>HTTP</code>协议是无状态、无连接的，采用的是请求/响应模式，通信请求只能由客户端发起，服务器响应。这种请求/响应模式在客户端服务器需要持续的交互时候就显得很鸡肋，在HMTL5出来之前，要实现客户端服务器持续交互大多数都是通过AJAX轮询，但是轮询效率低，浪费带宽和服务器资源。因此WebSocket就发明出来了，WebSocket是HTML5提供的一种在单个TCP连接上进行全双工通信的协议。接下来我运用Spring和WebSocket实现一个简单的聊天功能，希望能对大家有帮助。</p>
-  </div>
-  
   <p class="article-meta">
     <span class="article-date">
     <i class="icon icon-calendar-check"></i>
@@ -521,11 +505,6 @@
     </h1>
   
 
-  </div>
-  
-  <div class="article-entry text-muted" itemprop="description">
-    <p><img src="https://ws1.sinaimg.cn/large/e0e01e43gy1fyi08g83uwj20jd05hmxe.jpg" style="width: 100%"></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这两天在折腾SSM，在捣鼓<code>Spring MVC</code>的时候，我想让Spring MVC的前端控制器（<code>DispatcherServlet</code>）给用户返回的是HTML类型的视图而不是JSP类型的视图，于是我按照常规的思路，把<code>Spring MVC</code>配置文件里面的视图解析器配置修改成HTML后缀的，然后就遇上了各种问题了……当然这些问题也都是我对Spring MVC不够了解才导致的，接下来详细说一下我遇到的问题以及解决过程。</p>
   </div>
   
   <p class="article-meta">
@@ -572,11 +551,6 @@
 
   </div>
   
-  <div class="article-entry text-muted" itemprop="description">
-    <p><img src="https://ws1.sinaimg.cn/large/e0e01e43gy1fyaudx4yrxj209u03yt8m.jpg" style="width: 100%"></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这两天在和同学谈到RPC、RESTful时候发现自己对这两者并不是很理解，于是查阅了网上相关资料加上自己的理解写下本篇文章以加深印象，由于本人水平有限，若对这两者的理解有不妥之处望指出。</p>
-  </div>
-  
   <p class="article-meta">
     <span class="article-date">
     <i class="icon icon-calendar-check"></i>
@@ -619,11 +593,6 @@
     </h1>
   
 
-  </div>
-  
-  <div class="article-entry text-muted" itemprop="description">
-    <p><img src="https://ws1.sinaimg.cn/large/e0e01e43gy1fy8muss9bdj20m8078mx7.jpg" style="width: 100%"></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>前面已经介绍<a href="https://ddnd.cn/2018/12/01/Spring-Mybatis/">Spring和Mybatis整合</a>，而本篇介绍在IDEA下Spring、Spring MVC、Mybatis（SSM）三个框架的整合，在阅读本篇之前，建议大家先去了解一下Spring、Spring MVC、Mybatis（<a href="https://ddnd.cn/categories/">三大框架基础入门传送门</a>），会达到事半功倍的效果。至于Spring MVC相对于Servlet、JSP的优点这里就不累赘了，大家可以上网查阅相关资料。本篇注重整合思路、整合过程以及整合过程中出现的坑。</p>
   </div>
   
   <p class="article-meta">
@@ -670,14 +639,6 @@
 
   </div>
   
-  <div class="article-entry text-muted" itemprop="description">
-    <p><img src="https://ws1.sinaimg.cn/large/e0e01e43gy1fxreyw9u7sj21y013edog.jpg" style="width: 100%"></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在很多项目中，Mybatis都是和Spring配合起来一起发挥作用的，利用Spring的注入、基于接口编程等优势，将Mybatis的一些琐事交给Spring管理，而Mybatis可以更加注重在自身业务SQL语句上。Mybatis和Spring的整合思路如下：</p>
-<ol>
-<li>Mybatis将SqlSessionFactory交给Spring创建和管理<br><code>SqlSessionFactoryBean</code>代替了<code>SqlSessionFactoryBuilder</code>来创建<code>SqlSessionFactory</code>,SqlSessionFactoryBean实现了Spring的FactoryBean接口，Spring在应用启动的时候为你创建SqlSessionFactory对象，然后将它以SqlSessionFactory为命名来存储。</li>
-<li>Mybatis将数据映射器Mapper交给Spring管理<br><code>MapperFactoryBean</code>封装了原有的<code>session.getMapper()</code>功能的实现，它可以把我们对应的Mapper接口<strong>注入</strong>到由Spring管理的Bean对象中(如Service Bean对象)，这样当我们需要使用到相应的Mapper对象时候，<code>MapperFactoryBean</code>会从它的getObject方法中获取到对应的Mapper.xml文件，即通过<strong>Mapper接口</strong>(xx.java)获取我们想要的<strong>Mapper对象</strong>。
-  </li></ol></div>
-  
   <p class="article-meta">
     <span class="article-date">
     <i class="icon icon-calendar-check"></i>
@@ -720,11 +681,6 @@
     </h1>
   
 
-  </div>
-  
-  <div class="article-entry text-muted" itemprop="description">
-    <p><img src="https://ws1.sinaimg.cn/large/e0e01e43gy1fxqf5iw6clj20m80cin0d.jpg" style="width: 100%"></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>我们在使用Mybatis的时候，获取需要执行的SQL语句的时候，都是通过调用xml文件来获取，例如：<code>User user = (User) sqlSession.selectOne(&quot;cn.ddnd.www.Entity.User.getUser&quot;, &quot;xue8@qq.com&quot;);</code>。这种方式是通过字符串去调用标签定义的SQL语句，第一容易出错，第二是当xml当中的id修改过后你不知道在程序当中有多少个地方使用了这个id，需要手动一一修改。后来Mybatis推出了Mapper动态代理方式，只需要编写<strong>Mapper接口</strong>（相当于Dao层）,由Mybatis框架根据接口定义创建接口的动态代理对象。</p>
   </div>
   
   <p class="article-meta">
@@ -770,11 +726,6 @@
   
 
   </div>
-  
-  <div class="article-entry text-muted" itemprop="description">
-    <p><img src="https://ws1.sinaimg.cn/large/e0e01e43gy1fxq59jtsmsj20jk09mjr9.jpg" style="width:100%"></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>上一篇文章介绍了xml文件映射SQL语句，即<code>User user = (User) sqlSession.selectOne(&quot;cn.ddnd.www.Entity.User.getUser&quot;, &quot;xue8@qq.com&quot;)</code>，但是这种方式过于繁杂，所以我们本篇介绍使用<strong>注解</strong>和<strong>SQL语句返回值的接口</strong>（如：IUser.class），即可实现xml配置文件的功能。<br>
-  </p></div>
   
   <p class="article-meta">
     <span class="article-date">

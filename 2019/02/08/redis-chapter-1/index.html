@@ -18,23 +18,23 @@
   
   
   <title>第一章 认识Redis 【Redis入门教程】 | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
-  <meta name="description" content="Redis入门教程目录：【Redis入门教程目录】 简介Redis是由C语言编写的开源、基于内存、支持多种数据结构、高性能的Key-Value数据库。">
+  <meta name="description" content="Redis入门教程目录：【Redis入门教程目录】 简介Redis是由C语言编写的开源、基于内存、支持多种数据结构、高性能的Key-Value数据库。 特性速度快首先Redis是将数据储存在内存中的，通常情况下每秒读写次数达到千万级别。其次Redis使用ANSI C编写，因为C语言接近操作系统，所以Redis的执行效率很高。最后Redis的处理网络请求部分采用的是单线程，如果想充分利用CPU资">
 <meta name="keywords" content="Java,xue8,薛8,DDND,程序员,">
 <meta property="og:type" content="article">
 <meta property="og:title" content="第一章 认识Redis 【Redis入门教程】">
 <meta property="og:url" content="http://ddnd.cn/2019/02/08/redis-chapter-1/index.html">
 <meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
-<meta property="og:description" content="Redis入门教程目录：【Redis入门教程目录】 简介Redis是由C语言编写的开源、基于内存、支持多种数据结构、高性能的Key-Value数据库。">
+<meta property="og:description" content="Redis入门教程目录：【Redis入门教程目录】 简介Redis是由C语言编写的开源、基于内存、支持多种数据结构、高性能的Key-Value数据库。 特性速度快首先Redis是将数据储存在内存中的，通常情况下每秒读写次数达到千万级别。其次Redis使用ANSI C编写，因为C语言接近操作系统，所以Redis的执行效率很高。最后Redis的处理网络请求部分采用的是单线程，如果想充分利用CPU资">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://ws1.sinaimg.cn/large/e0e01e43gy1fzz559f0n2j21d80gf3zh.jpg">
 <meta property="og:image" content="http://wx4.sinaimg.cn/large/e0e01e43gy1fzzbt51xfuj20w30cvag3.jpg">
 <meta property="og:image" content="http://wx2.sinaimg.cn/large/e0e01e43gy1fzzfhx264oj20oc0awq52.jpg">
 <meta property="og:image" content="http://wx2.sinaimg.cn/large/e0e01e43gy1fzzgkys41kj20pc0hrq7u.jpg">
 <meta property="og:image" content="http://ws1.sinaimg.cn/large/e0e01e43gy1fzzymliocdj20dr0fun32.jpg">
-<meta property="og:updated_time" content="2019-03-12T10:14:35.033Z">
+<meta property="og:updated_time" content="2019-03-13T11:12:44.120Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第一章 认识Redis 【Redis入门教程】">
-<meta name="twitter:description" content="Redis入门教程目录：【Redis入门教程目录】 简介Redis是由C语言编写的开源、基于内存、支持多种数据结构、高性能的Key-Value数据库。">
+<meta name="twitter:description" content="Redis入门教程目录：【Redis入门教程目录】 简介Redis是由C语言编写的开源、基于内存、支持多种数据结构、高性能的Key-Value数据库。 特性速度快首先Redis是将数据储存在内存中的，通常情况下每秒读写次数达到千万级别。其次Redis使用ANSI C编写，因为C语言接近操作系统，所以Redis的执行效率很高。最后Redis的处理网络请求部分采用的是单线程，如果想充分利用CPU资">
 <meta name="twitter:image" content="http://ws1.sinaimg.cn/large/e0e01e43gy1fzz559f0n2j21d80gf3zh.jpg">
   <!-- Canonical links -->
   <link rel="canonical" href="http://ddnd.cn/2019/02/08/redis-chapter-1/index.html">
@@ -384,9 +384,10 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <p><img src="http://ws1.sinaimg.cn/large/e0e01e43gy1fzz559f0n2j21d80gf3zh.jpg" alt="image" width="100%"></p>
+        <a id="more"></a>
+<p><img src="http://ws1.sinaimg.cn/large/e0e01e43gy1fzz559f0n2j21d80gf3zh.jpg" alt="image" width="100%"></p>
 <p><strong>Redis入门教程目录</strong>：<a href="https://ddnd.cn/categories/Redis/">【Redis入门教程目录】</a></p>
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><strong>Redis</strong>是由C语言编写的开源、基于内存、支持多种数据结构、高性能的<strong>Key-Value</strong>数据库。<br><a id="more"></a></p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><strong>Redis</strong>是由C语言编写的开源、基于内存、支持多种数据结构、高性能的<strong>Key-Value</strong>数据库。</p>
 <h2 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h2><h3 id="速度快"><a href="#速度快" class="headerlink" title="速度快"></a>速度快</h3><p><strong>首先</strong>Redis是将数据储存在内存中的，通常情况下每秒读写次数达到<strong>千万级别</strong>。<strong>其次</strong>Redis使用<code>ANSI C</code>编写，因为C语言接近操作系统，所以Redis的执行效率很高。<strong>最后</strong>Redis的处理网络请求部分采用的是<strong>单线程</strong>，如果想充分利用CPU资源的话，可以多开几个Redis实例来达到目的，为什么单线程还是速度快的原因呢？我们知道Redis的读写都是基于内存的，读写速度都是非常快的，不会出现需要等待很长时间，所以瓶颈并不会出现在请求读写上，所以没必要使用多线程来利用CPU，如果使用多线程的话（<strong>线程数&gt;CPU数情况下</strong>），多线程的创建、销毁、线程切换、线程竞争等开销所需要的时间会比执行读写所损耗的时间还多，那就南辕北辙了，当然这是在数据量小的时候才会这样，如果数据量到达一定量级了，那肯定是多线程比单线程快（<strong>线程数&lt;=CPU数情况下</strong>）。<br><img src="http://wx4.sinaimg.cn/large/e0e01e43gy1fzzbt51xfuj20w30cvag3.jpg" alt="image"></p>
 <h3 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h3><p>Redis可以通过<code>RDB</code>和<code>AOF</code>两种方式将数据持久化到磁盘上，其中这两种方式的区别如下：</p>
 <ul>

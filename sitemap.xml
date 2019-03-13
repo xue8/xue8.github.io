@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ddnd.cn/2019/03/11/java-memory-model/</loc>
+    
+    <lastmod>2019-03-13T12:11:26.706Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2019/03/08/jdk1-8-hashtable/</loc>
+    
+    <lastmod>2019-03-13T12:11:13.218Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ddnd.cn/2019/03/10/jdk1-8-concurrenthashmap/</loc>
+    
+    <lastmod>2019-03-13T12:11:08.004Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ddnd.cn/2018/11/14/Technique-Mvc-3ta/</loc>
     
     <lastmod>2019-03-13T11:14:39.939Z</lastmod>
@@ -156,30 +177,9 @@
   </url>
   
   <url>
-    <loc>http://ddnd.cn/2019/03/08/jdk1-8-hashtable/</loc>
-    
-    <lastmod>2019-03-13T11:12:04.895Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ddnd.cn/2019/03/10/jdk1-8-concurrenthashmap/</loc>
-    
-    <lastmod>2019-03-13T11:11:58.027Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://ddnd.cn/2019/03/07/jdk1.8-hashmap/</loc>
     
     <lastmod>2019-03-13T11:11:49.458Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ddnd.cn/2019/03/11/java-memory-model/</loc>
-    
-    <lastmod>2019-03-13T11:11:43.238Z</lastmod>
     
   </url>
   

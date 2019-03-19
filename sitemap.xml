@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ddnd.cn/2019/03/19/java-volatile/</loc>
+    
+    <lastmod>2019-03-19T08:20:33.677Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ddnd.cn/2019/03/15/java-abstractqueuedsynchronizer/</loc>
     
     <lastmod>2019-03-15T12:52:47.248Z</lastmod>

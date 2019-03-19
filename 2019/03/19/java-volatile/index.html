@@ -30,7 +30,7 @@
 <meta property="og:image" content="http://wx3.sinaimg.cn/large/e0e01e43ly1g186enjfwfj20k80degmr.jpg">
 <meta property="og:image" content="http://wx4.sinaimg.cn/large/e0e01e43ly1g186ext5z1j20h809vjsv.jpg">
 <meta property="og:image" content="http://ws1.sinaimg.cn/large/e0e01e43ly1g186f6g2hnj20ha09et9t.jpg">
-<meta property="og:updated_time" content="2019-03-19T08:20:33.677Z">
+<meta property="og:updated_time" content="2019-03-19T10:14:19.354Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java volatile关键字解析">
 <meta name="twitter:description" content="volatile简介volatile被称为轻量级的synchronized，运行时开销比synchronized更小，在多线程并发编程中发挥着同步共享变量、禁止处理器重排序的重要作用。建议在学习volatie之前，先看一下Java内存模型《什么是Java内存模型？》，因为volatile和Java内存模型有着莫大的关系。 Java内存模型在学习volatie之前，需要补充下Java内存模型的相关">
@@ -225,7 +225,7 @@
   <div class="widget">
     <h3 class="widget-title">Archive</h3>
     <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">12</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">12</span></li></ul>
     </div>
   </div>
 
@@ -237,6 +237,21 @@
     <div class="widget-body">
       <ul class="recent-post-list list-unstyled no-thumbnail">
         
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/03/19/java-synchronized/" class="title">java-synchronized</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-03-19T10:14:36.000Z" itemprop="datePublished">2019-03-19</time>
+              </p>
+            </div>
+          </li>
+          
           <li>
             
             <div class="item-inner">
@@ -297,21 +312,6 @@
             </div>
           </li>
           
-          <li>
-            
-            <div class="item-inner">
-              <p class="item-category">
-                <a class="category-link" href="/categories/Java-Programming/">Java编程基础</a>
-              </p>
-              <p class="item-title">
-                <a href="/2019/03/10/jdk1-8-concurrenthashmap/" class="title">10分钟掌握ConcurrentHashMap 3分钟清楚和HashMap、Hashtable的区别</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2019-03-10T14:02:55.000Z" itemprop="datePublished">2019-03-10</time>
-              </p>
-            </div>
-          </li>
-          
       </ul>
     </div>
   </div>
@@ -327,7 +327,7 @@
   <div class="slimContent">
     <nav id="toc" class="article-toc">
       <h3 class="toc-title">Catalogue</h3>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#volatile简介"><span class="toc-number">1.</span> <span class="toc-text">volatile简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java内存模型"><span class="toc-number">2.</span> <span class="toc-text">Java内存模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#volatile原理"><span class="toc-number">3.</span> <span class="toc-text">volatile原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#volatile的可见性"><span class="toc-number">3.1.</span> <span class="toc-text">volatile的可见性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#volatile的有序性"><span class="toc-number">3.2.</span> <span class="toc-text">volatile的有序性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#volatile有没有原子性？"><span class="toc-number">3.3.</span> <span class="toc-text">volatile有没有原子性？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#volatile简介"><span class="toc-number">1.</span> <span class="toc-text">volatile简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java内存模型"><span class="toc-number">2.</span> <span class="toc-text">Java内存模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#volatile原理"><span class="toc-number">3.</span> <span class="toc-text">volatile原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#volatile的可见性"><span class="toc-number">3.1.</span> <span class="toc-text">volatile的可见性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#volatile的有序性"><span class="toc-number">3.2.</span> <span class="toc-text">volatile的有序性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#volatile有没有原子性？"><span class="toc-number">3.3.</span> <span class="toc-text">volatile有没有原子性？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#volatile和CAS"><span class="toc-number">4.</span> <span class="toc-text">volatile和CAS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">5.</span> <span class="toc-text">参考</span></a></li></ol>
     </nav>
   </div>
 </aside>
@@ -378,7 +378,7 @@
         <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/03/19/java-volatile/#comments" class="article-comment-link">Comments</a></span>
         
 	
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 2.8k(words)</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 2.9k(words)</span>
 	
 	
 		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 10(minutes)</span>
@@ -444,6 +444,11 @@
 <p>如果所示：线程<code>1</code>在主存中获取了<code>i</code>的最新值(i=1)，线程<code>2</code>也在主存中获取了<code>i</code>的最新值(i=1，注意这时候线程<code>1</code>并未对变量<code>i</code>进行修改，所以<code>i</code>的值还是<code>1</code>)），然后线程<code>2</code>将i自增后写回主存，这时候主存中<code>i=2</code>，到这里还没有问题，然后线程<code>1</code>又对i进行了自增写回了主存，这时候主存中<code>i=2</code>，也就是对i做了2次自增操作，结果i的结果只自增了1，问题就出来了这里。 </p>
 <p>为什么会有这个问题呢，前面我们提到了Java内存模型和主存之间交互的<code>8</code>个操作都是原子性的，但是他们的操作连在一起就不是原子性了，而<code>volatile</code>关键字也只是保证了<code>use</code>、<code>load</code>、<code>read</code>三个操作连在一起时候的原子性，还有<code>assign</code>、<code>store</code>、<code>write</code>这三个操作连在一起时候的原子性，也就是<code>volatile</code>关键字<strong>保证了变量读操作的原子性和写操作的原子性，而变量的自增过程需要对变量进行读和写两个过程，而这两个过程连在一起就不是原子性操作了。</strong></p>
 <p>所以说<code>volatile</code>变量对于变量的单独写操作/读操作是保证了原子性的，而常说的原子性包括读写操作连在一起，所以说对于<code>volatile</code>不保证原子性的。那么如何解决上面程序的问题呢？只能给<code>increase</code>方法加锁，让在多线程情况下只有一个线程能执行<code>increase</code>方法，也就是保证了一个线程对变量的读写是原子性的。</p>
+<h2 id="volatile和CAS"><a href="#volatile和CAS" class="headerlink" title="volatile和CAS"></a>volatile和CAS</h2><p>学完<code>volatile</code>之后，是不是觉得<code>volatile</code>和<code>CAS</code>有种似曾相识的感觉？那它们之间有什么关系或者区别呢。   </p>
+<ol>
+<li><code>volatile</code>只能保证共享变量的读和写操作单个操作的原子性，而<code>CAS</code>保证了共享变量的读和写两个操作一起的原子性(即CAS是原子性操作的)。</li>
+<li><code>volatile</code>的实现基于<code>JMM</code>，而<code>CAS</code>的实现基于硬件。</li>
+</ol>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.cnblogs.com/dolphin0520/p/3920373.html" target="_blank" rel="noopener">Java并发编程：volatile关键字解析</a><br><a href="https://www.javazhiyin.com/887.html" target="_blank" rel="noopener">JAVA并发六：彻底理解volatile</a><br><a href="https://jiangzhengjun.iteye.com/blog/652532" target="_blank" rel="noopener">Java内存模型与volatile</a><br><a href="http://www.techug.com/post/java-volatile-keyword.html" target="_blank" rel="noopener">Java面试官最爱问的volatile关键字</a>      </p>
 
       
@@ -499,6 +504,10 @@
   <div class="bar-inner">
   
   <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2019/03/19/java-synchronized/" title="java-synchronized"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
     
     
     <li class="next">

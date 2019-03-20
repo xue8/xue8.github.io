@@ -28,9 +28,10 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://ws2.sinaimg.cn/large/e0e01e43ly1g186ftl4a0j21g80yt4qt.jpg">
 <meta property="og:image" content="http://wx3.sinaimg.cn/large/e0e01e43ly1g186enjfwfj20k80degmr.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/large/e0e01e43ly1g191y6o3paj21620f5qd7.jpg">
 <meta property="og:image" content="http://wx4.sinaimg.cn/large/e0e01e43ly1g186ext5z1j20h809vjsv.jpg">
 <meta property="og:image" content="http://ws1.sinaimg.cn/large/e0e01e43ly1g186f6g2hnj20ha09et9t.jpg">
-<meta property="og:updated_time" content="2019-03-19T10:14:19.354Z">
+<meta property="og:updated_time" content="2019-03-20T02:36:50.972Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java volatile关键字解析">
 <meta name="twitter:description" content="volatile简介volatile被称为轻量级的synchronized，运行时开销比synchronized更小，在多线程并发编程中发挥着同步共享变量、禁止处理器重排序的重要作用。建议在学习volatie之前，先看一下Java内存模型《什么是Java内存模型？》，因为volatile和Java内存模型有着莫大的关系。 Java内存模型在学习volatie之前，需要补充下Java内存模型的相关">
@@ -419,12 +420,12 @@
 <p>线程<code>1</code>和线程<code>2</code>同时执行，线程<code>1</code>的<code>A</code>和<code>B</code>的执行顺序可能是<code>A-&gt;B</code>或者<code>B-&gt;A</code>(因为A和B之间没有依赖关系，可以指令重排序)。如果线程<code>1</code>按照<code>A-&gt;B</code>的顺序执行，那么线程<code>2</code>执行后的结果s就是我们想要的正确结果，如果线程<code>1</code>按照<code>B-&gt;A</code>的顺序执行，那么线程<code>2</code>执行后的结果s可能就不是我们想要的结果了，因为线程<code>1</code>将变量<code>stop</code>的值修改为<code>true</code>后，线程<code>2</code>马上获取到<code>stop</code>为<code>true</code>然后执行<code>C</code>语句，然后执行<code>D</code>语句即<code>s = 3.14 * 0 * 0</code>，然后线程<code>1</code>再执行<code>B</code>语句，那么结果就是有问题了。    </p>
 <p>那么为了解决这个问题，我们可以在变量<code>true</code>加上关键字<code>volatile</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">double pi = 3.14;</span><br><span class="line">double r = 0;</span><br><span class="line">double s = 0;</span><br><span class="line">volatile boolean start = false;</span><br><span class="line">//线程1</span><br><span class="line">r = 10; //A</span><br><span class="line">start = true; //B</span><br><span class="line"></span><br><span class="line">//线程2</span><br><span class="line">if (start) &#123;  //C</span><br><span class="line">    s = pi * r * r;  //D</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>这样线程<code>1</code>的执行顺序就只能是<code>A-&gt;B</code>了，因为关键字<strong>发挥了禁止处理器指令重排序的作用</strong>，所以线程<code>2</code>的执行结果就不会有问题了。</p>
-<p>那么<code>volatile</code>是怎么实现禁止处理器重排序的呢？<br><strong>编译器会在编译生成字节码的时候，在加有<code>volatile</code>关键字的变量的指令进行插入内存屏障来禁止特定类型的处理器重排序</strong><br>我们先看<strong>内存屏障</strong>有哪些及发挥的作用</p>
+<p>那么<code>volatile</code>是怎么实现禁止处理器重排序的呢？<br><strong>编译器会在编译生成字节码的时候，在加有<code>volatile</code>关键字的变量的指令进行插入内存屏障来禁止特定类型的处理器重排序</strong><br>我们先看<strong>内存屏障</strong>有哪些及发挥的作用<br><img src="http://wx1.sinaimg.cn/large/e0e01e43ly1g191y6o3paj21620f5qd7.jpg" alt="image"></p>
 <ol>
-<li><code>StoreStore</code>屏障：禁止屏障上面的普通变量的写和下面的<code>volatile</code>变量的写进行处理器重排序。</li>
-<li><code>StoreLoad</code>屏障：防止屏障上面的<code>volatile</code>变量的写和下面可能有的<code>volatile</code>变量的读/写进行处理器重排序。</li>
-<li><code>LoadLoad</code>屏障：禁止屏障上面的<code>volatile</code>读和下面的<strong>所有</strong>普通变量的读进行处理器重排序。</li>
-<li><code>LoadStore</code>屏障：禁止屏障上面的<code>volatile</code>读和下面的<strong>所有</strong>普通变量的读进行处理器重排序。</li>
+<li><code>StoreStore</code>屏障：禁止屏障上面变量的写和下面所有进行写的变量进行处理器重排序。</li>
+<li><code>StoreLoad</code>屏障：禁止屏障上面变量的写和下面所有进行读的变量进行处理器重排序。</li>
+<li><code>LoadLoad</code>屏障：禁止屏障上面变量的读和下面所有进行读的变量进行处理器重排序。</li>
+<li><code>LoadStore</code>屏障：禁止屏障上面变量的读和下面所有进行写的变量进行处理器重排序。</li>
 </ol>
 <p>再看<code>volatile</code>是怎么插入屏障的</p>
 <ol>

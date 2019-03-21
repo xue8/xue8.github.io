@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>synchronized的使用（一） | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
+  <meta name="description" content="多线程简介在现代计算机中往往存在多个CPU核心，而1个CPU能同时运行一个线程，为了充分利用CPU多核心，提高CPU的效率，多线程就应时而生了。    那么多线程就一定比单线程快吗？答案是不一定，因为多线程存在单线程没有的问题  上下文切换：线程从运行状态切换到阻塞状态或者等待状态的时候需要将线程的运行状态保存，线程从阻塞状态或者等待状态切换到运行状态的时候需要加载线程上次运行的状态。线程的运行">
+<meta name="keywords" content="多线程,synchronized">
+<meta property="og:type" content="article">
+<meta property="og:title" content="synchronized的使用（一）">
+<meta property="og:url" content="http://ddnd.cn/2019/03/21/java-synchronized/index.html">
+<meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
+<meta property="og:description" content="多线程简介在现代计算机中往往存在多个CPU核心，而1个CPU能同时运行一个线程，为了充分利用CPU多核心，提高CPU的效率，多线程就应时而生了。    那么多线程就一定比单线程快吗？答案是不一定，因为多线程存在单线程没有的问题  上下文切换：线程从运行状态切换到阻塞状态或者等待状态的时候需要将线程的运行状态保存，线程从阻塞状态或者等待状态切换到运行状态的时候需要加载线程上次运行的状态。线程的运行">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://wx3.sinaimg.cn/large/e0e01e43ly1g1ajyi7wlhj21g80yt1kx.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/large/e0e01e43ly1g1ajxlcrxhj20sm0f9q49.jpg">
+<meta property="og:updated_time" content="2019-03-21T09:39:35.590Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="synchronized的使用（一）">
+<meta name="twitter:description" content="多线程简介在现代计算机中往往存在多个CPU核心，而1个CPU能同时运行一个线程，为了充分利用CPU多核心，提高CPU的效率，多线程就应时而生了。    那么多线程就一定比单线程快吗？答案是不一定，因为多线程存在单线程没有的问题  上下文切换：线程从运行状态切换到阻塞状态或者等待状态的时候需要将线程的运行状态保存，线程从阻塞状态或者等待状态切换到运行状态的时候需要加载线程上次运行的状态。线程的运行">
+<meta name="twitter:image" content="http://wx3.sinaimg.cn/large/e0e01e43ly1g1ajyi7wlhj21g80yt1kx.jpg">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://ddnd.cn/2019/03/21/java-synchronized/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="薛8的个人网站 - xue8&#39;s Blog - DDND.CN" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+  
+</head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/xue8" target="_blank">
+          <img class="img-circle img-rotate" src="/img/logo.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">薛8</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Web Developer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Guiling, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search">
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech="">
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope="" itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">Links</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/xue8" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope="" itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java-Programming/">Java编程基础</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mybatis-Programming/">Mybatis</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Shiro/">Shiro</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Programming/">Spring</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-MVC/">Spring MVC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Technique/">技术杂谈</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Computer-Foundation/">计算机基础</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AQS/">AQS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CAS/">CAS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ConcurrentHashMap/">ConcurrentHashMap</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HashMap/">HashMap</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hashtable/">Hashtable</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java内存模型/">Java内存模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jdbc/">Jdbc</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MVC/">MVC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mybatis/">Mybatis</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RESTful/">RESTful</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RPC/">RPC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shiro/">Shiro</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-MVC/">Spring MVC</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-MVC/">Spring-MVC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TEA算法/">TEA算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TomcatDBCP/">TomcatDBCP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/">WebSocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/servlet/">servlet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/synchronized/">synchronized</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/volatile/">volatile</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web-xml/">web.xml</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机内存模型/">计算机内存模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/连接池/">连接池</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/AQS/" style="font-size: 13px;">AQS</a> <a href="/tags/CAS/" style="font-size: 13px;">CAS</a> <a href="/tags/ConcurrentHashMap/" style="font-size: 13px;">ConcurrentHashMap</a> <a href="/tags/HashMap/" style="font-size: 13.25px;">HashMap</a> <a href="/tags/Hashtable/" style="font-size: 13.25px;">Hashtable</a> <a href="/tags/Java内存模型/" style="font-size: 13px;">Java内存模型</a> <a href="/tags/Jdbc/" style="font-size: 13.5px;">Jdbc</a> <a href="/tags/MVC/" style="font-size: 13px;">MVC</a> <a href="/tags/Mybatis/" style="font-size: 13.75px;">Mybatis</a> <a href="/tags/RESTful/" style="font-size: 13px;">RESTful</a> <a href="/tags/RPC/" style="font-size: 13px;">RPC</a> <a href="/tags/Shiro/" style="font-size: 13.25px;">Shiro</a> <a href="/tags/Spring/" style="font-size: 13.75px;">Spring</a> <a href="/tags/Spring-MVC/" style="font-size: 13.25px;">Spring MVC</a> <a href="/tags/Spring-MVC/" style="font-size: 13px;">Spring-MVC</a> <a href="/tags/TEA算法/" style="font-size: 13px;">TEA算法</a> <a href="/tags/TomcatDBCP/" style="font-size: 13px;">TomcatDBCP</a> <a href="/tags/WebSocket/" style="font-size: 13px;">WebSocket</a> <a href="/tags/servlet/" style="font-size: 13px;">servlet</a> <a href="/tags/synchronized/" style="font-size: 13px;">synchronized</a> <a href="/tags/volatile/" style="font-size: 13px;">volatile</a> <a href="/tags/web-xml/" style="font-size: 13px;">web.xml</a> <a href="/tags/多线程/" style="font-size: 14px;">多线程</a> <a href="/tags/计算机内存模型/" style="font-size: 13px;">计算机内存模型</a> <a href="/tags/连接池/" style="font-size: 13px;">连接池</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">12</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Java-Programming/">Java编程基础</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/03/21/java-synchronized/" class="title">synchronized的使用（一）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-03-21T10:14:36.000Z" itemprop="datePublished">2019-03-21</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Java-Programming/">Java编程基础</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/03/19/java-volatile/" class="title">Java volatile关键字解析</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-03-19T07:21:09.000Z" itemprop="datePublished">2019-03-19</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Java-Programming/">Java编程基础</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/03/15/java-abstractqueuedsynchronizer/" class="title">一文带你快速掌握AQS</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-03-15T13:53:03.000Z" itemprop="datePublished">2019-03-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Java-Programming/">Java编程基础</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/03/13/java-cas/" class="title">CAS原理分析及ABA问题详解</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-03-13T09:09:33.000Z" itemprop="datePublished">2019-03-13</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Java-Programming/">Java编程基础</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/03/11/java-memory-model/" class="title">什么是Java内存模型？</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-03-11T08:24:28.000Z" itemprop="datePublished">2019-03-11</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope="" itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">Catalogue</h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#多线程简介"><span class="toc-number">1.</span> <span class="toc-text">多线程简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#synchronized简介"><span class="toc-number">2.</span> <span class="toc-text">synchronized简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#synchronized的特性"><span class="toc-number">3.</span> <span class="toc-text">synchronized的特性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#synchronized与可见性"><span class="toc-number">3.1.</span> <span class="toc-text">synchronized与可见性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#synchronized与有序性"><span class="toc-number">3.2.</span> <span class="toc-text">synchronized与有序性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#synchronized与原子性"><span class="toc-number">3.3.</span> <span class="toc-text">synchronized与原子性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-java-synchronized" class="article article-type-post" itemscope="" itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      synchronized的使用（一）
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2019/03/21/java-synchronized/" class="article-date">
+	  <time datetime="2019-03-21T10:14:36.000Z" itemprop="datePublished">2019-03-21</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Java-Programming/">Java编程基础</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/synchronized/">synchronized</a>, <a class="article-tag-link" href="/tags/多线程/">多线程</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/03/21/java-synchronized/#comments" class="article-comment-link">Comments</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 2.5k(words)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 9(minutes)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p><img src="http://wx3.sinaimg.cn/large/e0e01e43ly1g1ajyi7wlhj21g80yt1kx.jpg" alt="image" width="100%"></p>
+<h2 id="多线程简介"><a href="#多线程简介" class="headerlink" title="多线程简介"></a>多线程简介</h2><p>在现代计算机中往往存在多个<code>CPU</code>核心，而<code>1</code>个<code>CPU</code>能同时运行一个线程，为了充分利用<code>CPU</code>多核心，提高<code>CPU</code>的效率，多线程就应时而生了。   </p>
+<p>那么多线程就一定比单线程快吗？答案是不一定，因为多线程存在单线程没有的问题</p>
+<ul>
+<li><strong>上下文切换</strong>：线程从<strong>运行状态</strong>切换到<strong>阻塞状态</strong>或者<strong>等待状态</strong>的时候需要将线程的运行状态保存，线程从<strong>阻塞状态</strong>或者<strong>等待状态</strong>切换到<strong>运行状态</strong>的时候需要加载线程上次运行的状态。线程的运行状态从保存到再加载就是一次上下文切换，而上下文切换的开销是非常大的，而我们知道<code>CPU</code>给每个线程分配的时间片很短，通常是几十毫秒(ms)，那么线程的切换就会很频繁。</li>
+<li><strong>死锁</strong>：死锁的一般场景是，线程<code>A</code>和线程<code>B</code>都在互相等待对方释放锁，死锁会造成系统不可用。</li>
+<li><strong>资源限制的挑战</strong>：资源限制指计算机硬件资源或软件资源限制了多线程的运行速度，例如某个资源的下载速度是<code>1Mb/s</code>，资源的服务器带宽只有<code>2Mb/s</code>，那么开<code>10</code>个线程下载资源并不会将下载速度提升到<code>10Mb/s</code>。</li>
+</ul>
+<p>既然多线程存在这些问题，那么我们在开发的过程中有必要使用多线程吗？我们知道任何技术都有它存在的理由，总而言之就是多线程利大于弊，只要我们合理使用多线程就能达到事半功倍的效果。   </p>
+<p>多线程的意思就是多个线程同时工作，那么多线程之间如何协同合作，这也就是我们需要解决的<strong>线程通信</strong>、<strong>线程同步</strong>问题</p>
+<ul>
+<li><strong>线程通信</strong>：线程通信指线程之间以何种机制来交换消息，线程之间的通信机制有两种：<strong>共享内存</strong>和<strong>消息传递</strong>。共享内存即线程通过对共享变量的读写而达到隐式通信，消息传递即线程通过发送消息给对方显示的进行通信。</li>
+<li><strong>线程同步</strong>：线程同步指不同线程对同一个资源进行操作时候线程应该以什么顺序去操作，线程同步依赖于线程通信，以共享内存方式进行线程通信的线程同步是显式的，以消息传递方式进行线程通信的线程同步是隐式的。</li>
+</ul>
+<h2 id="synchronized简介"><a href="#synchronized简介" class="headerlink" title="synchronized简介"></a>synchronized简介</h2><p><code>synchronized</code>是Java的关键字，可用于同步实例方法、类方法(静态方法)、代码块</p>
+<ul>
+<li><strong>同步实例方法</strong>：当<code>synchronized</code>修饰实例方法的时候，同步的范围是当前实例的实例方法。</li>
+<li><strong>同步类方法</strong>：当<code>synchronized</code>修饰类方法的时候，同步的范围是当前类的方法。</li>
+<li><strong>同步代码块</strong>：当<code>synchronized</code>修饰代码块的时候，同步的范围是<code>()</code>中的对象。</li>
+</ul>
+<p><code>&quot;talk is cheap show me the code&quot;</code>让我们分别运行个例子来看看。</p>
+<ol>
+<li><strong>同步实例方法</strong>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">synchronized public void synSay() &#123;</span><br><span class="line">    System.out.println(&quot;synSay----&quot; + Thread.currentThread().getName());</span><br><span class="line">    while (true) &#123; //保证进入该方法的线程 一直占用着该同步方法</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public void say() &#123;</span><br><span class="line">    System.out.println(&quot;say----&quot; + Thread.currentThread().getName());</span><br><span class="line">&#125;</span><br><span class="line">public static void main(String[] args)&#123;</span><br><span class="line">    Test test1 = new Test();</span><br><span class="line">    Thread t1 = new Thread(new Runnable() &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public void run() &#123;</span><br><span class="line">            test1.synSay();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    Thread t2 = new Thread(new Runnable() &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public void run() &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                Thread.sleep(3000);  //休眠3秒钟 保证线程t1先执行</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            test1.say();</span><br><span class="line">            test1.synSay();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    t1.start();</span><br><span class="line">    t2.start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>运行输出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">synSay----Thread-0  //线程t1</span><br><span class="line">say----Thread-1  //线程t2</span><br></pre></td></tr></table></figure></p>
+<p>创建<code>t1</code>，<code>t2</code>两个线程，分别执行同一个实例<code>test1</code>的方法，线程<code>t1</code>先执行加了同步关键字的<code>synSay</code>方法，注意方法里面需要加上个<code>while</code>死循环，目的是让线程一直在同步方法里面，然后然线程t1执行之后再让线程t2去执行，此时线程t2并不能成功进入到<code>synSay</code>方法里面，因为此时线程t1正在方法里面，线程2只能在<code>synSay</code>方法外面阻塞，但是线程t2可以进入到没有加同步关键字的<code>say</code>方法。<br>也就是说<strong>关键字<code>synchronized</code>修饰实例方法的时候，锁住的是该实例的加了同步关键字的方法，而没有加同步关键字的方法，线程还是可以正常访问的</strong>。但是不同实例之间同步是不会影响的，因为每个实例都有自己的一个锁，不同实例之间的锁是不一样的。</p>
+<ol start="2">
+<li><strong>同步类方法</strong>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">synchronized static public void synSay() &#123;</span><br><span class="line">    System.out.println(&quot;static synSay----&quot; + Thread.currentThread().getName());</span><br><span class="line">    while (true) &#123; //保证进入该方法的线程 一直占用着该同步方法</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">synchronized public void synSay1() &#123;</span><br><span class="line">    System.out.println(&quot;synSay1----&quot; + Thread.currentThread().getName());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public void say() &#123;</span><br><span class="line">    System.out.println(&quot;say----&quot; + Thread.currentThread().getName());</span><br><span class="line">&#125;</span><br><span class="line">public static void main(String[] args)&#123;</span><br><span class="line">    Test test1 = new Test();</span><br><span class="line">    Test test2 = new Test();</span><br><span class="line">    Thread t1 = new Thread(new Runnable() &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public void run() &#123;</span><br><span class="line">            test1.synSay();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    Thread t2 = new Thread(new Runnable() &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public void run() &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                Thread.sleep(3000);  //休眠3秒钟 保证线程t1先执行</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            test1.say();</span><br><span class="line">            test2.say();</span><br><span class="line">            test1.synSay();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    t1.start();</span><br><span class="line">    t2.start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>运行输出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">static synSay----Thread-0 //线程t1 实例test1</span><br><span class="line">say----Thread-1 //线程t2 实例test1</span><br><span class="line">say----Thread-1 //线程t2 实例test2</span><br><span class="line"></span><br><span class="line">static synSay----Thread-0 //线程t1 实例test1</span><br><span class="line">say----Thread-1  //线程t2 实例test1</span><br><span class="line">synSay1----Thread-1 //线程t2 实例test1</span><br><span class="line">say----Thread-1 //线程t2 实例test2</span><br></pre></td></tr></table></figure></p>
+<p>这里和上面的同步实例方法的代码差不多，就是将<code>synSay</code>方法加上了<code>static</code>修饰符，即把方法从实例方法变成类方法了，然后我们再新建个实例<code>test2</code>，先让线程t1调用实例test1的synSay类方法，在让线程t2去调用实例test1的say实例方法、synSay类方法和让线程t2去调用实例test2的say实例方法，发现<strong>在线程t1占用加了同步关键字的<code>synSay</code>类方法的时候，别的线程是不能调用加了锁的类方法的，但是可以调用没有加同步关键字的方法或者加了同步关键字的实例方法</strong>，也就是说每个类有且仅有1<code>1</code>个锁，每个实例有且仅有<code>1</code>个锁，但是每个类可以有一个或者多个实例，类的锁和实例的锁不会相互影响，实例之间的锁也不会相互影响。<strong>需要注意的是，一个类和一个实例有且仅有一个锁，当这个锁被其他线程占用了，那么别的线程就无法获得锁，只有阻塞等待</strong>。</p>
+<p><img src="http://wx3.sinaimg.cn/large/e0e01e43ly1g1ajxlcrxhj20sm0f9q49.jpg" alt="image"></p>
+<ol start="3">
+<li><strong>同步代码块</strong>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">    public void synSay() &#123;</span><br><span class="line">        String x = &quot;&quot;;</span><br><span class="line">        System.out.println(&quot;come in synSay----&quot; + Thread.currentThread().getName());</span><br><span class="line">        synchronized (x) &#123;</span><br><span class="line">            System.out.println(&quot;come in synchronized----&quot; + Thread.currentThread().getName());</span><br><span class="line">            while (true) &#123; //保证进入该方法的线程 一直占用着该同步方法</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">public static void main(String[] args)&#123;</span><br><span class="line">        Test test1 = new Test();</span><br><span class="line">        Thread t1 = new Thread(new Runnable() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void run() &#123;</span><br><span class="line">                test1.synSay();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        Thread t2 = new Thread(new Runnable() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void run() &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    Thread.sleep(3000);  //休眠3秒钟 保证线程t1先执行</span><br><span class="line">                &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                test1.synSay();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>运行输出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">come in synSay----Thread-0</span><br><span class="line">come in synchronized----Thread-0</span><br><span class="line">come in synSay----Thread-1</span><br></pre></td></tr></table></figure></p>
+<p>可以发现同步代码块和同步实例方法、同步类方法其实差不多，但是同步代码块将同步的范围缩小了，可以同步到指定的对象上，而不像同步实例方法、同步类方法那样同步的是整个方法，所以<strong>同步代码块</strong>在效率上比其他两者都有较大的提升。<br>需要注意的是，当同步代码块的时候，在<strong>类方法</strong>中加入同步代码块且同步的对象是<code>xx.class</code>等类的引用的时候，同步的是该类，如果在<strong>**实例方法</strong>中加入同步代码块且同步的对象是<code>this</code>，那么同步的是该实例，可以看成前者使用的是<strong>类的锁</strong>，后者使用的是<strong>实例的锁</strong>。</p>
+<h2 id="synchronized的特性"><a href="#synchronized的特性" class="headerlink" title="synchronized的特性"></a>synchronized的特性</h2><p>建议把<code>volatile</code>的特性和<code>synchronized</code>的特性进行对比学习，加深理解。<a href="https://ddnd.cn/2019/03/19/java-volatile/">《Java volatile关键字解析》</a></p>
+<h3 id="synchronized与可见性"><a href="#synchronized与可见性" class="headerlink" title="synchronized与可见性"></a>synchronized与可见性</h3><p><code>JMM</code>关于<code>synchronized</code>的两条语义规定了：</p>
+<ul>
+<li>线程加锁前：需要将工作内存清空，从而保证了工作区的变量副本都是从主存中获取的最新值。</li>
+<li>线程解锁前；需要将工作内存的变量副本写回到主存中。</li>
+</ul>
+<p>大概流程：<strong>清空线程的工作内存-&gt;在主存中拷贝变量副本到工作内存-&gt;执行完毕-&gt;将变量副本写回到主存中-&gt;释放锁</strong>。<br>所以<code>synchronized</code>能保证共享变量的<strong>可见性</strong>，而实现这个流程的原理也是通过插入内存屏障，和关键字<code>volatile</code>相似。</p>
+<h3 id="synchronized与有序性"><a href="#synchronized与有序性" class="headerlink" title="synchronized与有序性"></a>synchronized与有序性</h3><p>因为<code>synchronized</code>是给共享变量加锁，即使用阻塞的同步机制，共享变量只能同时被一个线程操作，<strong>所以<code>JMM</code>不用像<code>volatile</code>那样考虑加内存屏障去保证<code>synchronized</code>多线程情况下的有序性，因为<code>CPU</code>在单线程情况下是保证了有序性的</strong>。<br>所以<code>synchronized</code>修饰的代码，是保证了有序性的。</p>
+<h3 id="synchronized与原子性"><a href="#synchronized与原子性" class="headerlink" title="synchronized与原子性"></a>synchronized与原子性</h3><p>同样因为<code>synchronized</code>是给共享变量加锁了，以阻塞的机制去同步，在对共享变量进行读/写操作的时候是原子性的。<br>所以<code>synchronized</code>修饰的代码，是能保证原子性的。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>Java并发编程的艺术<br><a href="https://blog.csdn.net/guyuealian/article/details/52525724" target="_blank" rel="noopener">内存可见性和原子性：Synchronized和Volatile的比较</a><br><a href="https://langgufu.iteye.com/blog/2152608" target="_blank" rel="noopener">java synchronized类锁，对象锁详解（转载）</a>    </p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://ddnd.cn/2019/03/21/java-synchronized/" title="synchronized的使用（一）" target="_blank" rel="external">http://ddnd.cn/2019/03/21/java-synchronized/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/xue8" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/img/logo.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/xue8" target="_blank"><span class="text-dark">薛8</span><small class="ml-1x">Web Developer</small></a></h3>
+        <div>个人简介。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom="">
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2019/03/19/java-volatile/" title="Java volatile关键字解析"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="Catalogue" role="button">
+        <span>[&nbsp;</span><span>Catalogue</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope="" itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/xue8" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

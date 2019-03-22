@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ddnd.cn/2019/03/22/java-synchronized-2/</loc>
+    
+    <lastmod>2019-03-22T15:22:17.742Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ddnd.cn/2019/03/21/java-synchronized/</loc>
     
-    <lastmod>2019-03-21T09:39:35.590Z</lastmod>
+    <lastmod>2019-03-22T08:14:42.588Z</lastmod>
     
   </url>
   

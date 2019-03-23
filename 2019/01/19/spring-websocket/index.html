@@ -50,6 +50,8 @@
   <link rel="stylesheet" href="/css/style.css">
   
   
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitment@0.0.3/style/default.min.css">
+  
   
   
 </head>
@@ -229,7 +231,7 @@
   <div class="widget">
     <h3 class="widget-title">Archive</h3>
     <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">12</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">12</span></li></ul>
     </div>
   </div>
 
@@ -241,6 +243,21 @@
     <div class="widget-body">
       <ul class="recent-post-list list-unstyled no-thumbnail">
         
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/03/23/java-reentrantlock/" class="title">java-reentrantlock</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-03-23T07:26:07.000Z" itemprop="datePublished">2019-03-23</time>
+              </p>
+            </div>
+          </li>
+          
           <li>
             
             <div class="item-inner">
@@ -297,21 +314,6 @@
               </p>
               <p class="item-date">
                 <time datetime="2019-03-15T13:53:03.000Z" itemprop="datePublished">2019-03-15</time>
-              </p>
-            </div>
-          </li>
-          
-          <li>
-            
-            <div class="item-inner">
-              <p class="item-category">
-                <a class="category-link" href="/categories/Java-Programming/">Java编程基础</a>
-              </p>
-              <p class="item-title">
-                <a href="/2019/03/13/java-cas/" class="title">CAS原理分析及ABA问题详解</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2019-03-13T09:09:33.000Z" itemprop="datePublished">2019-03-13</time>
               </p>
             </div>
           </li>
@@ -482,7 +484,7 @@
     
   <section id="comments">
   	
-      <div id="vcomments"></div>
+
     
   </section>
 
@@ -586,29 +588,24 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 
    
     
-  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/valine"></script>
-  <script type="text/javascript">
-  var GUEST = ['nick', 'mail', 'link'];
-  var meta = 'nick,mail,link';
-  meta = meta.split(',').filter(function(item) {
-    return GUEST.indexOf(item) > -1;
-  });
-  new Valine({
-    el: '#vcomments',
-    verify: false,
-    notify: false,
-    appId: '',
-    appKey: '',
-    placeholder: 'Just go go',
-    avatar: 'mm',
-    meta: meta,
-    pageSize: '10' || 10,
-    visitor: false
-  });
-  </script>
+<script src="//cdn.jsdelivr.net/npm/gitment@0.0.3/dist/gitment.browser.min.js"></script>
+<script>
+var gitment = new Gitment({
+  // id默认为当前页面url，如果url后带参数或锚点，gitment要重新初始化
+  // https://github.com/imsun/gitment/issues/55
+  // 解决方案：id:window.location.pathname,或者将id设置为当前页面标题
+  id: 'Spring+Tomcat+WebSocket教程 附源码', 
+  owner: 'xue8', // 可以是你的GitHub用户名，也可以是github id
+  repo: 'ddnd.cn',
+  oauth: {
+    client_id: '44eba9c2a65634685dd0',
+    client_secret: '1d846bf73efeb924ca668691ea65d61aa6b4627f',
+  }
+})
+gitment.render('comments')
+</script>
 
-     
+
 
 
 

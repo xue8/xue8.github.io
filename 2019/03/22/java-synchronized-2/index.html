@@ -17,11 +17,11 @@
   <meta http-equiv="window-target" content="_top">
   
   
-  <title>深入分析synchronized原理(二) | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
+  <title>深入分析synchronized原理和锁膨胀过程(二) | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
   <meta name="description" content="前言上一篇文章介绍了多线程的概念及synchronized的使用方法《synchronized的使用（一）》，但是仅仅会用还是不够的，只有了解其底层实现才能在开发过程中运筹帷幄，所以本篇探讨synchronized的实现原理及锁升级(膨胀)的过程。 synchronized实现原理synchronized是依赖于JVM来实现同步的，在同步方法和代码块的原理有点区别。 同步代码块我们在代码块加上s">
 <meta name="keywords" content="多线程,synchronized,JVM">
 <meta property="og:type" content="article">
-<meta property="og:title" content="深入分析synchronized原理(二)">
+<meta property="og:title" content="深入分析synchronized原理和锁膨胀过程(二)">
 <meta property="og:url" content="http://ddnd.cn/2019/03/22/java-synchronized-2/index.html">
 <meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
 <meta property="og:description" content="前言上一篇文章介绍了多线程的概念及synchronized的使用方法《synchronized的使用（一）》，但是仅仅会用还是不够的，只有了解其底层实现才能在开发过程中运筹帷幄，所以本篇探讨synchronized的实现原理及锁升级(膨胀)的过程。 synchronized实现原理synchronized是依赖于JVM来实现同步的，在同步方法和代码块的原理有点区别。 同步代码块我们在代码块加上s">
@@ -39,11 +39,11 @@
 <meta property="og:image" content="http://ws2.sinaimg.cn/large/e0e01e43gy1g1bz7zl1axj20fr08hmy4.jpg">
 <meta property="og:image" content="http://wx2.sinaimg.cn/large/e0e01e43gy1g1bz85piqtj20k20fbq3o.jpg">
 <meta property="og:image" content="http://wx1.sinaimg.cn/large/e0e01e43gy1g1bz8ahlkcj20id0bajtc.jpg">
-<meta property="og:image" content="http://wx1.sinaimg.cn/large/e0e01e43gy1g1bz8jwb4yj22zf1e7e81.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/large/e0e01e43gy1g1cozajzz3j22zf1e7u0x.jpg">
 <meta property="og:image" content="http://ws1.sinaimg.cn/large/e0e01e43gy1g1bz9ltetvj20rw08j42l.jpg">
-<meta property="og:updated_time" content="2019-03-22T15:22:17.742Z">
+<meta property="og:updated_time" content="2019-03-23T06:04:09.917Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="深入分析synchronized原理(二)">
+<meta name="twitter:title" content="深入分析synchronized原理和锁膨胀过程(二)">
 <meta name="twitter:description" content="前言上一篇文章介绍了多线程的概念及synchronized的使用方法《synchronized的使用（一）》，但是仅仅会用还是不够的，只有了解其底层实现才能在开发过程中运筹帷幄，所以本篇探讨synchronized的实现原理及锁升级(膨胀)的过程。 synchronized实现原理synchronized是依赖于JVM来实现同步的，在同步方法和代码块的原理有点区别。 同步代码块我们在代码块加上s">
 <meta name="twitter:image" content="http://ws1.sinaimg.cn/large/e0e01e43gy1g1bza8l04cj21g80yte82.jpg">
   <!-- Canonical links -->
@@ -255,7 +255,7 @@
                 <a class="category-link" href="/categories/Java-Programming/">Java编程基础</a>
               </p>
               <p class="item-title">
-                <a href="/2019/03/22/java-synchronized-2/" class="title">深入分析synchronized原理(二)</a>
+                <a href="/2019/03/22/java-synchronized-2/" class="title">深入分析synchronized原理和锁膨胀过程(二)</a>
               </p>
               <p class="item-date">
                 <time datetime="2019-03-22T15:10:17.000Z" itemprop="datePublished">2019-03-22</time>
@@ -352,7 +352,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      深入分析synchronized原理(二)
+      深入分析synchronized原理和锁膨胀过程(二)
     </h1>
   
 
@@ -486,7 +486,7 @@
 <h3 id="锁的转换过程"><a href="#锁的转换过程" class="headerlink" title="锁的转换过程"></a>锁的转换过程</h3><p>锁主要存在<code>4</code>种状态，级别从低到高依次是：<strong>无锁状态、偏向锁状态、轻量级锁状态和重量级锁状态</strong>，这几个状态会随着竞争的情况逐渐升级，这几个锁只有重量级锁是需要使用操作系统底层<code>mutex</code>互斥原语来实现，其他的锁都是使用对象头来实现的。<strong>需要注意锁可以升级，但是不可以降级。</strong>    </p>
 <p><img src="http://wx1.sinaimg.cn/large/e0e01e43gy1g1bz8ahlkcj20id0bajtc.jpg" alt="image"></p>
 <p>这里盗个图，这个图总结的挺好的！</p>
-<p><img src="http://wx1.sinaimg.cn/large/e0e01e43gy1g1bz8jwb4yj22zf1e7e81.jpg" alt="image"></p>
+<p><img src="http://wx2.sinaimg.cn/large/e0e01e43gy1g1cozajzz3j22zf1e7u0x.jpg" alt="image"></p>
 <h3 id="三种锁的优缺点比较"><a href="#三种锁的优缺点比较" class="headerlink" title="三种锁的优缺点比较"></a>三种锁的优缺点比较</h3><p><img src="http://ws1.sinaimg.cn/large/e0e01e43gy1g1bz9ltetvj20rw08j42l.jpg" alt="image"></p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>深入理解Java虚拟机<br><a href="https://blog.csdn.net/lkforce/article/details/81128115#%E4%B8%80%EF%BC%8C%E5%AF%B9%E8%B1%A1%E5%A4%B4" target="_blank" rel="noopener">Java的对象头和对象组成详解</a><br><a href="https://blog.csdn.net/liupeifeng3514/article/details/79111565" target="_blank" rel="noopener">JVM（三）JVM中对象的内存布局详解</a><br><a href="https://www.cnblogs.com/zhengbin/p/6490953.html" target="_blank" rel="noopener">JVM——深入分析对象的内存布局</a><br><a href="https://juejin.im/post/5b4eec7df265da0fa00a118f#heading-16" target="_blank" rel="noopener">啃碎并发（七）：深入分析Synchronized原理</a><br><a href="http://bigdatadecode.club/JavaSynchronizedTheory.html" target="_blank" rel="noopener">Java Synchronized实现原理</a>   </p>
 
@@ -498,7 +498,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="http://ddnd.cn/2019/03/22/java-synchronized-2/" title="深入分析synchronized原理(二)" target="_blank" rel="external">http://ddnd.cn/2019/03/22/java-synchronized-2/</a>
+      <a href="http://ddnd.cn/2019/03/22/java-synchronized-2/" title="深入分析synchronized原理和锁膨胀过程(二)" target="_blank" rel="external">http://ddnd.cn/2019/03/22/java-synchronized-2/</a>
     </li>
     
     <li class="post-copyright-license">

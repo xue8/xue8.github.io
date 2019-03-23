@@ -39,7 +39,7 @@
 <meta property="og:image" content="http://wx4.sinaimg.cn/large/e0e01e43ly1g13rodrehcj20md0hajy9.jpg">
 <meta property="og:image" content="http://ws1.sinaimg.cn/large/e0e01e43ly1g13rooch2sj20y407bdh0.jpg">
 <meta property="og:image" content="http://wx2.sinaimg.cn/large/e0e01e43ly1g13rotlu30j20za06wgmq.jpg">
-<meta property="og:updated_time" content="2019-03-15T12:52:47.248Z">
+<meta property="og:updated_time" content="2019-03-23T14:52:18.174Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一文带你快速掌握AQS">
 <meta name="twitter:description" content="AbstractQueuedSynchronizer简介AbstractQueuedSynchronizer抽象队列同步器，简称为AQS，可用于构建阻塞锁或者其他相关同步器的基础框，是Java并发包的基础工具类。通过AQS这个框架可以对同步状态原子性管理、线程的阻塞和解除阻塞、队列的管理进行统一管理。AQS是抽象类，并不能直接实例化，当需要使用AQS的时候需要继承AQS抽象类并且重写指定的方法，">
@@ -55,9 +55,9 @@
   <link rel="stylesheet" href="/css/style.css">
   
   
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitment@0.0.3/style/default.min.css">
   
   
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.css">
   
 </head>
 
@@ -411,7 +411,7 @@
 </ol>
 <p>完成以上三个任务即可实现自己的锁。<br><code>AQS</code>作为<code>J.U.C</code>的工具类，面向的是需要实现<strong>锁的实现者</strong>，而锁面向的是<strong>锁的使用者</strong>，这两者的区别还是需要搞清楚的。</p>
 <h2 id="AQS数据结构"><a href="#AQS数据结构" class="headerlink" title="AQS数据结构"></a>AQS数据结构</h2><p>先看<code>AQS</code>有哪些重要的成员变量。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// 头结点，你直接把它当做 当前持有锁的线程 可能是最好理解的</span><br><span class="line">private transient volatile Node head;</span><br><span class="line"></span><br><span class="line">// 阻塞的尾节点，每个新的节点进来，都插入到最后，也就形成了一个链表</span><br><span class="line">private transient volatile Node tail;</span><br><span class="line"></span><br><span class="line">// 这个是最重要的，不过也是最简单的，代表当前锁的状态，0代表没有被占用，大于0代表有线程持有当前锁</span><br><span class="line">// 之所以说大于0，而不是等于1，是因为锁可以重入嘛，每次重入都加上1</span><br><span class="line">private volatile int state;</span><br><span class="line"></span><br><span class="line">// 代表当前持有独占锁的线程，举个最重要的使用例子，因为锁可以重入</span><br><span class="line">// reentrantLock.lock()可以嵌套调用多次，所以每次用这个来判断当前线程是否已经拥有了锁</span><br><span class="line">// if (currentThread == getExclusiveOwnerThread()) &#123;state++&#125;</span><br><span class="line">private transient Thread exclusiveOwnerThread; //继承自AbstractOwnableSynchronizer</span><br></pre></td></tr></table></figure></p>
-<p>然后再看看<code>AQS</code>的内部结构，<code>AQS</code>内部数据结构为一个<strong>双向链表</strong>和一个<strong>单向链表</strong>，双链表为同步队列，队列中的每个节点对应一个<code>Node</code>内部类，<code>AQS</code>通过控制链表的节点而达到阻塞、同步的目的，单链表为普通队列，<strong>可以把同步队列理解为储存阻塞状态的线程，而普通队列储存的是等待状态的线程</strong>，普通队列中的线程并不能直接去获取资源，而要先从普通队列转到同步队列中排队获取，一个线程要么是在同步队列中，要么是在普通队列中，不可能同时存在这两个队列里面。</p>
+<p>然后再看看<code>AQS</code>的内部结构，<code>AQS</code>内部数据结构为一个<strong>双向链表</strong>和一个<strong>单向链表</strong>，双链表为同步队列，队列中的每个节点对应一个<code>Node</code>内部类，<code>AQS</code>通过控制链表的节点而达到阻塞、同步的目的，单链表为普通队列，<strong>可以把同步队列和普通队列理解成储存等待状态的线程的队列</strong>，但是普通队列中的线程并不能直接去获取资源，而要先从普通队列转到同步队列中排队获取，同步队列的唤醒结果是线程去尝试获取锁，而普通队列的唤醒结果是把线程从普通队列移到同步队列中，一个线程要么是在同步队列中，要么是在普通队列中，不可能同时存在这两个队列里面。</p>
 <p><img src="http://wx3.sinaimg.cn/large/e0e01e43ly1g13rma1mnmj20v207ngml.jpg" alt="image"></p>
 <blockquote>
 <p>Java<strong>阻塞状态</strong>和<strong>等待状态</strong>的线程从Linux内核来看，都是阻塞(等待)状态，它们都会让出CPU时间片。Java为了方便管理线程将“阻塞(等待)”状态细分成了阻塞状态和等待状态，这两个状态的区别<strong>在于由谁去唤醒</strong>，是操作系统还是其他线程。Java线程请求某一个资源失败的时候就会进入<strong>阻塞状态</strong>，处于阻塞态的线程会不断请求资源，一旦请求成功，就会进入就绪队列，等待执行。而当线程调用<code>wait</code>、<code>join</code>、<code>pack</code>函数时候会进入<strong>等待状态</strong>，需要其它线程显性的唤醒否则会无限期的处于等待状态。   </p>
@@ -434,7 +434,7 @@
 <li>线程调用子类重写的<code>tryAcquire</code>方法获取资源，如果获取成功，则流程结束，否则继续往下执行。</li>
 <li>调用<code>addWaiter</code>方法(详细过程看下面的源码解析)，将该线<strong>程封装成Node节点</strong>，并添加到队列<strong>队尾</strong>。</li>
 <li>调用<code>acquireQueued</code>方法让节点以”死循环”方式进行获取资源，为什么死循环加了双引号呢？因为循环并不是一直让节点无间断的去获取资源，节点会经历 获取资源-&gt;失败-&gt;线程进入等待状态-&gt;唤醒-&gt;获取资源……，<strong>线程在死循环的过程会不断等待和唤醒</strong>，节点进入到自旋状态(详细过程看下面的源码解析)，<strong>再循环过程中还会将标识为取消的前驱节点移除队列，同时标识前驱节点状态为SIGNAL</strong>。</li>
-<li>线程的等待状态是通过调用<code>LockSupport.lock()</code>方法实现的，这个方法会相应<code>Thread.interrupt</code>，但是不会抛出InterruptedException异常，这点与<code>Thread.sleep</code>、<code>Thread.wait</code>不一样。</li>
+<li>线程的等待状态是通过调用<code>LockSupport.lock()</code>方法实现的，这个方法会响应<code>Thread.interrupt</code>，但是不会抛出InterruptedException异常，这点与<code>Thread.sleep</code>、<code>Thread.wait</code>不一样。</li>
 </ol>
 <p><img src="http://ws4.sinaimg.cn/large/e0e01e43ly1g13rn1r0hjj20wc10fgps.jpg" alt="image"></p>
 <p><img src="http://wx2.sinaimg.cn/large/e0e01e43ly1g13rn6zuazj20s709j3zt.jpg" alt="image"></p>
@@ -507,7 +507,7 @@
     
   <section id="comments">
   	
-
+           
     
   </section>
 
@@ -611,24 +611,23 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 
    
     
-<script src="//cdn.jsdelivr.net/npm/gitment@0.0.3/dist/gitment.browser.min.js"></script>
-<script>
-var gitment = new Gitment({
-  // id默认为当前页面url，如果url后带参数或锚点，gitment要重新初始化
-  // https://github.com/imsun/gitment/issues/55
-  // 解决方案：id:window.location.pathname,或者将id设置为当前页面标题
-  id: '一文带你快速掌握AQS', 
-  owner: 'xue8', // 可以是你的GitHub用户名，也可以是github id
-  repo: 'xue8.github.io',
-  oauth: {
-    client_id: '44eba9c2a65634685dd0',
-    client_secret: '1d846bf73efeb924ca668691ea65d61aa6b4627f',
-  }
-})
-gitment.render('comments')
-</script>
+  <!-- <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"> -->
+  <script src="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: '44eba9c2a65634685dd0',
+    clientSecret: '1d846bf73efeb924ca668691ea65d61aa6b4627f',
+    repo: 'xue8.github.io',
+    owner: 'xue8',
+    admin: ['xue8'],
+    id: md5(location.pathname),
+    distractionFreeMode: true
+  })
+  gitalk.render('comments')
+  </script>
 
-
+      
 
 
 

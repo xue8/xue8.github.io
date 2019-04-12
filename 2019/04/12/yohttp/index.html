@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>��0��ʼ��һ������(����) | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
+  <meta name="description" content="ǰ���׻�˵����Ҫ�ظ������ӡ��������Ҿ���ͨ���о�����������ӣ�Ȼ���Լ�ȥ������һ����ª��ģ����������Լ���������˼�Ǻ��а����ġ��ع����⣬�������һ����ҵ���ͼ����������صģ�����ѡ������Java����һ����ª���HTTP�ͻ��ˣ����Ǳ���ȥ�ݶ���Square">
+<meta name="keywords" content="Java,xue8,薛8,DDND,程序员,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="��0��ʼ��һ������(����)">
+<meta property="og:url" content="http://ddnd.cn/2019/04/12/yohttp/index.html">
+<meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
+<meta property="og:description" content="ǰ���׻�˵����Ҫ�ظ������ӡ��������Ҿ���ͨ���о�����������ӣ�Ȼ���Լ�ȥ������һ����ª��ģ����������Լ���������˼�Ǻ��а����ġ��ع����⣬�������һ����ҵ���ͼ����������صģ�����ѡ������Java����һ����ª���HTTP�ͻ��ˣ����Ǳ���ȥ�ݶ���Square">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://ws1.sinaimg.cn/large/e0e01e43gy1g1zyfrcqm6j20t60jg7wh.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/large/e0e01e43gy1g1zyft6158j21fk0lfmzz.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/large/e0e01e43gy1g1zyg4vt29j20do072aa3.jpg">
+<meta property="og:image" content="http://ws3.sinaimg.cn/large/e0e01e43gy1g1zyga9hkij20n50izmye.jpg">
+<meta property="og:image" content="http://ws4.sinaimg.cn/large/e0e01e43gy1g1zyghl3wrj20n50izwfa.jpg">
+<meta property="og:image" content="http://ws4.sinaimg.cn/large/e0e01e43gy1g1zygq1zg3j20n50izt9w.jpg">
+<meta property="og:image" content="http://ws2.sinaimg.cn/large/e0e01e43gy1g1zygx8qz0j20ls0hhwf5.jpg">
+<meta property="og:image" content="http://ws3.sinaimg.cn/large/e0e01e43gy1g1zyh29034j20n50izaaw.jpg">
+<meta property="og:updated_time" content="2019-04-12T09:00:40.760Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="��0��ʼ��һ������(����)">
+<meta name="twitter:description" content="ǰ���׻�˵����Ҫ�ظ������ӡ��������Ҿ���ͨ���о�����������ӣ�Ȼ���Լ�ȥ������һ����ª��ģ����������Լ���������˼�Ǻ��а����ġ��ع����⣬�������һ����ҵ���ͼ����������صģ�����ѡ������Java����һ����ª���HTTP�ͻ��ˣ����Ǳ���ȥ�ݶ���Square">
+<meta name="twitter:image" content="http://ws1.sinaimg.cn/large/e0e01e43gy1g1zyfrcqm6j20t60jg7wh.jpg">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://ddnd.cn/2019/04/12/yohttp/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="薛8的个人网站 - xue8&#39;s Blog - DDND.CN" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+  
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.css">
+  
+</head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/xue8" target="_blank">
+          <img class="img-circle img-rotate" src="/img/logo.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">薛8</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Web Developer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Guiling, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search">
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech="">
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope="" itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">Links</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/xue8" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope="" itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java-Programming/">Java编程基础</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mybatis-Programming/">Mybatis</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Shiro/">Shiro</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Programming/">Spring</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-MVC/">Spring MVC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/YoHttp/">YoHttp</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Technique/">技术杂谈</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Computer-Foundation/">计算机基础</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AQS/">AQS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CAS/">CAS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ConcurrentHashMap/">ConcurrentHashMap</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HashMap/">HashMap</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hashtable/">Hashtable</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/">JVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java内存模型/">Java内存模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jdbc/">Jdbc</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MVC/">MVC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mybatis/">Mybatis</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RESTful/">RESTful</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RPC/">RPC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ReentrantLock/">ReentrantLock</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shiro/">Shiro</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-MVC/">Spring MVC</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-MVC/">Spring-MVC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TEA算法/">TEA算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TomcatDBCP/">TomcatDBCP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/">WebSocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/servlet/">servlet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/synchronized/">synchronized</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/volatile/">volatile</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web-xml/">web.xml</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机内存模型/">计算机内存模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/连接池/">连接池</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/AQS/" style="font-size: 13.25px;">AQS</a> <a href="/tags/CAS/" style="font-size: 13px;">CAS</a> <a href="/tags/ConcurrentHashMap/" style="font-size: 13px;">ConcurrentHashMap</a> <a href="/tags/HashMap/" style="font-size: 13.25px;">HashMap</a> <a href="/tags/Hashtable/" style="font-size: 13.25px;">Hashtable</a> <a href="/tags/JVM/" style="font-size: 13px;">JVM</a> <a href="/tags/Java内存模型/" style="font-size: 13px;">Java内存模型</a> <a href="/tags/Jdbc/" style="font-size: 13.5px;">Jdbc</a> <a href="/tags/MVC/" style="font-size: 13px;">MVC</a> <a href="/tags/Mybatis/" style="font-size: 13.75px;">Mybatis</a> <a href="/tags/RESTful/" style="font-size: 13px;">RESTful</a> <a href="/tags/RPC/" style="font-size: 13px;">RPC</a> <a href="/tags/ReentrantLock/" style="font-size: 13px;">ReentrantLock</a> <a href="/tags/Shiro/" style="font-size: 13.25px;">Shiro</a> <a href="/tags/Spring/" style="font-size: 13.75px;">Spring</a> <a href="/tags/Spring-MVC/" style="font-size: 13.25px;">Spring MVC</a> <a href="/tags/Spring-MVC/" style="font-size: 13px;">Spring-MVC</a> <a href="/tags/TEA算法/" style="font-size: 13px;">TEA算法</a> <a href="/tags/TomcatDBCP/" style="font-size: 13px;">TomcatDBCP</a> <a href="/tags/WebSocket/" style="font-size: 13px;">WebSocket</a> <a href="/tags/servlet/" style="font-size: 13px;">servlet</a> <a href="/tags/synchronized/" style="font-size: 13.25px;">synchronized</a> <a href="/tags/volatile/" style="font-size: 13px;">volatile</a> <a href="/tags/web-xml/" style="font-size: 13px;">web.xml</a> <a href="/tags/多线程/" style="font-size: 14px;">多线程</a> <a href="/tags/计算机内存模型/" style="font-size: 13px;">计算机内存模型</a> <a href="/tags/连接池/" style="font-size: 13px;">连接池</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">12</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/YoHttp/">YoHttp</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/04/12/yohttp/" class="title">��0��ʼ��һ������(����)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-04-12T05:35:37.000Z" itemprop="datePublished">2019-04-12</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/04/03/java-arraylist/" class="title">java-arraylist</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-04-03T10:04:04.000Z" itemprop="datePublished">2019-04-03</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Java-Programming/">Java编程基础</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/03/24/java-reentrantlock/" class="title">深入理解ReentrantLock的实现原理</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-03-24T04:26:07.000Z" itemprop="datePublished">2019-03-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Java-Programming/">Java编程基础</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/03/22/java-synchronized-2/" class="title">深入分析synchronized原理和锁膨胀过程(二)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-03-22T15:10:17.000Z" itemprop="datePublished">2019-03-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Java-Programming/">Java编程基础</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/03/21/java-synchronized/" class="title">synchronized的使用（一）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-03-21T10:14:36.000Z" itemprop="datePublished">2019-03-21</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope="" itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">Catalogue</h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#j��"><span class="toc-number">1.</span> <span class="toc-text">ǰ��</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#�����ܹ�"><span class="toc-number">2.</span> <span class="toc-text">�����ܹ�</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#������Ϣ"><span class="toc-number">3.</span> <span class="toc-text">������Ϣ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#YoHttpClient"><span class="toc-number">4.</span> <span class="toc-text">YoHttpClient</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#������"><span class="toc-number">5.</span> <span class="toc-text">������</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#��������"><span class="toc-number">6.</span> <span class="toc-text">��������</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#���ӳ�"><span class="toc-number">7.</span> <span class="toc-text">���ӳ�</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#�ܽ�"><span class="toc-number">8.</span> <span class="toc-text">�ܽ�</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-yohttp" class="article article-type-post" itemscope="" itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ��0��ʼ��һ������(����)
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2019/04/12/yohttp/" class="article-date">
+	  <time datetime="2019-04-12T05:35:37.000Z" itemprop="datePublished">2019-04-12</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/YoHttp/">YoHttp</a>
+  </span>
+
+        
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/04/12/yohttp/#comments" class="article-comment-link">Comments</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 787(words)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 4(minutes)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p><img src="http://ws1.sinaimg.cn/large/e0e01e43gy1g1zyfrcqm6j20t60jg7wh.jpg" alt="image"></p>
+<h2 id="j��"><a href="#j��" class="headerlink" title="ǰ��"></a>ǰ��</h2><p>�׻�˵����Ҫ�ظ������ӡ��������Ҿ���ͨ���о�����������ӣ�Ȼ���Լ�ȥ������һ����ª��ģ����������Լ���������˼�Ǻ��а����ġ�<br>�ع����⣬�������һ����ҵ���ͼ����������صģ�����ѡ������Java����һ����ª���HTTP�ͻ��ˣ����Ǳ���ȥ�ݶ���<code>Square</code>��˾��Դ��<code>OkHttp</code>��������Okhttp�����˼�룬������<code>Yohttp</code>�� </p>
+<p>�������<code>Github</code>��ַ:<a href="https://github.com/xue8/yohttp" target="_blank" rel="noopener">YoHttp</a>����ӭ���һ��ѧϰ̽�֡�</p>
+<h2 id="�����ܹ�"><a href="#�����ܹ�" class="headerlink" title="�����ܹ�"></a>�����ܹ�</h2><p><img src="http://wx3.sinaimg.cn/large/e0e01e43gy1g1zyft6158j21fk0lfmzz.jpg" alt="image"></p>
+<p>���߽����������Ƴ����ģ�飺  </p>
+<ol>
+<li><strong>������Ϣ</strong><br>�ⲿ�ּ���Ӧ��ͼ��<code>Request</code>�������û�����������Ϣ����<code>URL</code>��<code>method</code>������ͷ�ȡ��ⲿ�����û����Բ����ġ�</li>
+<li><strong>Yohttp�ͻ���</strong><br>�û�����һ��<code>YoHttp</code>��Ȼ��������Ϣע�뵽Yohttp�����Կ�ʼʹ�������ܣ��������ͬ��������첽��������һ��<code>YoHttp</code>����һ���������ġ�һ�����ӳأ����Զ���һ����Ŀ��˵��ά����һ��<code>YoHttp</code>�ͻ��˾����ԡ�  </li>
+<li><strong>������</strong><br>����������ľ���ʵ�ֲ��������߽�һ��һ��������װ��һ������������ѻ�ȡ<code>Socket</code>���ӵĲ�����װ����������������<code>Socket</code>���Ķ�д��װ���շ���������Ȼ������������Ҫ�õ���Щ���������ɰ���Щ������һ��һ��ƴ��������ϳ�һ��������(Chain)��<strong>һ����������Ӧ��һ������</strong>��ִ�д������е�һ������������ֱ��ִ�������е���������Ҳ��Ӧ��һ���������ɡ���Ҳ��Ϊʲô������Ҫ���շ����������������Ϊһ����������һ�������϶��ǽ���Socket����д�Ͷ���<br>������Ϊ������һ��һ��������װ����������Ȼ�����������ƴ�ճɴ����������ִ�д��������ɴﵽִ�в���������Ľ�����������̣�ͬʱҲ�������չ�ԡ�</li>
+</ol>
+<p><img src="http://wx1.sinaimg.cn/large/e0e01e43gy1g1zyg4vt29j20do072aa3.jpg" alt="image"></p>
+<ol start="4">
+<li><p><strong>��������</strong><br>����������ʹ���첽�����ʱ���õ�����������ά����һ��������к�һ���̳߳أ������������洢���Ǵ�����<code>Chain</code>���̳߳ظ���ִ�ж����еĴ�������<br>������Ϊ����ʹ���̳߳�����߶��еĴ���Ч�ʣ��Ͼ�����PC���Ƕ���ĵģ��������CPU���Ч�ʻ��ǲ����ġ�</p>
+</li>
+<li><p><strong>���ӳ�</strong><br>ÿ��������ȥ���ӳػ�ȡ<code>Socket</code>���ӣ�������ӳ��д���<code>IP</code>��<code>PORT</code>��ͬ��������ֱ�ӷ��أ����򴴽�һ��<code>Socket</code>���Ӵ洢�����ӳ�Ȼ�󷵻أ������ӳ��е�����<strong>����ʱ�䳬������������õ�ʱ���ͻᱻ�ر�</strong>��<br>������Ϊͨ��ʹ�����ӳ��ܼ������Ӵ������ٵĿ�����������϶ࡢ����Ƶ�ʽϸߵĳ����������Ч�ʡ�</p>
+</li>
+</ol>
+<p>�������˼ܹ������ǿ�����ôʹ�����ǵ�HTTP�ͻ��ˣ�   </p>
+<ol>
+<li>ͬ������   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Request request = new Request.Builder()</span><br><span class="line">        .url(&quot;www.baidu.com&quot;)</span><br><span class="line">        .get()</span><br><span class="line">        .build();</span><br><span class="line">YoHttpClient httpClient = new YoHttpClient();</span><br><span class="line">Response response = httpClient.SyncCall(request).executor();</span><br><span class="line">System.out.println(response.getBody());</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>��һ���½���������Ϣ<code>Request</code>����д�����<code>URL</code>�����󷽷�������ͷ����Ϣ��<br>�ڶ����½���<code>YoHttp</code>�ͻ��ˣ�<strong>ѡ��ͬ��������</strong>����������Ϣע�룬ִ������</p>
+<ol start="2">
+<li>�첽����  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Request request = new Request.Builder()</span><br><span class="line">        .url(&quot;www.baidu.com&quot;)</span><br><span class="line">        .get()</span><br><span class="line">        .build();</span><br><span class="line">YoHttpClient httpClient = new YoHttpClient();</span><br><span class="line">httpClient.AsyncCall(request).executor(new CallBack() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void onResponse(Response response) &#123;</span><br><span class="line">        System.out.println(response.getBody());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>��һ���½���������Ϣ<code>Request</code>����д�����<code>URL</code>�����󷽷�������ͷ����Ϣ��<br>�ڶ����½���<code>YoHttp</code>�ͻ��ˣ�<strong>ѡ���첽������</strong>����������Ϣע�룬ִ�����󣬵���������Ӧ��ʱ�򣬻�ͨ���ص��첽�����<code>onResponse</code>������������Ӧ���ݡ�   </p>
+<p>˵���˼ܹ�����ʹ�÷��������������߽��ܸ���ģ��ľ���ʵ�֡�  </p>
+<h2 id="������Ϣ"><a href="#������Ϣ" class="headerlink" title="������Ϣ"></a>������Ϣ</h2><p><img src="http://ws3.sinaimg.cn/large/e0e01e43gy1g1zyga9hkij20n50izmye.jpg" alt="image">  </p>
+<p>��ʵ��<code>Request</code>��ʱ�򣬱���ʹ�õ���<code>Builder</code>ģʽ����������ģʽ����<code>Request</code>�����Ӹ�<strong>��̬�ڲ���Builder</strong>�����ڹ���Request��</p>
+<h2 id="YoHttpClient"><a href="#YoHttpClient" class="headerlink" title="YoHttpClient"></a>YoHttpClient</h2><p><img src="http://ws4.sinaimg.cn/large/e0e01e43gy1g1zyghl3wrj20n50izwfa.jpg" alt="image"></p>
+<p>��YoHttp�ͻ�������һ���������ĺ�һ�����ӳأ�����������ʹ���첽�����ʱ�����ϵģ����ӳ������������ȡ<code>Socket</code>���ӵ�ʱ��ʹ�á�  </p>
+<ol>
+<li><strong>���췽��</strong><br>�����������������췽����<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public YoHttpClient() &#123;</span><br><span class="line">    this(5, TimeUnit.MINUTES);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public YoHttpClient(int keepAliveTime, TimeUnit timeUnit) &#123;</span><br><span class="line">    this.dispatcher = new Dispatcher();</span><br><span class="line">    this.connectionPool = new ConnectionPool(keepAliveTime, timeUnit);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>һ�����޲ι��췽����һ����ָ�����ӳ��������������ʱ��Ĺ��췽��������û�ʹ�����޲ι��췽����Ĭ���������ӳ��е������������ʱ����<code>5</code>���ӡ�</p>
+<ol start="2">
+<li><strong>ͬ�����󷽷�SynchCall</strong>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">public SyncCall SyncCall(Request request) &#123;</span><br><span class="line">    return new SyncCall(this, request);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// SyncCall.java</span><br><span class="line">@Override</span><br><span class="line">public Response executor() &#123;</span><br><span class="line">    synchronized (this) &#123;</span><br><span class="line">        if (this.executed)</span><br><span class="line">            throw new IllegalStateException(&quot;Call Already Executed&quot;);</span><br><span class="line">        this.executed = true;</span><br><span class="line">    &#125;</span><br><span class="line">    List&lt;Interceptor&gt; interceptors = new ArrayList&lt;&gt;();</span><br><span class="line">    interceptors.add(new ConnectionInterceptor(yoHttpClient, request));</span><br><span class="line">    interceptors.add(new CallServerInterceptor(request));</span><br><span class="line">    Chain chain = new Chain(interceptors, null);</span><br><span class="line">    Response response = chain.proceed();</span><br><span class="line">    chain = null;</span><br><span class="line">    return response;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//Chain.java</span><br><span class="line">public Response proceed() &#123;</span><br><span class="line">    Response response = new Response();</span><br><span class="line">    for (int i = 0; i &lt; interceptors.size(); i++) &#123;</span><br><span class="line">        response = interceptors.get(i).proceed(response);</span><br><span class="line">    &#125;</span><br><span class="line">    return response;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>����һ��<code>SynchCall</code>ͬ������SynchCall�����и�<code>executor</code>�����������������һ���洢������<code>Interceptor</code>��List�����ǰ���������Ҫ�õ��Ĳ���(������)���뵽List�У����������õ�������������(ConnectionInterceptor)���շ�������(CallServerInterceptor)��Ȼ��List��װ��һ��<strong>������(Chain)</strong>�������ô�������<code>proceed</code>��������List�е���������ִ�У��������ɴﵽִ��һ����������в�����������ͬ����������������������ִ����ɷ���response֮���return��</p>
+<ol start="3">
+<li><strong>�첽����AsyncCall</strong>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public AsyncCall AsyncCall(Request request) &#123;</span><br><span class="line">    return new AsyncCall(this, request);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//AsyncCall.java</span><br><span class="line">public void executor(CallBack callBack) &#123;</span><br><span class="line">    synchronized (this) &#123;</span><br><span class="line">        if (this.executed)</span><br><span class="line">            throw new IllegalStateException(&quot;Call Already Executed&quot;);</span><br><span class="line">        this.executed = true;</span><br><span class="line">    &#125;</span><br><span class="line">    List&lt;Interceptor&gt; interceptors = new ArrayList&lt;&gt;();</span><br><span class="line">    interceptors.add(new ConnectionInterceptor(yoHttpClient, request));</span><br><span class="line">    interceptors.add(new CallServerInterceptor(request));</span><br><span class="line">    Chain chain = new Chain(interceptors, callBack);</span><br><span class="line">    yoHttpClient.getDispatcher().addChain(chain);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>�첽�����У�ͬ������<code>executor</code>��������������������������������װ�ɴ�������<strong>����ĵط������ﲢ�������ϵ��ô�������<code>proceed</code>���������ǽ����������ӵ��������ĵ���������У�Ȼ�����Ϸ�����</strong>���������ĵľ���ʵ���ں��Ľ��ܡ�</p>
+<h2 id="������"><a href="#������" class="headerlink" title="������"></a>������</h2><p>�����������ĵ�YoHttpClient���ܵĲ���ˣ����ﲹ��һ������������ơ�<br>���е���������ʵ��<code>Interceptor</code>����ӿڣ�����ӿںܼ򵥣�ֻ��һ������<code>proceed</code>��ֻ��Ҫ������Ĳ���д������������ɡ���������������<code>ConnectionInterceptor</code>��ʵ�����¡�<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public Response proceed(Response response) &#123;</span><br><span class="line">    Address address = request.getAddress();</span><br><span class="line">    Connection connection = yoHttpClient.getConnectionPool().getConnection(address);</span><br><span class="line">    request.setConnection(connection);</span><br><span class="line">    return response;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>��һ���ǻ�ȡ������Ϣ�е�<code>IP</code>��<code>PORT</code>(���߽������߷�װ����Address)<br>�ڶ�����ʹ�����addressȥ���ӳ��л�ȡ���ӡ�  </p>
+<p>���proceed�������ṩ����������ִ�еġ�</p>
+<h2 id="��������"><a href="#��������" class="headerlink" title="��������"></a>��������</h2><p><img src="http://ws4.sinaimg.cn/large/e0e01e43gy1g1zygq1zg3j20n50izt9w.jpg" alt="image"></p>
+<p>�����������첽������ʹ�õ�����������ά����һ��������к�һ���̳߳ء����߲��õ�����������(���ǵ���������)�Ϳɻ����̳߳أ�����̳߳ص��ص㣺�����߳�����0���߳��������<code>Integer.MAX_VALUE</code>���߳�����ʱ���������Ϊ60�롣<br>����������2���ڲ��࣬һ����<code>CallRunnable</code>������ڲ���������ǽ�������Chain��װ��<code>Runnable</code>���߳�ִ�С���һ����<code>ChainQueue</code>������ڲ���ά����һ���������У��������������Ӻͳ��ӡ�</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">private void executor() &#123;</span><br><span class="line">    Thread thread = new Thread(new Runnable() &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public void run() &#123;</span><br><span class="line">            while (true) &#123;</span><br><span class="line">                while (chainQueue.size() &gt; 0) &#123;</span><br><span class="line">                    executorService.submit(new CallRunnable(chainQueue.pollChain()));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    thread.start();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//CallRunnable�ڲ���</span><br><span class="line">private final class CallRunnable implements Runnable &#123;</span><br><span class="line">    private Chain chain;</span><br><span class="line"></span><br><span class="line">    CallRunnable(Chain chain) &#123;</span><br><span class="line">        this.chain = chain;</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        Response response = chain.proceed();</span><br><span class="line">        chain.getCallBack().onResponse(response);</span><br><span class="line">        chain = null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>�ڵ������Ŀ�����һ���̣߳�ͨ�������������У���������������������򽻸��̳߳�ȥ����</strong>���߳�ͨ�����ô�������proceed�����������������е��������������ͬ�������е�һ���ģ���ִ��������ͨ���ص�����Ӧ���ظ��ͻ��ˡ�</p>
+<p><img src="http://ws2.sinaimg.cn/large/e0e01e43gy1g1zygx8qz0j20ls0hhwf5.jpg" alt="image"></p>
+<h2 id="���ӳ�"><a href="#���ӳ�" class="headerlink" title="���ӳ�"></a>���ӳ�</h2><p><img src="http://ws3.sinaimg.cn/large/e0e01e43gy1g1zyh29034j20n50izaaw.jpg" alt="image"></p>
+<p>���߽�<code>Socket</code>���ӷ�װ��һ��<code>Connection</code>�������ӳ�ά��������һ���洢<code>Connection</code>��HashMap�� </p>
+<ol>
+<li><strong>��ȡ����</strong>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public Connection getConnection(Address address) &#123;</span><br><span class="line">    return tryAcquire(address);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private Connection tryAcquire(Address address) &#123;</span><br><span class="line">    if (connections.containsKey(address)) &#123;</span><br><span class="line">        connections.get(address).setTime(System.currentTimeMillis());</span><br><span class="line">        return connections.get(address);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    synchronized (address) &#123;</span><br><span class="line">        cleanUpConnection();</span><br><span class="line">        if (!connections.containsKey(address)) &#123;</span><br><span class="line">            Connection connection = new Connection(address);</span><br><span class="line">            connection.setTime(System.currentTimeMillis());</span><br><span class="line">            connections.put(address, connection);</span><br><span class="line">            return connection;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            connections.get(address).setTime(System.currentTimeMillis());</span><br><span class="line">            return connections.get(address);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>ͨ������<code>getConnection</code>�������ɻ�ȡ��һ�����ӣ���getConnection��ʵ����ͨ������˽�з���<code>tryAcquire</code>����ȡ���������£�<br>��һ�����ж����ӳ����Ƿ����address��ͬ�����ӣ�����������̵߳Ļ�Ծʱ��Ȼ��ֱ�ӷ��أ�û����ִ�еڶ�����<br>�ڶ�����סaddress��Ŀ���Ƿ�ֹ����߳�ͬʱ����ͬһ�����ӣ���ס֮���ٴ��ж����ӳ��Ƿ���������ˣ�û������д���Ȼ�󷵻ء�</p>
+<ol start="2">
+<li><strong>������������ʱ�������</strong>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">private void cleanUpConnection() &#123;</span><br><span class="line">    for (Map.Entry&lt;Address, Connection&gt; entry: connections.entrySet()) &#123;</span><br><span class="line">        if (System.currentTimeMillis() - entry.getValue().getTime() &lt;= keepAliveTime) &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                connections.get(entry.getKey()).getSocket().close();</span><br><span class="line">            &#125; catch (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            connections.remove(entry.getKey());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>���cleanUpConnection������ÿ�λ�ȡ���ӵ�ʱ�򶼻�ִ��һ�Σ��������ӳ��е����ӣ�������ӳ��е����ӳ�������������ʱ����ر��������Ȼ�������Ƴ�Map��</p>
+<h2 id="�ܽ�"><a href="#�ܽ�" class="headerlink" title="�ܽ�"></a>�ܽ�</h2><p><strong>�����Ŀ����ѧϰʹ�ã�����������������</strong>��<br>Ŀǰ��ʵ����<code>GET</code>��<code>POST</code>��<code>DELETE</code>��<code>PUT</code>������ϣ����������Ƹ��๦�ܻ��а�IO�ĳ�NIO������ܡ�<br>ϣ����λǰ������֮���ܸ�������������¸���~<br>����ٸ���<code>Github</code>��ַ:<a href="https://github.com/xue8/yohttp" target="_blank" rel="noopener">YoHttp</a>����ӭ���һ��ѧϰ̽�֡�</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://ddnd.cn/2019/04/12/yohttp/" title="��0��ʼ��һ������(����)" target="_blank" rel="external">http://ddnd.cn/2019/04/12/yohttp/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/xue8" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/img/logo.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/xue8" target="_blank"><span class="text-dark">薛8</span><small class="ml-1x">Web Developer</small></a></h3>
+        <div>个人简介。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+           
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom="">
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2019/04/03/java-arraylist/" title="java-arraylist"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="Catalogue" role="button">
+        <span>[&nbsp;</span><span>Catalogue</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope="" itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/xue8" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        <script type="text/javascript" src="https://s23.cnzz.com/z_stat.php?id=1275516312&web_id=1275516312"></script>
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <!-- <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"> -->
+  <script src="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: '44eba9c2a65634685dd0',
+    clientSecret: '1d846bf73efeb924ca668691ea65d61aa6b4627f',
+    repo: 'xue8.github.io',
+    owner: 'xue8',
+    admin: ['xue8'],
+    id: md5(location.pathname),
+    distractionFreeMode: true
+  })
+  gitalk.render('comments')
+  </script>
+
+      
+
+
+
+
+
+
+
+</body>
+</html>

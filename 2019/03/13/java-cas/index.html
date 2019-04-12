@@ -19,7 +19,7 @@
   
   <title>CAS原理分析及ABA问题详解 | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
   <meta name="description" content="什么是CASCAS即Compare And Swap的缩写，翻译成中文就是比较并交换，其作用是让CPU比较内存中某个值是否和预期的值相同，如果相同则将这个值更新为新值，不相同则不做更新，也就是CAS是原子性的操作(读和写两者同时具有原子性)，其实现方式是通过借助C/C++调用CPU指令完成的，所以效率很高。CAS的原理很简单，这里使用一段Java代码来描述123456789public boo">
-<meta name="keywords" content="多线程,CAS">
+<meta name="keywords" content="CAS,多线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CAS原理分析及ABA问题详解">
 <meta property="og:url" content="http://ddnd.cn/2019/03/13/java-cas/index.html">
@@ -196,7 +196,7 @@
   <div class="widget">
     <h3 class="widget-title">Categories</h3>
     <div class="widget-body">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java-Programming/">Java编程基础</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mybatis-Programming/">Mybatis</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Shiro/">Shiro</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Programming/">Spring</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-MVC/">Spring MVC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Technique/">技术杂谈</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Computer-Foundation/">计算机基础</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/������̸/">������̸</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java-Programming/">Java编程基础</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mybatis-Programming/">Mybatis</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Shiro/">Shiro</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Programming/">Spring</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-MVC/">Spring MVC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Technique/">技术杂谈</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Computer-Foundation/">计算机基础</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -241,10 +241,10 @@
             
             <div class="item-inner">
               <p class="item-category">
-                <a class="category-link" href="/categories/������̸/">������̸</a>
+                <a class="category-link" href="/categories/Technique/">技术杂谈</a>
               </p>
               <p class="item-title">
-                <a href="/2019/04/12/yohttp/" class="title">��0��ʼ��һ������(����)</a>
+                <a href="/2019/04/12/yohttp/" class="title">从0开始造一个轮子(方的)</a>
               </p>
               <p class="item-date">
                 <time datetime="2019-04-12T05:35:37.000Z" itemprop="datePublished">2019-04-12</time>

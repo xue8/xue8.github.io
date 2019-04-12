@@ -34,7 +34,7 @@
 <meta property="og:image" content="http://ws4.sinaimg.cn/large/e0e01e43gy1g1zygq1zg3j20n50izt9w.jpg">
 <meta property="og:image" content="http://ws2.sinaimg.cn/large/e0e01e43gy1g1zygx8qz0j20ls0hhwf5.jpg">
 <meta property="og:image" content="http://ws3.sinaimg.cn/large/e0e01e43gy1g1zyh29034j20n50izaaw.jpg">
-<meta property="og:updated_time" content="2019-04-12T09:03:39.542Z">
+<meta property="og:updated_time" content="2019-04-12T10:33:33.667Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从0开始造一个轮子(方的)">
 <meta name="twitter:description" content="前言俗话说「不要重复造轮子」，但是我觉得通过研究大神造的轮子，然后自己去尝试造一个简陋版的，对于提升自己的软件构思是很有帮助的。回归正题，最近在做一个作业，和计算机网络相关的，笔者选择了用Java开发一个简陋版的HTTP客户端，于是笔者去拜读了Square公司开源的OkHttp，参照了Okhttp的设计思想，开发了Yohttp。  这里给出Github地址:YoHttp，欢迎大家一起学习探讨。">
@@ -416,12 +416,12 @@
 <li>同步请求   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Request request = new Request.Builder()</span><br><span class="line">        .url(&quot;www.baidu.com&quot;)</span><br><span class="line">        .get()</span><br><span class="line">        .build();</span><br><span class="line">YoHttpClient httpClient = new YoHttpClient();</span><br><span class="line">Response response = httpClient.SyncCall(request).executor();</span><br><span class="line">System.out.println(response.getBody());</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<p>第一步新建个请求信息<code>Request</code>，填写请求的<code>URL</code>、请求方法、请求头等信息。<br>第二步新建个<code>YoHttp</code>客户端，<strong>选择同步于请求</strong>并将请求信息注入，执行请求。</p>
+<p>第一步新建个请求信息<code>Request</code>，填写请求的<code>URL</code>、请求方法、请求头等信息。<br>第二步新建个<code>YoHttp</code>客户端，<strong>选择同步请求</strong>并将请求信息注入，执行请求。</p>
 <ol start="2">
 <li>异步请求  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Request request = new Request.Builder()</span><br><span class="line">        .url(&quot;www.baidu.com&quot;)</span><br><span class="line">        .get()</span><br><span class="line">        .build();</span><br><span class="line">YoHttpClient httpClient = new YoHttpClient();</span><br><span class="line">httpClient.AsyncCall(request).executor(new CallBack() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void onResponse(Response response) &#123;</span><br><span class="line">        System.out.println(response.getBody());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<p>第一步新建个请求信息<code>Request</code>，填写请求的<code>URL</code>、请求方法、请求头等信息。<br>第二步新建个<code>YoHttp</code>客户端，<strong>选择异步于请求</strong>并将请求信息注入，执行请求，当请求有响应的时候，会通过回调异步请求的<code>onResponse</code>方法来反馈响应内容。   </p>
+<p>第一步新建个请求信息<code>Request</code>，填写请求的<code>URL</code>、请求方法、请求头等信息。<br>第二步新建个<code>YoHttp</code>客户端，<strong>选择异步请求</strong>并将请求信息注入，执行请求，当请求有响应的时候，会通过回调异步请求的<code>onResponse</code>方法来反馈响应内容。   </p>
 <p>说完了架构还有使用方法，接下来笔者介绍各个模块的具体实现。  </p>
 <h2 id="请求信息"><a href="#请求信息" class="headerlink" title="请求信息"></a>请求信息</h2><p><img src="http://ws3.sinaimg.cn/large/e0e01e43gy1g1zyga9hkij20n50izmye.jpg" alt="image">  </p>
 <p>在实现<code>Request</code>的时候，笔者使用的是<code>Builder</code>模式，即构造者模式，在<code>Request</code>中添加个<strong>静态内部类Builder</strong>，用于构造Request。</p>

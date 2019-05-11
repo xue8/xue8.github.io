@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ddnd.cn/2019/05/10/springboot-starter-and-autoconfiguration/</loc>
+    
+    <lastmod>2019-05-11T03:57:15.709Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ddnd.cn/2019/04/12/yohttp/</loc>
     
     <lastmod>2019-04-12T10:33:33.667Z</lastmod>

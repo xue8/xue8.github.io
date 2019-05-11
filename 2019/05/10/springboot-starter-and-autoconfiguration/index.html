@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>����ǳ��Spring Boot ���������Զ����� | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
+  <meta name="description" content="ǰ������֪�� Spring Boot �ܿ��ٵĴ��һ��Ӧ�ã����˴��������ù��̣��ǵ����ж�”��”�أ�����ͨ��һ��������˵����ƽʱ����ͨ�� Spring��Spring MVC �һ��helloword�� Web Ӧ�ã���Ҫ�����¹�����     ���� pom.xml ���� Spring��Spring MV">
+<meta name="keywords" content="������,�Զ�����">
+<meta property="og:type" content="article">
+<meta property="og:title" content="����ǳ��Spring Boot ���������Զ�����">
+<meta property="og:url" content="http://ddnd.cn/2019/05/10/springboot-starter-and-autoconfiguration/index.html">
+<meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
+<meta property="og:description" content="ǰ������֪�� Spring Boot �ܿ��ٵĴ��һ��Ӧ�ã����˴��������ù��̣��ǵ����ж�”��”�أ�����ͨ��һ��������˵����ƽʱ����ͨ�� Spring��Spring MVC �һ��helloword�� Web Ӧ�ã���Ҫ�����¹�����     ���� pom.xml ���� Spring��Spring MV">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-05-11T03:57:15.709Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="����ǳ��Spring Boot ���������Զ�����">
+<meta name="twitter:description" content="ǰ������֪�� Spring Boot �ܿ��ٵĴ��һ��Ӧ�ã����˴��������ù��̣��ǵ����ж�”��”�أ�����ͨ��һ��������˵����ƽʱ����ͨ�� Spring��Spring MVC �һ��helloword�� Web Ӧ�ã���Ҫ�����¹�����     ���� pom.xml ���� Spring��Spring MV">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://ddnd.cn/2019/05/10/springboot-starter-and-autoconfiguration/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="薛8的个人网站 - xue8&#39;s Blog - DDND.CN" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+  
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.css">
+  
+</head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/xue8" target="_blank">
+          <img class="img-circle img-rotate" src="/img/logo.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">薛8</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Web Developer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Guiling, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search">
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech="">
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope="" itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">Links</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/xue8" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope="" itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java-Programming/">Java编程基础</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mybatis-Programming/">Mybatis</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Shiro/">Shiro</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Programming/">Spring</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Boot/">Spring Boot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-MVC/">Spring MVC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Technique/">技术杂谈</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Computer-Foundation/">计算机基础</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AQS/">AQS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CAS/">CAS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ConcurrentHashMap/">ConcurrentHashMap</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HashMap/">HashMap</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hashtable/">Hashtable</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/">JVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java内存模型/">Java内存模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jdbc/">Jdbc</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MVC/">MVC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mybatis/">Mybatis</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RESTful/">RESTful</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RPC/">RPC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ReentrantLock/">ReentrantLock</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shiro/">Shiro</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-MVC/">Spring MVC</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-MVC/">Spring-MVC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TEA算法/">TEA算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TomcatDBCP/">TomcatDBCP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/">WebSocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/YoHttp/">YoHttp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/servlet/">servlet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/synchronized/">synchronized</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/volatile/">volatile</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web-xml/">web.xml</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机内存模型/">计算机内存模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/连接池/">连接池</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/�Զ�����/">�Զ�����</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/������/">������</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/AQS/" style="font-size: 13.25px;">AQS</a> <a href="/tags/CAS/" style="font-size: 13px;">CAS</a> <a href="/tags/ConcurrentHashMap/" style="font-size: 13px;">ConcurrentHashMap</a> <a href="/tags/HashMap/" style="font-size: 13.25px;">HashMap</a> <a href="/tags/Hashtable/" style="font-size: 13.25px;">Hashtable</a> <a href="/tags/JVM/" style="font-size: 13px;">JVM</a> <a href="/tags/Java内存模型/" style="font-size: 13px;">Java内存模型</a> <a href="/tags/Jdbc/" style="font-size: 13.5px;">Jdbc</a> <a href="/tags/MVC/" style="font-size: 13px;">MVC</a> <a href="/tags/Mybatis/" style="font-size: 13.75px;">Mybatis</a> <a href="/tags/RESTful/" style="font-size: 13px;">RESTful</a> <a href="/tags/RPC/" style="font-size: 13px;">RPC</a> <a href="/tags/ReentrantLock/" style="font-size: 13px;">ReentrantLock</a> <a href="/tags/Shiro/" style="font-size: 13.25px;">Shiro</a> <a href="/tags/Spring/" style="font-size: 13.75px;">Spring</a> <a href="/tags/Spring-MVC/" style="font-size: 13.25px;">Spring MVC</a> <a href="/tags/Spring-MVC/" style="font-size: 13px;">Spring-MVC</a> <a href="/tags/TEA算法/" style="font-size: 13px;">TEA算法</a> <a href="/tags/TomcatDBCP/" style="font-size: 13px;">TomcatDBCP</a> <a href="/tags/WebSocket/" style="font-size: 13px;">WebSocket</a> <a href="/tags/YoHttp/" style="font-size: 13px;">YoHttp</a> <a href="/tags/servlet/" style="font-size: 13px;">servlet</a> <a href="/tags/synchronized/" style="font-size: 13.25px;">synchronized</a> <a href="/tags/volatile/" style="font-size: 13px;">volatile</a> <a href="/tags/web-xml/" style="font-size: 13px;">web.xml</a> <a href="/tags/多线程/" style="font-size: 14px;">多线程</a> <a href="/tags/计算机内存模型/" style="font-size: 13px;">计算机内存模型</a> <a href="/tags/连接池/" style="font-size: 13px;">连接池</a> <a href="/tags/�Զ�����/" style="font-size: 13px;">�Զ�����</a> <a href="/tags/������/" style="font-size: 13px;">������</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">12</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Spring-Boot/">Spring Boot</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/05/10/springboot-starter-and-autoconfiguration/" class="title">����ǳ��Spring Boot ���������Զ�����</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-05-10T13:06:25.000Z" itemprop="datePublished">2019-05-10</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Technique/">技术杂谈</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/04/12/yohttp/" class="title">从0开始造一个轮子(方的)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-04-12T05:35:37.000Z" itemprop="datePublished">2019-04-12</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Java-Programming/">Java编程基础</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/03/24/java-reentrantlock/" class="title">深入理解ReentrantLock的实现原理</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-03-24T04:26:07.000Z" itemprop="datePublished">2019-03-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Java-Programming/">Java编程基础</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/03/22/java-synchronized-2/" class="title">深入分析synchronized原理和锁膨胀过程(二)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-03-22T15:10:17.000Z" itemprop="datePublished">2019-03-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Java-Programming/">Java编程基础</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/03/21/java-synchronized/" class="title">synchronized的使用（一）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-03-21T10:14:36.000Z" itemprop="datePublished">2019-03-21</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope="" itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">Catalogue</h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#j��"><span class="toc-number">1.</span> <span class="toc-text">ǰ��</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#����Ӧ�y�ܺ�΢������"><span class="toc-number">2.</span> <span class="toc-text">����Ӧ�ÿ�ܺ�΢������</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-Boot"><span class="toc-number">3.</span> <span class="toc-text">Spring Boot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#������"><span class="toc-number">4.</span> <span class="toc-text">������</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#�Զ�����"><span class="toc-number">5.</span> <span class="toc-text">�Զ�����</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#�ܽ�"><span class="toc-number">6.</span> <span class="toc-text">�ܽ�</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-springboot-starter-and-autoconfiguration" class="article article-type-post" itemscope="" itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ����ǳ��Spring Boot ���������Զ�����
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2019/05/10/springboot-starter-and-autoconfiguration/" class="article-date">
+	  <time datetime="2019-05-10T13:06:25.000Z" itemprop="datePublished">2019-05-10</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Spring-Boot/">Spring Boot</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/�Զ�����/">�Զ�����</a>, <a class="article-tag-link" href="/tags/������/">������</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/05/10/springboot-starter-and-autoconfiguration/#comments" class="article-comment-link">Comments</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 1.3k(words)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 7(minutes)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="j��"><a href="#j��" class="headerlink" title="ǰ��"></a>ǰ��</h2><p>����֪�� Spring Boot �ܿ��ٵĴ��һ��Ӧ�ã����˴��������ù��̣��ǵ����ж�”��”�أ�<br>����ͨ��һ��������˵����ƽʱ����ͨ�� <code>Spring</code>��<code>Spring MVC</code> �һ��<code>helloword</code>�� Web Ӧ�ã���Ҫ�����¹�����  </p>
+<ul>
+<li><ol>
+<li>���� pom.xml ���� <code>Spring</code>��<code>Spring MVC</code>��ܵ�������ͬʱ����Ҫ������Щ��ͬ�Ŀ�ܵĲ�ͬ�汾�Ƿ���ڲ����ݵ����⡣</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>���� Web.xml������ Spring��Spring MVC��</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>���� Spring ��</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>���� Spring MVC��</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>��дҵ���߼����롣</li>
+</ol>
+</li>
+</ul>
+<p>��ʹ�� Spring Boot ��Ļ�����Ҫ�����¹���:    </p>
+<ul>
+<li><ol>
+<li>���� pom.xml �̳� Spring Boot �� <code>pom.xml</code>������ Web ��������</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>�������������ࡣ</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>��дҵ���߼����롣</li>
+</ol>
+</li>
+</ul>
+<p>���Ӳ��������Ͽ���֪��ͨ�� Spring��Spring MVC ���ͨ�� <code>Spring Boot</code> ������ӣ���Ҫ��д���������ã��⻹�������ں��ٿ�ܺ� Spring ��������£������Ҫ�������������ܺ� Spring ���ϣ����¾�Ҫ����”���õ���”�ˣ�������Щ���û������ǹ̻��ģ�Ҳ���Ǵ�µ�Ӧ�ã�����Ȼ��Ҫ�ٴα�д��ͬ��������Ϣ���ر�����΢������ô��ĵ��£�һ��Ӧ�ÿ�����ʮ����������ʮ��С�ͷ�������ɣ����ÿ��С�ͷ����ظ���������Щ���ù���……��    </p>
+<p>����û��ʲô�취�����������أ������еģ��Ǿ���ʹ�� <code>Spring Boot</code>���ϴ���������ӾͿ��Է��֣�ʹ�� <code>Spring Boot</code> ������ŵ���Ǽ��������õĹ�������ô�ǲ���˵ʹ�� <code>Spring Boot</code> �Ͳ���Ҫ��Щ���ù����ˣ���Ȼ���ǣ����� <code>Spring Boot</code> �����ǰ���Щ���������ˡ�   </p>
+<p>�� Spring Boot ����ΰ����ǰ���Щ���ù����������أ�����Ǳ�����Ҫ̽�ֵ������ˣ���̽��֮ǰ��������Ҫ�˽���������<strong>������</strong>��<strong>�Զ�����</strong>����������֪��������������<code>Spring Boot</code>�ĺ��ġ���<code>Spring Boot</code>�ľ������ڡ������ǲ���Ҫ�ٽ��д������ù�����ԭ�����ھ����ˡ�  </p>
+<h2 id="����Ӧ�y�ܺ�΢������"><a href="#����Ӧ�y�ܺ�΢������" class="headerlink" title="����Ӧ�ÿ�ܺ�΢������"></a>����Ӧ�ÿ�ܺ�΢������</h2><h2 id="Spring-Boot"><a href="#Spring-Boot" class="headerlink" title="Spring Boot"></a>Spring Boot</h2><h2 id="������"><a href="#������" class="headerlink" title="������"></a>������</h2><p>������˵���˾���<code>Spring Boot</code>ͨ���Գ��õ�����������һ�η�װ����������ƽʱ��Ҫ�һ��<code>Web</code>Ӧ�õ�ʱ��һ�㶼�ᵼ�����¼���������<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;5.1.3.RELEASE&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-web&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;5.1.3.RELEASE&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure></p>
+<p>Ҳ������Ҫ��<code>spring-web</code>��<code>spring mvc</code>�ֱ��룬��ʹ��<code>Spring Boot</code>�Ļ�ֻ��Ҫ����һ����<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure></p>
+<p>Ҳ����ֻ��Ҫ����һ����Ϊ<code>web</code>�����������ɣ����ǵ�<code>spring-boot-starter-web</code>��ȥ���Կ�������ʵ��������������˳��õ� web ���������£�<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;2.1.4.RELEASE&lt;/version&gt;</span><br><span class="line">  &lt;scope&gt;compile&lt;/scope&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter-json&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;2.1.4.RELEASE&lt;/version&gt;</span><br><span class="line">  &lt;scope&gt;compile&lt;/scope&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter-tomcat&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;2.1.4.RELEASE&lt;/version&gt;</span><br><span class="line">  &lt;scope&gt;compile&lt;/scope&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.hibernate.validator&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;hibernate-validator&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;6.0.16.Final&lt;/version&gt;</span><br><span class="line">  &lt;scope&gt;compile&lt;/scope&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-web&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;5.1.6.RELEASE&lt;/version&gt;</span><br><span class="line">  &lt;scope&gt;compile&lt;/scope&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;5.1.6.RELEASE&lt;/version&gt;</span><br><span class="line">  &lt;scope&gt;compile&lt;/scope&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure></p>
+<p>Ҳ����ǰ����˵�ģ�Spring Boot��������˵���˾��ǶԳ��õ�����������һ�η�װ�������������룬���� pom.xml ���ã����Ǹ���Ҫ���ǽ������Ĺ��������� Spring Boot�����������ע��ͬ�������Ĳ�ͬ�汾�Ƿ���ڳ�ͻ�����⣬Spring Boot �������ǿ��Ǻ��ˣ����������ü��ɣ�   </p>
+<p>��ʹ�� Spring Boot ��������֮ǰ��������Ҫ��<code>pom.xml</code>���������ã�<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;parent&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.1.4.RELEASE&lt;/version&gt;</span><br><span class="line">    &lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;</span><br><span class="line">&lt;/parent&gt;</span><br></pre></td></tr></table></figure></p>
+<p>����<code>pom.xml</code>�̳� Spring Boot ��<code>pom.xml</code>���� Spring Boot ��<code>pom.xml</code>���涨���˳��õĿ�ܵ������Լ���Ӧ�İ汾�š�    </p>
+<p>�ܽ�һ�� Spring Boot �����������ŵ㣺   </p>
+<ul>
+<li><ol>
+<li>���迼�ǲ�ͬ��ܵĲ�ͬ�汾�ĳ�ͻ���⡣  </li>
+</ol>
+</li>
+<li><ol start="2">
+<li>����<code>pom.xml</code>���á�</li>
+</ol>
+</li>
+</ul>
+<h2 id="�Զ�����"><a href="#�Զ�����" class="headerlink" title="�Զ�����"></a>�Զ�����</h2><p>���������һ��Ӧ�ñ�����װ�޷��ӵĹ��̣���ô Spring Boot ������һ��ȫ���͹�˾һ�����ڣ������������Ա����ɹ���װ����Ʒ�Ĺ��̣��Զ����ñ�������װ����Ʒ����װ�޵Ĺ��̡�    </p>
+<p>���ǿ���ͨ�� Spring Boot ����������ȡ������Ҫ��Ϳ�ϡ���ש��װ��Ʒ�ȣ� Spring Boot ��˾�������ѵ���Ͻ���Щװ����Ʒ����ø����ǣ��������迼�Ǹ���װ����Ʒ�Ƿ���䡢�Ƿ��ͻ�����⡣     </p>
+<p>ͨ�����������ǻ�ȡ������Ҫ��װ����Ʒ���ǽ�����������Ҫ���ľ��ǽ���װ���ˣ�ǰ������˵�� Spring Boot ����һ��ȫ���͹�˾һ�������������������ﹺ��װ����Ʒ֮��<strong>��������װ����Ʒ�����Ż�����������װ��(�Զ�����)</strong>������������һվʽ�ķ��񣬴ӹ���װ��Ʒ(������)��װ�����(�Զ�����)���������ǿ��ǣ�����ֻ��Ҫ��װ�����֮����ס(��д�Լ���ҵ���߼�����)���ɡ�   </p>
+<p>˵����ô�࣬���ǻ���֪��<code>Spring Boot</code>���������Զ����õģ����������������� Spring Boot ������Զ����ã�    </p>
+<p>��������֪�� Spring Boot ������Ҫ��һ�����������࣬����������Ӧ�õ����֮�⣬�����������õ� Spring Boot ����Ҫ���á�������һ���򵥵����������ࣺ<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@SpringBootApplication</span><br><span class="line">public class DemoApplication &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(DemoApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>���Ƿ�����һ����Ϊ<code>@SpringBootApplication</code>��ע�⣬�����ȥ���Է��֣����ע�ⷢ���Ŷ��ע������ã�<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@Target(&#123;ElementType.TYPE&#125;)</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">@Documented</span><br><span class="line">@Inherited</span><br><span class="line">@SpringBootConfiguration</span><br><span class="line">@EnableAutoConfiguration</span><br><span class="line">@ComponentScan(</span><br><span class="line">    excludeFilters = &#123;@Filter(</span><br><span class="line">    type = FilterType.CUSTOM,</span><br><span class="line">    classes = &#123;TypeExcludeFilter.class&#125;</span><br><span class="line">), @Filter(</span><br><span class="line">    type = FilterType.CUSTOM,</span><br><span class="line">    classes = &#123;AutoConfigurationExcludeFilter.class&#125;</span><br><span class="line">)&#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>�����Ҫ��˵��<code>@SpringBootConfiguration</code>��<code>@ComponentScan</code>ע�⡣ǰ��ʵ��Ϊ<code>@Configuration</code>ע�⣬���ע����ȴ�Ҷ��Ӵ�����Ҳ���������������Ϊ����������ã��������𵽿����Զ�ɨ����������á�     </p>
+<p>������Ҫ�ص��������<code>@EnableAutoConfiguration</code>���ע�⣬���ע��������ǿ��� Spring Boot ���Զ����ù��ܣ�����������һ��������ο����ģ������ȥ���Կ�����<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@Target(&#123;ElementType.TYPE&#125;)</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">@Documented</span><br><span class="line">@Inherited</span><br><span class="line">@AutoConfigurationPackage</span><br><span class="line">@Import(&#123;AutoConfigurationImportSelector.class&#125;)</span><br><span class="line">public @interface EnableAutoConfiguration &#123;</span><br><span class="line">    String ENABLED_OVERRIDE_PROPERTY = &quot;spring.boot.enableautoconfiguration&quot;;</span><br><span class="line"></span><br><span class="line">    Class&lt;?&gt;[] exclude() default &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    String[] excludeName() default &#123;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>@EnableAutoConfiguration</code>���ע��ͬ�������Ŷ��ע��Ĺ��ܣ������ص����<code>@Import({AutoConfigurationImportSelector.class})</code>���ע�⣬����֪��<code>@import</code>�������ǽ�������ӵ� Spring �����У��������Ｔ�ǽ�<code>AutoConfigurationImportSelector</code>���������ӵ� Spring �����С�   </p>
+<p>���ǽ�һ������<code>AutoConfigurationImportSelector</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">protected AutoConfigurationImportSelector.AutoConfigurationEntry getAutoConfigurationEntry(AutoConfigurationMetadata autoConfigurationMetadata, AnnotationMetadata annotationMetadata) &#123;</span><br><span class="line">    if (!this.isEnabled(annotationMetadata)) &#123;</span><br><span class="line">        return EMPTY_ENTRY;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        AnnotationAttributes attributes = this.getAttributes(annotationMetadata);</span><br><span class="line">        List&lt;String&gt; configurations = this.getCandidateConfigurations(annotationMetadata, attributes); </span><br><span class="line">        configurations = this.removeDuplicates(configurations);</span><br><span class="line">        Set&lt;String&gt; exclusions = this.getExclusions(annotationMetadata, attributes);</span><br><span class="line">        this.checkExcludedClasses(configurations, exclusions);</span><br><span class="line">        configurations.removeAll(exclusions);</span><br><span class="line">        configurations = this.filter(configurations, autoConfigurationMetadata);</span><br><span class="line">        this.fireAutoConfigurationImportEvents(configurations, exclusions);</span><br><span class="line">        return new AutoConfigurationImportSelector.AutoConfigurationEntry(configurations, exclusions);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">protected List&lt;String&gt; getCandidateConfigurations(AnnotationMetadata metadata, AnnotationAttributes attributes) &#123;</span><br><span class="line">    List&lt;String&gt; configurations = SpringFactoriesLoader.loadFactoryNames(this.getSpringFactoriesLoaderFactoryClass(), this.getBeanClassLoader());</span><br><span class="line">    Assert.notEmpty(configurations, &quot;No auto configuration classes found in META-INF/spring.factories. If you are using a custom packaging, make sure that file is correct.&quot;);</span><br><span class="line">    return configurations;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>��һ����Ϊ<code>getAutoConfigurationEntry</code>�ķ���������������ӵ�������ɨ��<code>ClassPath</code>�µ�����<code>jar</code>����<code>spring.factories</code>�ļ�����<code>spring.factories</code>�ļ�<code>key</code>Ϊ<code>EnableAutoConfiguration</code>������ֵȡ����Ȼ����Щֵ��ʵ�����ȫ�޶�����<strong>Ҳ�����Զ��������ȫ�޶���</strong>��Ȼ�� Spring Boot ͨ����Щȫ�޶������������(����)������Щ�Զ����������ӵ� Spring �����С�    </p>
+<p>����Щ�Զ�����������Щ������ʲô�����أ����ǽ������¿��������ҵ�һ����Ϊ<code>spring-boot-autoconfigure-2.1.4.RELEASE.jar</code>�� jar ����������<code>spring.factories</code>�ļ�����������ļ���<code>key</code>Ϊ<code>EnableAutoConfiguration</code>�ļ�ֵ��</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># Auto Configure</span><br><span class="line">org.springframework.boot.autoconfigure.EnableAutoConfiguration=\</span><br><span class="line">org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.aop.AopAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.batch.BatchAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.cassandra.CassandraAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.cloud.CloudServiceConnectorsAutoConfiguration,\</span><br><span class="line"></span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+<p>Ҳ�������<code>jar</code>�����Զ������࣬���Է�����Щ�Զ������䶼����<code>xxxAutoConfiguration</code>������������ȡ���ģ���Щ�Զ���������������ǳ��õĿ�ܵ��Զ������࣬����<code>aop</code>��<code>elasticsearch</code>��<code>redis</code>��<code>web</code>�ȵȣ����������������ճ�����������     </p>
+<p>����Щ�Զ�������������η����������õ��أ�����ȡһ����Ϊ�򵥵���������з�������Ϊ<code>HttpEncodingAutoConfiguration</code>�����Ĳ��ִ������£�<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">@Configuration  //���������Ϊ������</span><br><span class="line">@EnableConfigurationProperties(&#123;HttpProperties.class&#125;)  //����ConfigurationProperties���ܣ�ͬʱ�������ļ���HttpProperties.class������</span><br><span class="line">@ConditionalOnWebApplication(  //ֻ����webӦ�����Զ����������Ч</span><br><span class="line">    type = Type.SERVLET</span><br><span class="line">)</span><br><span class="line">@ConditionalOnClass(&#123;CharacterEncodingFilter.class&#125;) //ֻ�д���CharacterEncodingFilter.class����� �Զ����������Ч</span><br><span class="line">@ConditionalOnProperty( //�ж������ļ��Ƿ����ĳ������spring.http.encoding�����������ֵΪenabled����Ч��������������������Ҳ��Ч��</span><br><span class="line">    prefix = &quot;spring.http.encoding&quot;,</span><br><span class="line">    value = &#123;&quot;enabled&quot;&#125;,</span><br><span class="line">    matchIfMissing = true</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">//���ַ����������������ӵ� Spring ������</span><br><span class="line">@Bean</span><br><span class="line">@ConditionalOnMissingBean</span><br><span class="line">public CharacterEncodingFilter characterEncodingFilter() &#123;</span><br><span class="line">    CharacterEncodingFilter filter = new OrderedCharacterEncodingFilter();</span><br><span class="line">    filter.setEncoding(this.properties.getCharset().name());</span><br><span class="line">    filter.setForceRequestEncoding(this.properties.shouldForce(org.springframework.boot.autoconfigure.http.HttpProperties.Encoding.Type.REQUEST));</span><br><span class="line">    filter.setForceResponseEncoding(this.properties.shouldForce(org.springframework.boot.autoconfigure.http.HttpProperties.Encoding.Type.RESPONSE));</span><br><span class="line">    return filter;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Bean</span><br><span class="line">public HttpEncodingAutoConfiguration.LocaleCharsetMappingsCustomizer localeCharsetMappingsCustomizer() &#123;</span><br><span class="line">    return new HttpEncodingAutoConfiguration.LocaleCharsetMappingsCustomizer(this.properties);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>������ͬ��������ע�⣬����һ��һ��������</p>
+<ul>
+<li>Configuration�����ע�������������Ϊ������(������ƽʱд��������һ����ͬ���������ϼ����ע��)��</li>
+<li>EnableConfigurationProperties������<code>ConfigurationProperties</code>���ܣ�Ҳ���ǽ������ļ���<code>HttpProperties.class</code>�������������������ļ�����Ӧ��ֵ��<code>HttpProperties.class</code>�ı����������������Ե��<code>HttpProperties.class</code>��ȥ�����������ȡ�˲��ִ�����з�����<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@ConfigurationProperties(</span><br><span class="line">    prefix = &quot;spring.http&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">public static final Charset DEFAULT_CHARSET;</span><br><span class="line">private Charset charset;</span><br><span class="line">private Boolean force;</span><br><span class="line">private Boolean forceRequest;</span><br><span class="line">private Boolean forceResponse;</span><br><span class="line">private Map&lt;Locale, Charset&gt; mapping;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>ͨ��<code>ConfigurationProperties</code>ָ��ǰ׺���������ļ�<code>application.properties</code>ǰ׺Ϊ<code>spring.http</code>��ֵ��<code>HttpProperties.class</code>�ı�������������ͨ����ı������Է��֣����ǿ������õ�������<code>charset</code>��<code>force</code>��<code>forceRequest</code>��<code>forceResponse</code>��<code>mapping</code>��Ҳ�������ǳ���ʹ�� Spring Boot Ĭ���ṩ��������Ϣ֮�⣬���ǻ�����ͨ�������ļ�ָ��������Ϣ��</p>
+<ul>
+<li>ConditionalOnWebApplication�����ע����������Զ��������� Web Ӧ���в���Ч��</li>
+<li>ConditionalOnClass��ֻ���ڴ���<code>CharacterEncodingFilter</code>������������Զ�������Ż���Ч��</li>
+<li>ConditionalOnProperty���ж������ļ��Ƿ����ĳ������ spring.http.encoding �����������ֵΪ enabled ����Ч��������������������Ҳ��Ч��</li>
+</ul>
+<p>���Է��ֺ��漸��ע�ⶼ��<code>ConditionalXXXX</code>������������Щע���� Spring �ƶ�������ע�⣬ֻ���ڷ���������������Զ�������Ż���Ч��    </p>
+<p>��������<code>characterEncodingFilter</code>����������һ��<code>CharacterEncodingFilter</code>�Ķ���Ҳ�����ַ������������ͬʱ����������ԣ�Ȼ�󽫶��󷵻أ�ͨ��<code>@Bean</code>ע�⣬�����صĶ������ӵ� Spring �����С������ַ����������������ú��ˣ���ƽʱ�Ļ���������Ҫ�� web.xml �����������ã�<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;filter&gt;</span><br><span class="line">     &lt;filter-name&gt;springUtf8Encoding&lt;/filter-name&gt;</span><br><span class="line">     &lt;filter-class&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;/filter-class&gt;</span><br><span class="line">     &lt;init-param&gt;</span><br><span class="line">         &lt;param-name&gt;encoding&lt;/param-name&gt;</span><br><span class="line">         &lt;param-value&gt;utf-8&lt;/param-value&gt;</span><br><span class="line">     &lt;/init-param&gt;</span><br><span class="line">     &lt;init-param&gt;</span><br><span class="line">         &lt;param-name&gt;forceEncoding&lt;/param-name&gt;</span><br><span class="line">         &lt;param-value&gt;true&lt;/param-value&gt;</span><br><span class="line">     &lt;/init-param&gt; </span><br><span class="line">  &lt;/filter&gt;</span><br><span class="line">  &lt;filter-mapping&gt;</span><br><span class="line">     &lt;filter-name&gt;springUtf8Encoding&lt;/filter-name&gt;</span><br><span class="line">     &lt;url-pattern&gt;/*&lt;/url-pattern&gt;</span><br><span class="line"> &lt;/filter-mapping&gt;</span><br></pre></td></tr></table></figure></p>
+<p>�������ǲ��Ǹ��ܵ��� Spring Boot �Զ����ô����ĺô��ˣ�    </p>
+<p>��������<code>localeCharsetMappingsCustomizer</code>����ͬ�����Ͳ������ˡ�   </p>
+<p>���������һ�仰�ܽ�һ�� Spring Boot ���Զ����ã�Spring Boot ������ʱ�򣬻�ɨ��<code>ClassPath</code>�µ����� jar ��������<code>spring.factories</code>�ļ���<code>key</code>Ϊ<code>EnableAutoConfiguration</code>������ֵȡ����Ȼ����Щֵ��ʵ�����ȫ�޶�����<strong>Ҳ�����Զ��������ȫ�޶���</strong>��Ȼ�� Spring Boot ͨ����Щȫ�޶������������(����)������Щ�Զ����������ӵ� Spring �����С���Щ�Զ���������ݲ�ͬ������(@ConditionalXXX)�����Զ��������Ƿ���Ч����Ч�Ļ��Զ�������Ὣ���������ӵ� Spring �����У�Ҳ�Ͳ��������ٽ�������!    </p>
+<h2 id="�ܽ�"><a href="#�ܽ�" class="headerlink" title="�ܽ�"></a>�ܽ�</h2><p>��������ͦ������¶�˵�Ĳ��Ǻ���������԰����Լ�������д������ƪ�ܽᣬ����֮����ӭָ����  </p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://ddnd.cn/2019/05/10/springboot-starter-and-autoconfiguration/" title="����ǳ��Spring Boot ���������Զ�����" target="_blank" rel="external">http://ddnd.cn/2019/05/10/springboot-starter-and-autoconfiguration/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/xue8" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/img/logo.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/xue8" target="_blank"><span class="text-dark">薛8</span><small class="ml-1x">Web Developer</small></a></h3>
+        <div>个人简介。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+           
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom="">
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2019/04/12/yohttp/" title="从0开始造一个轮子(方的)"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="Catalogue" role="button">
+        <span>[&nbsp;</span><span>Catalogue</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope="" itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/xue8" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        <script type="text/javascript" src="https://s23.cnzz.com/z_stat.php?id=1275516312&web_id=1275516312"></script>
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <!-- <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"> -->
+  <script src="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: '44eba9c2a65634685dd0',
+    clientSecret: '1d846bf73efeb924ca668691ea65d61aa6b4627f',
+    repo: 'xue8.github.io',
+    owner: 'xue8',
+    admin: ['xue8'],
+    id: md5(location.pathname),
+    distractionFreeMode: true
+  })
+  gitalk.render('comments')
+  </script>
+
+      
+
+
+
+
+
+
+
+</body>
+</html>

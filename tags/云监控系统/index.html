@@ -17,28 +17,20 @@
   <meta http-equiv="window-target" content="_top">
   
   
-  <title>什么是Java内存模型？ | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
-  <meta name="description" content="前言要想深入了解Java并发编程，就要先理解好Java内存模型，而要理解Java内存模型又不得不从硬件、计算机内存模型说起，本文从计算机内存模型产生的原因、解决的问题谈起，然后再对Java模型进行介绍，最后对计算机内存模型和Java内存模型进行总结，希望大家看完本文之后有所收获！ CPU工作过程及出现的问题CPU执行过程大家都知道，计算机在执行程序时，每条指令都是在CPU中执行的，而执行的时候">
-<meta name="keywords" content="Java内存模型,计算机内存模型,多线程">
-<meta property="og:type" content="article">
-<meta property="og:title" content="什么是Java内存模型？">
-<meta property="og:url" content="http://ddnd.cn/2019/03/11/java-memory-model/index.html">
+  <title>Tag: 云监控系统 | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
+  <meta name="description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
+<meta name="keywords" content="Java,xue8,薛8,DDND,程序员,">
+<meta property="og:type" content="website">
+<meta property="og:title" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
+<meta property="og:url" content="http://ddnd.cn/tags/云监控系统/index.html">
 <meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
-<meta property="og:description" content="前言要想深入了解Java并发编程，就要先理解好Java内存模型，而要理解Java内存模型又不得不从硬件、计算机内存模型说起，本文从计算机内存模型产生的原因、解决的问题谈起，然后再对Java模型进行介绍，最后对计算机内存模型和Java内存模型进行总结，希望大家看完本文之后有所收获！ CPU工作过程及出现的问题CPU执行过程大家都知道，计算机在执行程序时，每条指令都是在CPU中执行的，而执行的时候">
+<meta property="og:description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://ws3.sinaimg.cn/large/e0e01e43ly1g0z8ongt9yj21qi15okjn.jpg">
-<meta property="og:image" content="http://wx2.sinaimg.cn/large/e0e01e43ly1g0z8qqzxgmj20p70kjwgk.jpg">
-<meta property="og:image" content="http://ws3.sinaimg.cn/large/e0e01e43ly1g0z8qyxhv7j20qc092757.jpg">
-<meta property="og:image" content="http://ws1.sinaimg.cn/large/e0e01e43ly1g0z8r8km5kj20q20bs40h.jpg">
-<meta property="og:image" content="http://ws2.sinaimg.cn/large/e0e01e43ly1g0z8rfihfkj20qk09ft9l.jpg">
-<meta property="og:image" content="http://ws1.sinaimg.cn/large/e0e01e43ly1g0z8rlifrqj20zb0cbjsz.jpg">
-<meta property="og:updated_time" content="2019-03-13T12:11:26.706Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="什么是Java内存模型？">
-<meta name="twitter:description" content="前言要想深入了解Java并发编程，就要先理解好Java内存模型，而要理解Java内存模型又不得不从硬件、计算机内存模型说起，本文从计算机内存模型产生的原因、解决的问题谈起，然后再对Java模型进行介绍，最后对计算机内存模型和Java内存模型进行总结，希望大家看完本文之后有所收获！ CPU工作过程及出现的问题CPU执行过程大家都知道，计算机在执行程序时，每条指令都是在CPU中执行的，而执行的时候">
-<meta name="twitter:image" content="http://ws3.sinaimg.cn/large/e0e01e43ly1g0z8ongt9yj21qi15okjn.jpg">
+<meta name="twitter:title" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
+<meta name="twitter:description" content="薛8的个人网站 - xue8&apos;s Blog - DDND.CN">
   <!-- Canonical links -->
-  <link rel="canonical" href="http://ddnd.cn/2019/03/11/java-memory-model/index.html">
+  <link rel="canonical" href="http://ddnd.cn/tags/云监控系统/index.html">
   
     <link rel="alternate" href="/atom.xml" title="薛8的个人网站 - xue8&#39;s Blog - DDND.CN" type="application/atom+xml">
   
@@ -326,197 +318,116 @@
 </aside>
 
   
-  
-<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope="" itemtype="http://schema.org/WPSideBar">
-  <div class="slimContent">
-    <nav id="toc" class="article-toc">
-      <h3 class="toc-title">Catalogue</h3>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CPU工作过程及出现的问题"><span class="toc-number">2.</span> <span class="toc-text">CPU工作过程及出现的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CPU执行过程"><span class="toc-number">2.1.</span> <span class="toc-text">CPU执行过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#缓存一致性问题"><span class="toc-number">2.2.</span> <span class="toc-text">缓存一致性问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#处理器重排序问题"><span class="toc-number">2.3.</span> <span class="toc-text">处理器重排序问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是计算机内存模型"><span class="toc-number">3.</span> <span class="toc-text">什么是计算机内存模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是Java内存模型"><span class="toc-number">4.</span> <span class="toc-text">什么是Java内存模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">6.</span> <span class="toc-text">参考</span></a></li></ol>
-    </nav>
-  </div>
-</aside>
-
-<main class="main" role="main">
-  <div class="content">
-  <article id="post-java-memory-model" class="article article-type-post" itemscope="" itemtype="http://schema.org/BlogPosting">
+  <main class="main" role="main">
+  <article class="content article article-tags post-type-list" itemscope="">
+    <header class="article-header">
+      <h1 itemprop="name" class="hidden-xs">Tag: 云监控系统</h1>
+      <p class="text-muted hidden-xs">Total 1 articles</p>
+      <nav role="navigation" id="nav-main" class="okayNav">
+        <ul>
+          <li><a href="/tags">All</a></li>
+          
+          <li><a href="/tags/Mybatis/">Mybatis</a></li>
+          
+          <li><a href="/tags/Spring/">Spring</a></li>
+          
+          <li><a href="/tags/Jdbc/">Jdbc</a></li>
+          
+          <li><a href="/tags/MVC/">MVC</a></li>
+          
+          <li><a href="/tags/Java内存模型/">Java内存模型</a></li>
+          
+          <li><a href="/tags/计算机内存模型/">计算机内存模型</a></li>
+          
+          <li><a href="/tags/多线程/">多线程</a></li>
+          
+          <li><a href="/tags/CAS/">CAS</a></li>
+          
+          <li><a href="/tags/Shiro/">Shiro</a></li>
+          
+          <li><a href="/tags/Spring-MVC/">Spring-MVC</a></li>
+          
+          <li><a href="/tags/TomcatDBCP/">TomcatDBCP</a></li>
+          
+          <li><a href="/tags/连接池/">连接池</a></li>
+          
+          <li><a href="/tags/第八届中国软件杯大赛/">第八届中国软件杯大赛</a></li>
+          
+          <li><a href="/tags/云监控系统/">云监控系统</a></li>
+          
+          <li><a href="/tags/synchronized/">synchronized</a></li>
+          
+          <li><a href="/tags/Hashtable/">Hashtable</a></li>
+          
+          <li><a href="/tags/volatile/">volatile</a></li>
+          
+          <li><a href="/tags/RPC/">RPC</a></li>
+          
+          <li><a href="/tags/RESTful/">RESTful</a></li>
+          
+          <li><a href="/tags/Spring-MVC/">Spring MVC</a></li>
+          
+          <li><a href="/tags/web-xml/">web.xml</a></li>
+          
+          <li><a href="/tags/servlet/">servlet</a></li>
+          
+          <li><a href="/tags/YoHttp/">YoHttp</a></li>
+          
+          <li><a href="/tags/JVM/">JVM</a></li>
+          
+          <li><a href="/tags/ReentrantLock/">ReentrantLock</a></li>
+          
+          <li><a href="/tags/AQS/">AQS</a></li>
+          
+          <li><a href="/tags/TEA算法/">TEA算法</a></li>
+          
+          <li><a href="/tags/WebSocket/">WebSocket</a></li>
+          
+          <li><a href="/tags/起步依赖/">起步依赖</a></li>
+          
+          <li><a href="/tags/自动配置/">自动配置</a></li>
+          
+          <li><a href="/tags/HashMap/">HashMap</a></li>
+          
+          <li><a href="/tags/ConcurrentHashMap/">ConcurrentHashMap</a></li>
+          
+        </ul>
+      </nav>
+    </header>
+    <!-- /header -->
+    <div class="article-body">
+      <div class="row">
+        
+<div class="col-md-6">
     
-    <div class="article-header">
-      
-        
-  
-    <h1 class="article-title" itemprop="name">
-      什么是Java内存模型？
-    </h1>
-  
-
-      
-      <div class="article-meta">
-        <span class="article-date">
-    <i class="icon icon-calendar-check"></i>
-	<a href="/2019/03/11/java-memory-model/" class="article-date">
-	  <time datetime="2019-03-11T08:24:28.000Z" itemprop="datePublished">2019-03-11</time>
-	</a>
-</span>
-        
-  <span class="article-category">
-    <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/categories/Java-Programming/">Java编程基础</a>
-  </span>
-
-        
-  <span class="article-tag">
-    <i class="icon icon-tags"></i>
-	<a class="article-tag-link" href="/tags/Java内存模型/">Java内存模型</a>, <a class="article-tag-link" href="/tags/多线程/">多线程</a>, <a class="article-tag-link" href="/tags/计算机内存模型/">计算机内存模型</a>
-  </span>
-
-
-        
-	<span class="article-read hidden-xs">
-	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
-	    <span id="busuanzi_container_page_pv">
-			<span id="busuanzi_value_page_pv">0</span>
-		</span>
-	</span>
-
-
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/03/11/java-memory-model/#comments" class="article-comment-link">Comments</a></span>
-        
-	
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 1.9k(words)</span>
-	
-	
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 6(minutes)</span>
-	
-
-      </div>
-    </div>
-    <div class="article-entry marked-body" itemprop="articleBody">
-      
-        <a id="more"></a>
-<p><img src="http://ws3.sinaimg.cn/large/e0e01e43ly1g0z8ongt9yj21qi15okjn.jpg" alt="image" width="100%"></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>要想深入了解Java并发编程，就要先理解好<strong>Java内存模型</strong>，而要理解Java内存模型又不得不从硬件、计算机内存模型说起，本文从计算机内存模型产生的原因、解决的问题谈起，然后再对Java模型进行介绍，最后对计算机内存模型和Java内存模型进行总结，希望大家看完本文之后有所收获！</p>
-<h2 id="CPU工作过程及出现的问题"><a href="#CPU工作过程及出现的问题" class="headerlink" title="CPU工作过程及出现的问题"></a>CPU工作过程及出现的问题</h2><h3 id="CPU执行过程"><a href="#CPU执行过程" class="headerlink" title="CPU执行过程"></a>CPU执行过程</h3><p>大家都知道，计算机在执行程序时，每条指令都是在CPU中执行的，而执行的时候，又免不了要和数据打交道，而计算机上面的临时数据，是储存在<strong>主存</strong>中的。    </p>
-<blockquote>
-<p>计算机内存包括<strong>高速缓存</strong>和<strong>主存</strong>。</p>
-</blockquote>
-<p>我们知道CPU执行指令的速度比从主存读取数据和向主存写入数据快很多，所以为了高效利用CPU，CPU增加了<strong>高速缓存(cache)</strong>来匹配CPU的执行速度，最终程序的执行过程如下</p>
-<ol>
-<li>首先会将数据从主存中复制一份到CPU的高速缓存中</li>
-<li>当CPU执行计算的时候就可以直接从高速缓存中读取数据和写入数据</li>
-<li>当运算结束后，再将高速缓存的数据更新到主存中    </li>
-</ol>
-<h3 id="缓存一致性问题"><a href="#缓存一致性问题" class="headerlink" title="缓存一致性问题"></a>缓存一致性问题</h3><p>上面的执行过程在单线程情况下并没有问题，但是在多线程情况下就会出现问题，<strong>因为CPU如果含有多个核心，则每个核心都有自己独占高速缓存</strong>，如果出现多个线程同时执行同一个操作，那么结果是无法预知。例如<code>2</code>个线程同时执行<code>i++</code>，假设i的初始值是<code>0</code>，那么我们希望<code>2</code>个线程执行完成之后<code>i</code>的值变为<code>2</code>，但是事实会是这样吗？<br><img src="http://wx2.sinaimg.cn/large/e0e01e43ly1g0z8qqzxgmj20p70kjwgk.jpg" alt="image"></p>
-<p>可能出现的情况有：    </p>
-<ol>
-<li>线程1先将<code>i=0</code>从主存中读取到线程1的高速缓存中，然后CPU完成运算，再将<code>i=1</code>写入到主存中，然后线程2开始从主存中读取<code>i=1</code>到线程2的高速缓存中，然后CPU完成运算，再将<code>i=2</code>写入到主存中，那么<code>i=2</code>即为我们想要的结果。</li>
-<li>线程1将<code>i=0</code>从主存中读取到线程1的高速缓存中的同时线程2也从主存中读取<code>i=0</code>到线程2的高速缓存中，然后线程1和线程2完成运算后，也都将<code>i=1</code>写入到主存中，那么结果<code>i=1</code>，结果就不是我们想要的了。出现这个情况，我们称为<strong>缓存不一致问题</strong>。</li>
-</ol>
-<p>那么如何解决CPU出现的<strong>缓存不一致问题</strong>呢？通常使用的解决方法有2种：     </p>
-<ol>
-<li>通过给总线加锁</li>
-<li>使用<strong>缓存一致性协议</strong></li>
-</ol>
-<p><img src="http://ws3.sinaimg.cn/large/e0e01e43ly1g0z8qyxhv7j20qc092757.jpg" alt="image"><br>第<code>1</code>种方法虽然也达到了目的，但是在总线被锁住的期间，其他的CPU也无法访问主存，<strong>效率很低</strong>，所以就出现了缓存一致性协议即第<code>2</code>种方法，其中最出名的就是<code>Intel</code>的MESI协议，MESI协议保证每个CPU高速缓存中的变量都是一致的。它的核心思想是，当CPU写数据时候，如果发现操作的变量是共享变量(即其他CPU上也存在该变量)，就会发出信号通知<strong>其他CPU</strong>将它高速缓存中缓存这个变量的缓存行置为<strong>无效状态</strong>，因此当其他CPU需要读取这个变量时，发现自己高速缓存中缓存该变量的缓存行为无效状态，那么它就会从主存中<strong>重新读取</strong>。<br><img src="http://ws1.sinaimg.cn/large/e0e01e43ly1g0z8r8km5kj20q20bs40h.jpg" alt="image"></p>
-<h3 id="处理器重排序问题"><a href="#处理器重排序问题" class="headerlink" title="处理器重排序问题"></a>处理器重排序问题</h3><p>在多线程场景下，CPU除了会出现缓存一致性问题，还会出现因为<strong>处理器重排序</strong>即<strong>处理器(CPU)为了提高效率可能会对输入的代码进行乱序执行</strong>，而造成多线程的情况下出现问题。<br>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//线程1:</span><br><span class="line">context = loadContext();   //语句1</span><br><span class="line">inited = true;             //语句2</span><br><span class="line"> </span><br><span class="line">//线程2:</span><br><span class="line">while(!inited )&#123;</span><br><span class="line">  sleep()</span><br><span class="line">&#125;</span><br><span class="line">doSomethingwithconfig(context);</span><br></pre></td></tr></table></figure></p>
-<p>线程1由于处理器重排序，先执行性了语句2，那么此时线程2会认为<code>context</code>已经初始化完成，那么跳出循环，去执行<code>doSomethingwithconfig(context)</code>方法，实际上此时context并未初始化(即线程1的语句1还未执行)，而导致程序出错。</p>
-<h2 id="什么是计算机内存模型"><a href="#什么是计算机内存模型" class="headerlink" title="什么是计算机内存模型"></a>什么是计算机内存模型</h2><p>上面提到的<strong>缓存一致性问题</strong>、<strong>处理器重排序问题</strong>都是在多线程情况下CPU可能出现的问题，那我们应该怎么处理这些问题？实际上这些问题并不需要我们考虑，这些问题CPU都会处理好，而CPU处理这些问题的时候是按照特定的<strong>操作规范</strong>，对特定的主存进行访问或告诉CPU高速缓存怎么访问主存，保证了多线程场景下的<strong>原子性、可见性、有序性</strong>，这个操作规范就称为<strong>计算机内存模型</strong>。      </p>
-<blockquote>
-<p>可见性即当一个变量修改后，这个变量会马上更新到主存中，其他线程会收到通知这个变量修改过了，使用这个变量的时候重新去主存获取</p>
-</blockquote>
-<h2 id="什么是Java内存模型"><a href="#什么是Java内存模型" class="headerlink" title="什么是Java内存模型"></a>什么是Java内存模型</h2><p>从前面的介绍了解到计算机内存模型是一种解决多线程场景下的一个主存操作规范，既然是规范，那么不同的编程语言都可以遵循这种操作规范，在多线程场景下访问主存保证原子性、可见性、有序性。<br><strong>Java内存模型(Java Memory Model，JMM)</strong>即是Java语言对这个操作规范的遵循，<code>JMM</code>规定了所有的变量都存储在<strong>主存</strong>中，每个线程都有自己的<strong>工作区</strong>，线程将使用到的变量从主存中<strong>复制</strong>一份到自己的工作区，线程对变量的<strong>所有操作</strong>(读取、赋值等)都必须在工作区，不同的线程也无法直接访问对方工作区，线程之间的消息传递都需要通过主存来完成。<strong>可以把这里主存类比成计算机内存模型中的主存，工作区类比成计算机内存模型中的高速缓存</strong>。</p>
-<p><img src="http://ws2.sinaimg.cn/large/e0e01e43ly1g0z8rfihfkj20qk09ft9l.jpg" alt="image"></p>
-<p>而我们知道<code>JMM</code>其实是工作主存中的，Java内存模型中的工作区也是主存中的一部分，所以可以这样说Java内存模型解决的是<strong>内存一致性问题(主存和主存)</strong>而计算机内存模型解决的是<strong>缓存一致性问题(CPU高速缓存和主存)</strong>，这两个模型类似，但是作用域不一样，Java内存模型保证的是主存和主存之间的原子性、可见性、有序性，而计算机内存模型保证的是CPU高速缓存和主存之间的原子性、可见性、有序性。</p>
-<p><img src="http://ws1.sinaimg.cn/large/e0e01e43ly1g0z8rlifrqj20zb0cbjsz.jpg" alt="image"></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文很多观点都是按照笔者自己的理解然后总结出来的，若有偏颇，欢迎指正！</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.cnblogs.com/dolphin0520/p/3920373.html" target="_blank" rel="noopener">Java并发编程：volatile关键字解析</a><br><a href="https://blog.csdn.net/u013256816/article/details/51510815" target="_blank" rel="noopener">Java内存模型</a><br><a href="http://developer.51cto.com/art/201807/579744.htm" target="_blank" rel="noopener">【教程】终于有人把Java内存模型说清楚了！</a><br><a href="https://www.zhihu.com/question/268021813" target="_blank" rel="noopener">关于JAVA内存模型与MESI协议？</a><br><a href="https://www.zhihu.com/question/277395220" target="_blank" rel="noopener">有了缓存一致性协议为什么还需要多线程同步？</a>  </p>
-
-      
-    </div>
-    <div class="article-footer">
-      <blockquote class="mt-2x">
-  <ul class="post-copyright list-unstyled">
-    
-    <li class="post-copyright-link hidden-xs">
-      <strong>本文链接：</strong>
-      <a href="http://ddnd.cn/2019/03/11/java-memory-model/" title="什么是Java内存模型？" target="_blank" rel="external">http://ddnd.cn/2019/03/11/java-memory-model/</a>
-    </li>
-    
-    <li class="post-copyright-license">
-      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
-    </li>
-  </ul>
-</blockquote>
-
-
-<div class="panel panel-default panel-badger">
+<article class="panel panel-default hover-shadow hover-grow" itemscope="" itemtype="http://schema.org/BlogPosting">
   <div class="panel-body">
-    <figure class="media">
-      <div class="media-left">
-        <a href="https://github.com/xue8" target="_blank" class="img-burn thumb-sm visible-lg">
-          <img src="/img/logo.jpg" class="img-rounded w-full" alt="">
-        </a>
-      </div>
-      <div class="media-body">
-        <h3 class="media-heading"><a href="https://github.com/xue8" target="_blank"><span class="text-dark">薛8</span><small class="ml-1x">Web Developer</small></a></h3>
-        <div>个人简介。</div>
-      </div>
-    </figure>
-  </div>
+     <div class="article-meta">
+       <time datetime="2019-07-28T07:08:52.000Z" itemprop="datePublished">2019-07-28</time>
+     </div>
+     <h3 class="article-title" itemprop="name">
+       <a class="article-link" href="/2019/07/28/cnsoftbei8-huayun/">第八届中国软件杯大赛-云监控系统设计思路</a>
+     </h3>
+   </div>
+   
+   <div class="panel-footer">
+     
+      <a href="/tags/第八届中国软件杯大赛/" class="label label-default mb">第八届中国软件杯大赛</a>
+     
+      <a href="/tags/云监控系统/" class="label label-default mb">云监控系统</a>
+     
+     
+   </div>
+   
+</article>
+
+
 </div>
 
-
+      </div>
     </div>
   </article>
-  
-    
-  <section id="comments">
-  	
-           
-    
-  </section>
-
-
-  
-</div>
-
-  <nav class="bar bar-footer clearfix" data-stick-bottom="">
-  <div class="bar-inner">
-  
-  <ul class="pager pull-left">
-    
-    <li class="prev">
-      <a href="/2019/03/13/java-cas/" title="CAS原理分析及ABA问题详解"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
-    </li>
-    
-    
-    <li class="next">
-      <a href="/2019/03/10/jdk1-8-concurrenthashmap/" title="10分钟掌握ConcurrentHashMap 3分钟清楚和HashMap、Hashtable的区别"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
-    </li>
-    
-    
-    <li class="toggle-toc">
-      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="Catalogue" role="button">
-        <span>[&nbsp;</span><span>Catalogue</span>
-        <i class="text-collapsed icon icon-anchor"></i>
-        <i class="text-in icon icon-close"></i>
-        <span>]</span>
-      </a>
-    </li>
-    
-  </ul>
-  
-  
-  
-  <div class="bar-right">
-    
-    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
-    
-  </div>
-  </div>
-</nav>
-  
-
-
+   
 </main>
 
   <footer class="footer" itemscope="" itemtype="http://schema.org/WPFooter">
@@ -566,33 +477,6 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 
 
 
-
-   
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
-
-
-
-   
-    
-  <!-- <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"> -->
-  <script src="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
-  <script type="text/javascript">
-  var gitalk = new Gitalk({
-    clientID: '44eba9c2a65634685dd0',
-    clientSecret: '1d846bf73efeb924ca668691ea65d61aa6b4627f',
-    repo: 'xue8.github.io',
-    owner: 'xue8',
-    admin: ['xue8'],
-    id: md5(location.pathname),
-    distractionFreeMode: true
-  })
-  gitalk.render('comments')
-  </script>
-
-      
 
 
 

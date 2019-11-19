@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>远程接口设计经验分享【转载】 | 薛8的个人网站 - xue8&#39;s Blog - DDND.CN</title>
+  <meta name="description" content="写在前边分布式架构是互联网应用的基础架构，很多新人入职以来就开始负责编写和调用阿里的各种远程接口。但如同结婚一般，用对一个正确的接口就如同嫁一个正确的人一样，往往难以那么顺利的实现，或多或少大家都会在这个上边吃亏。 每年双十一系统调用复盘的时候，我都会听到以下声音  你们调我的接口报错了竟然不会自己重试？ 我的返回值应该从这里取 我返回isSuccess() == true，不代表业务成功，你还需">
+<meta name="keywords" content="微服务,RPC 接口设计,RPC 调用结果">
+<meta property="og:type" content="article">
+<meta property="og:title" content="远程接口设计经验分享【转载】">
+<meta property="og:url" content="http://ddnd.cn/2019/11/19/rpc-interface-design/index.html">
+<meta property="og:site_name" content="薛8的个人网站 - xue8&#39;s Blog - DDND.CN">
+<meta property="og:description" content="写在前边分布式架构是互联网应用的基础架构，很多新人入职以来就开始负责编写和调用阿里的各种远程接口。但如同结婚一般，用对一个正确的接口就如同嫁一个正确的人一样，往往难以那么顺利的实现，或多或少大家都会在这个上边吃亏。 每年双十一系统调用复盘的时候，我都会听到以下声音  你们调我的接口报错了竟然不会自己重试？ 我的返回值应该从这里取 我返回isSuccess() == true，不代表业务成功，你还需">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://img4.tbcdn.cn/L1/461/1/eb10f02f448966babe614f9140c5b695e327bea2">
+<meta property="og:image" content="http://img1.tbcdn.cn/L1/461/1/6c77caaf612292c1654ec92473df1ac199b4f866">
+<meta property="og:image" content="http://img1.tbcdn.cn/L1/461/1/d956d1cc3aeeae2a6cec93616b222e9b13239078">
+<meta property="og:image" content="http://img4.tbcdn.cn/L1/461/1/eb10f02f448966babe614f9140c5b695e327bea2">
+<meta property="og:image" content="http://img4.tbcdn.cn/L1/461/1/e3cb58049ce66a0ceb0cef2be932a5ade41f4eab">
+<meta property="og:image" content="http://img4.tbcdn.cn/L1/461/1/eb10f02f448966babe614f9140c5b695e327bea2">
+<meta property="og:image" content="http://img1.tbcdn.cn/L1/461/1/d956d1cc3aeeae2a6cec93616b222e9b13239078">
+<meta property="og:image" content="http://img1.tbcdn.cn/L1/461/1/d956d1cc3aeeae2a6cec93616b222e9b13239078">
+<meta property="og:image" content="http://img4.tbcdn.cn/L1/461/1/eb10f02f448966babe614f9140c5b695e327bea2">
+<meta property="og:image" content="http://img2.tbcdn.cn/L1/461/1/31c5a1fd707e2ab11d37cde52460eab02ce45af4">
+<meta property="og:image" content="http://img1.tbcdn.cn/L1/461/1/b37ec8f6d761181b6b1cdb90d36880b13fb764ca">
+<meta property="og:image" content="http://img4.tbcdn.cn/L1/461/1/eb10f02f448966babe614f9140c5b695e327bea2">
+<meta property="og:image" content="http://img3.tbcdn.cn/L1/461/1/8f74c86ac9e4fd64628f73abeddd5f8fdcfeae7c">
+<meta property="og:image" content="http://img1.tbcdn.cn/L1/461/1/d956d1cc3aeeae2a6cec93616b222e9b13239078">
+<meta property="og:image" content="http://img4.tbcdn.cn/L1/461/1/eb10f02f448966babe614f9140c5b695e327bea2">
+<meta property="og:image" content="http://img1.tbcdn.cn/L1/461/1/d956d1cc3aeeae2a6cec93616b222e9b13239078">
+<meta property="og:image" content="http://img1.tbcdn.cn/L1/461/1/d024c6ab859d61976f1d4a8c7a35735ccba8392c">
+<meta property="og:updated_time" content="2019-11-19T11:46:57.945Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="远程接口设计经验分享【转载】">
+<meta name="twitter:description" content="写在前边分布式架构是互联网应用的基础架构，很多新人入职以来就开始负责编写和调用阿里的各种远程接口。但如同结婚一般，用对一个正确的接口就如同嫁一个正确的人一样，往往难以那么顺利的实现，或多或少大家都会在这个上边吃亏。 每年双十一系统调用复盘的时候，我都会听到以下声音  你们调我的接口报错了竟然不会自己重试？ 我的返回值应该从这里取 我返回isSuccess() == true，不代表业务成功，你还需">
+<meta name="twitter:image" content="http://img4.tbcdn.cn/L1/461/1/eb10f02f448966babe614f9140c5b695e327bea2">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://ddnd.cn/2019/11/19/rpc-interface-design/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="薛8的个人网站 - xue8&#39;s Blog - DDND.CN" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+  
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.css">
+  
+</head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/xue8" target="_blank">
+          <img class="img-circle img-rotate" src="/img/logo.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">薛8</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Web Developer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Guiling, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search">
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech="">
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope="" itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">Links</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/xue8" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope="" itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java-Programming/">Java编程基础</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mybatis-Programming/">Mybatis</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Shiro/">Shiro</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Programming/">Spring</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Boot/">Spring Boot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-MVC/">Spring MVC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/micro-service/">微服务</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Technique/">技术杂谈</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Computer-Foundation/">计算机基础</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AQS/">AQS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CAS/">CAS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ConcurrentHashMap/">ConcurrentHashMap</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HashMap/">HashMap</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hashtable/">Hashtable</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/">JVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java内存模型/">Java内存模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jdbc/">Jdbc</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MVC/">MVC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mybatis/">Mybatis</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RESTful/">RESTful</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RPC/">RPC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RPC-接口设计/">RPC 接口设计</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RPC-调用结果/">RPC 调用结果</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ReentrantLock/">ReentrantLock</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shiro/">Shiro</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-MVC/">Spring MVC</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-MVC/">Spring-MVC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TEA算法/">TEA算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TomcatDBCP/">TomcatDBCP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebSocket/">WebSocket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/YoHttp/">YoHttp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/servlet/">servlet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/synchronized/">synchronized</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/volatile/">volatile</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web-xml/">web.xml</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动配置/">自动配置</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机内存模型/">计算机内存模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/起步依赖/">起步依赖</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/连接池/">连接池</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/AQS/" style="font-size: 13.25px;">AQS</a> <a href="/tags/CAS/" style="font-size: 13px;">CAS</a> <a href="/tags/ConcurrentHashMap/" style="font-size: 13px;">ConcurrentHashMap</a> <a href="/tags/HashMap/" style="font-size: 13.25px;">HashMap</a> <a href="/tags/Hashtable/" style="font-size: 13.25px;">Hashtable</a> <a href="/tags/JVM/" style="font-size: 13px;">JVM</a> <a href="/tags/Java内存模型/" style="font-size: 13px;">Java内存模型</a> <a href="/tags/Jdbc/" style="font-size: 13.5px;">Jdbc</a> <a href="/tags/MVC/" style="font-size: 13px;">MVC</a> <a href="/tags/Mybatis/" style="font-size: 13.75px;">Mybatis</a> <a href="/tags/RESTful/" style="font-size: 13px;">RESTful</a> <a href="/tags/RPC/" style="font-size: 13px;">RPC</a> <a href="/tags/RPC-接口设计/" style="font-size: 13px;">RPC 接口设计</a> <a href="/tags/RPC-调用结果/" style="font-size: 13px;">RPC 调用结果</a> <a href="/tags/ReentrantLock/" style="font-size: 13px;">ReentrantLock</a> <a href="/tags/Shiro/" style="font-size: 13.25px;">Shiro</a> <a href="/tags/Spring/" style="font-size: 13.75px;">Spring</a> <a href="/tags/Spring-MVC/" style="font-size: 13.25px;">Spring MVC</a> <a href="/tags/Spring-MVC/" style="font-size: 13px;">Spring-MVC</a> <a href="/tags/TEA算法/" style="font-size: 13px;">TEA算法</a> <a href="/tags/TomcatDBCP/" style="font-size: 13px;">TomcatDBCP</a> <a href="/tags/WebSocket/" style="font-size: 13px;">WebSocket</a> <a href="/tags/YoHttp/" style="font-size: 13px;">YoHttp</a> <a href="/tags/servlet/" style="font-size: 13px;">servlet</a> <a href="/tags/synchronized/" style="font-size: 13.25px;">synchronized</a> <a href="/tags/volatile/" style="font-size: 13px;">volatile</a> <a href="/tags/web-xml/" style="font-size: 13px;">web.xml</a> <a href="/tags/多线程/" style="font-size: 14px;">多线程</a> <a href="/tags/微服务/" style="font-size: 13px;">微服务</a> <a href="/tags/自动配置/" style="font-size: 13px;">自动配置</a> <a href="/tags/计算机内存模型/" style="font-size: 13px;">计算机内存模型</a> <a href="/tags/起步依赖/" style="font-size: 13px;">起步依赖</a> <a href="/tags/连接池/" style="font-size: 13px;">连接池</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">12</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/micro-service/">微服务</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/19/rpc-interface-design/" class="title">远程接口设计经验分享【转载】</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-19T11:45:01.000Z" itemprop="datePublished">2019-11-19</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Technique/">技术杂谈</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/07/28/cnsoftbei8-huayun/" class="title">第八届中国软件杯大赛-云监控系统设计思路</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-07-28T07:08:52.000Z" itemprop="datePublished">2019-07-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Spring-Boot/">Spring Boot</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/05/10/springboot-starter-and-autoconfiguration/" class="title">深入浅出Spring Boot 起步依赖和自动配置</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-05-10T13:06:25.000Z" itemprop="datePublished">2019-05-10</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Technique/">技术杂谈</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/04/12/yohttp/" class="title">从0开始造一个轮子(方的)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-04-12T05:35:37.000Z" itemprop="datePublished">2019-04-12</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Java-Programming/">Java编程基础</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/03/24/java-reentrantlock/" class="title">深入理解ReentrantLock的实现原理</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-03-24T04:26:07.000Z" itemprop="datePublished">2019-03-24</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope="" itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">Catalogue</h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#写在前边"><span class="toc-number">1.</span> <span class="toc-text">写在前边</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一个日志服务LogService"><span class="toc-number">2.</span> <span class="toc-text">一个日志服务LogService</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#系统架构"><span class="toc-number">2.1.</span> <span class="toc-text">系统架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接口v0-1版"><span class="toc-number">2.2.</span> <span class="toc-text">接口v0.1版</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RPC调用"><span class="toc-number">2.3.</span> <span class="toc-text">RPC调用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#什么是RPC调用"><span class="toc-number">2.3.1.</span> <span class="toc-text">什么是RPC调用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#一次完整的RPC调用过程"><span class="toc-number">2.3.2.</span> <span class="toc-text">一次完整的RPC调用过程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一次远程调用出错的可能"><span class="toc-number">2.4.</span> <span class="toc-text">一次远程调用出错的可能</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#通讯框架错误"><span class="toc-number">2.4.1.</span> <span class="toc-text">通讯框架错误</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#业务系统错误"><span class="toc-number">2.4.2.</span> <span class="toc-text">业务系统错误</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#各种出错场景-amp-解决方案梳理"><span class="toc-number">2.4.3.</span> <span class="toc-text">各种出错场景&amp;解决方案梳理</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码组织"><span class="toc-number">2.5.</span> <span class="toc-text">代码组织</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正确处理返回值"><span class="toc-number">2.6.</span> <span class="toc-text">正确处理返回值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#客户端对返回值的处理总结"><span class="toc-number">2.7.</span> <span class="toc-text">客户端对返回值的处理总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么要有Client层"><span class="toc-number">2.8.</span> <span class="toc-text">为什么要有Client层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接口v0-2版"><span class="toc-number">2.9.</span> <span class="toc-text">接口v0.2版</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接口的Wrapper"><span class="toc-number">2.10.</span> <span class="toc-text">接口的Wrapper</span></a></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-rpc-interface-design" class="article article-type-post" itemscope="" itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      远程接口设计经验分享【转载】
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2019/11/19/rpc-interface-design/" class="article-date">
+	  <time datetime="2019-11-19T11:45:01.000Z" itemprop="datePublished">2019-11-19</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/micro-service/">微服务</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/RPC-接口设计/">RPC 接口设计</a>, <a class="article-tag-link" href="/tags/RPC-调用结果/">RPC 调用结果</a>, <a class="article-tag-link" href="/tags/微服务/">微服务</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/11/19/rpc-interface-design/#comments" class="article-comment-link">Comments</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 3.6k(words)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 12(minutes)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="写在前边"><a href="#写在前边" class="headerlink" title="写在前边"></a>写在前边</h2><p>分布式架构是互联网应用的基础架构，很多新人入职以来就开始负责编写和调用阿里的各种远程接口。但如同结婚一般，用对一个正确的接口就如同嫁一个正确的人一样，往往难以那么顺利的实现，或多或少大家都会在这个上边吃亏。</p>
+<p>每年双十一系统调用复盘的时候，我都会听到以下声音</p>
+<ul>
+<li>你们调我的接口报错了竟然不会自己重试？</li>
+<li>我的返回值应该从这里取</li>
+<li>我返回isSuccess() == true，不代表业务成功，你还需要判断ERROR_CODE</li>
+<li>这个ERROR_CODE没说全部都要重试啊！</li>
+<li>这个ERROR_CODE必须要重试！</li>
+</ul>
+<p>还有很多了，本文的目标就是帮助大家思考，如何设计自己的远程接口，让接口做到<code>健壮</code>、<code>易用</code>，节省大家在这块泥潭中所挣扎的时间。</p>
+<h2 id="一个日志服务LogService"><a href="#一个日志服务LogService" class="headerlink" title="一个日志服务LogService"></a>一个日志服务LogService</h2><p><em>PS：本例子的代码可以见 Excavatore-DEMO</em></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">…</th>
+<th style="text-align:left">苍老师</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">上课！大家好，我是你们的苍老师。今天就由我来给大家讲讲如何编写一个健壮的远程接口。老师将在这里给大家设计一个集中式的日志系统。  虽然这个系统的存在不合理，但这是能找到的最简单例子，所以不要在课堂上就系统的合理性展开讨论，否则老师会生气的哟～</td>
+<td style="text-align:left"><a href="https://yq.aliyun.com/go/articleRenderRedirect?url=http%3A%2F%2Fimg4.tbcdn.cn%2FL1%2F461%2F1%2Feb10f02f448966babe614f9140c5b695e327bea2" target="_blank" rel="noopener"><img src="http://img4.tbcdn.cn/L1/461/1/eb10f02f448966babe614f9140c5b695e327bea2" alt="老师"></a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h3><p>一个集中性的日志服务器，要求应用通过日志系统提供的日志服务，将所有日志集中统一的输出到固定的文件中。</p>
+<p><em>系统架构图</em></p>
+<p><a href="https://yq.aliyun.com/go/articleRenderRedirect?url=http%3A%2F%2Fimg1.tbcdn.cn%2FL1%2F461%2F1%2F6c77caaf612292c1654ec92473df1ac199b4f866" target="_blank" rel="noopener"><img src="http://img1.tbcdn.cn/L1/461/1/6c77caaf612292c1654ec92473df1ac199b4f866" alt="日志服务器架构"></a></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">小明</th>
+<th style="text-align:left">…</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="https://yq.aliyun.com/go/articleRenderRedirect?url=http%3A%2F%2Fimg1.tbcdn.cn%2FL1%2F461%2F1%2Fd956d1cc3aeeae2a6cec93616b222e9b13239078" target="_blank" rel="noopener"><img src="http://img1.tbcdn.cn/L1/461/1/d956d1cc3aeeae2a6cec93616b222e9b13239078" alt="xiaoming_head"></a></td>
+<td style="text-align:left">这很简单嘛，根据系统的要求和架构特性，我很快就能写出接口定义，老师你看。“如果方法顺利无异常返回，则说明日志已经被成功写入了日志文件”</td>
+</tr>
+</tbody>
+</table>
+<h3 id="接口v0-1版"><a href="#接口v0-1版" class="headerlink" title="接口v0.1版"></a>接口v0.1版</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 日志服务</span><br><span class="line"> * @author : xiaoming.xm@cainiao.com</span><br><span class="line"> * @version: 0.1</span><br><span class="line"> */</span><br><span class="line">public interface LogService &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 记录INFO级别日志</span><br><span class="line">     *</span><br><span class="line">     * @param format 日志模版(同String.format())</span><br><span class="line">     * @param args   日志参数</span><br><span class="line">     */</span><br><span class="line">    void info(String format, Serializable... args);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">…</th>
+<th style="text-align:left">苍老师</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">非常好，但这种接口只能用在单机版的程序中，如果遇到远程调用的场景就不适用了。要了解这个事实，首先大家就要知道远程调用的大概实现原理。</td>
+<td style="text-align:left"><a href="https://yq.aliyun.com/go/articleRenderRedirect?url=http%3A%2F%2Fimg4.tbcdn.cn%2FL1%2F461%2F1%2Feb10f02f448966babe614f9140c5b695e327bea2" target="_blank" rel="noopener"><img src="http://img4.tbcdn.cn/L1/461/1/eb10f02f448966babe614f9140c5b695e327bea2" alt="老师"></a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="RPC调用"><a href="#RPC调用" class="headerlink" title="RPC调用"></a>RPC调用</h3><h4 id="什么是RPC调用"><a href="#什么是RPC调用" class="headerlink" title="什么是RPC调用"></a>什么是RPC调用</h4><p>RPC（Remote Procedure Call）远程过程调用，一种通过网络从远程计算机程序上请求服务，而不需要了解底层网络技术的技术实现。</p>
+<blockquote>
+<p>RPC采用C/S模式。请求程序就是一个客户机，而服务提供程序就是一个服务器。首先，客户机调用进程发送一个有进程参数的调用信息到服务进程，然后等待应答信息。在服务器端，进程保持睡眠状态直到调用信息的到达为止。当一个调用信息到达，服务器获得进程参数，计算结果，发送答复信息，然后等待下一个调用信息，最后，客户端调用进程接收答复信息，获得进程结果，然后调用执行继续进行。</p>
+<p><em>以上信息摘录自百度百科</em></p>
+</blockquote>
+<h4 id="一次完整的RPC调用过程"><a href="#一次完整的RPC调用过程" class="headerlink" title="一次完整的RPC调用过程"></a>一次完整的RPC调用过程</h4><p><a href="https://yq.aliyun.com/go/articleRenderRedirect?url=http%3A%2F%2Fimg4.tbcdn.cn%2FL1%2F461%2F1%2Fe3cb58049ce66a0ceb0cef2be932a5ade41f4eab" target="_blank" rel="noopener"><img src="http://img4.tbcdn.cn/L1/461/1/e3cb58049ce66a0ceb0cef2be932a5ade41f4eab" alt="RPC调用流程"></a></p>
+<ul>
+<li><strong>请求过程</strong></li>
+</ul>
+<ol>
+<li><p><code>客户端函数</code>将参数传递到<code>客户端句柄</code>。</p>
+</li>
+<li><p><code>客户端句柄</code>将请求序号、远程方法、参数等信息封装到请求对象中，并完成请求对象序列化形成请求报文，通过<code>网络客户端</code>发送请求报文。</p>
+</li>
+<li><p>请求报文通过<code>网络客户端</code>与<code>网络服务端</code>所约定的协议（HTTP、RMI或自定义）进行通讯。</p>
+</li>
+<li><p><code>网络服务端</code>收到请求报文之后，通过反序列化，从请求对象中解析出远程方法、参数等信息，并根据这些信息找到<code>服务器句柄</code>。</p>
+</li>
+<li><p>通过<code>服务器句柄</code>完成<code>服务器函数</code>的本地调用过程</p>
+<p>自此，整个请求流程完成。</p>
+</li>
+</ol>
+<ul>
+<li><strong>应答过程</strong></li>
+</ul>
+<ol>
+<li><p><code>服务器函数</code>执行的过程将结果返回<code>服务器句柄</code>，返回的结果可能是正常返回，也可能是以抛异常的形式返回。</p>
+</li>
+<li><p><code>服务器句柄</code>根据返回的值与请求序号封装到应答对象中，并完成应答对象的序列化，形成应答报文，通过<code>网络服务端</code>发送应答报文。</p>
+</li>
+<li><p>应答报文通过<code>网络服户端</code>与<code>网络客务端</code>所约定的协议（HTTP、RMI或自定义）进行通讯。</p>
+</li>
+<li><p><code>网络客户端</code>收到应答报文之后，通过反序列化，从应答对象中解析出请求序号所挂钩的<code>客户端句柄</code></p>
+</li>
+<li><p><code>客户端句柄</code>将返回数据返回到<code>客户端函数</code>，以返回值或抛异常的形式将信息返回</p>
+<p>自此，整个应答流程完成。</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">…</th>
+<th style="text-align:left">苍老师</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">一次完整的RPC调用一共分10步，每一步都有可能出错，所以在设计一个远程接口的时候必须充分考虑到所有的出错可能，与客户端约定出错的应对方案。无论哪个环节出问题，都要求你的业务逻辑依旧保证不能错乱！</td>
+<td style="text-align:left"><a href="https://yq.aliyun.com/go/articleRenderRedirect?url=http%3A%2F%2Fimg4.tbcdn.cn%2FL1%2F461%2F1%2Feb10f02f448966babe614f9140c5b695e327bea2" target="_blank" rel="noopener"><img src="http://img4.tbcdn.cn/L1/461/1/eb10f02f448966babe614f9140c5b695e327bea2" alt="老师"></a></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">小明</th>
+<th style="text-align:left">…</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="https://yq.aliyun.com/go/articleRenderRedirect?url=http%3A%2F%2Fimg1.tbcdn.cn%2FL1%2F461%2F1%2Fd956d1cc3aeeae2a6cec93616b222e9b13239078" target="_blank" rel="noopener"><img src="http://img1.tbcdn.cn/L1/461/1/d956d1cc3aeeae2a6cec93616b222e9b13239078" alt="xiaoming_head"></a></td>
+<td style="text-align:left">不愧是苍老师，果然 博 大精深。我明白了，因为增加了远程访问的因素，所以原本单机中非常小的出错概率就被放大了，这也不得不让程序被迫感知和处理这些通讯错误。  那请问遇到这些错误都应该怎样进行归纳和处理呢？</td>
+</tr>
+</tbody>
+</table>
+<h3 id="一次远程调用出错的可能"><a href="#一次远程调用出错的可能" class="headerlink" title="一次远程调用出错的可能"></a>一次远程调用出错的可能</h3><h4 id="通讯框架错误"><a href="#通讯框架错误" class="headerlink" title="通讯框架错误"></a>通讯框架错误</h4><p>通讯框架错误根据发生环节分可以细分为</p>
+<ol>
+<li><p>Marshell &amp; UnMarshell</p>
+<p>C/S双方采用了不一致的序列化／反序列化算法，导致在通讯之前或之后无法正常取得通讯的对象。从而导致双方在编码、解码的过程中发生错误。</p>
+<p>如果你的通讯框架使用了Hessian那基本上你都有机会遇到过。至于序列化和反序列化的梗，都可以开个专题了。这里就不在啰嗦。</p>
+</li>
+<li><p>网络通讯错误</p>
+<p>系统错误会导致无法预测的异常产生，具体取决于RPC的实现方式。对于这种错误，唯一的处理方式只有：另外找时间／机会重试。</p>
+</li>
+</ol>
+<h4 id="业务系统错误"><a href="#业务系统错误" class="headerlink" title="业务系统错误"></a>业务系统错误</h4><p>业务系统错误分两种情况</p>
+<ol>
+<li><p>业务错误</p>
+<p>Client传递了违背业务规则的参数，导致业务逻辑处理失败。这种错误无论重复多少次都会得到一样结局。</p>
+</li>
+<li><p>系统错误</p>
+<p>Server处理内部逻辑时出现了无法控制的错误，常见的有：</p>
+</li>
+</ol>
+<ul>
+<li><p>数据库访问失败</p>
+</li>
+<li><p>文件写入失败</p>
+</li>
+<li><p>网络通讯失败</p>
+<p>一般遇到这种错误，可以通过重试解决。</p>
+</li>
+</ul>
+<h4 id="各种出错场景-amp-解决方案梳理"><a href="#各种出错场景-amp-解决方案梳理" class="headerlink" title="各种出错场景&amp;解决方案梳理"></a>各种出错场景&amp;解决方案梳理</h4><table>
+<thead>
+<tr>
+<th style="text-align:left">出错情况</th>
+<th style="text-align:left">解决方案</th>
+<th style="text-align:left">是否重试</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">通讯框架错误</td>
+<td style="text-align:left">抛出框架异常</td>
+<td style="text-align:left">重试</td>
+</tr>
+<tr>
+<td style="text-align:left">系统错误</td>
+<td style="text-align:left">抛出系统异常</td>
+<td style="text-align:left">重试</td>
+</tr>
+<tr>
+<td style="text-align:left">业务错误</td>
+<td style="text-align:left">返回明确的错误码</td>
+<td style="text-align:left">禁止重试</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">小明</th>
+<th style="text-align:left">…</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="https://yq.aliyun.com/go/articleRenderRedirect?url=http%3A%2F%2Fimg1.tbcdn.cn%2FL1%2F461%2F1%2Fd956d1cc3aeeae2a6cec93616b222e9b13239078" target="_blank" rel="noopener"><img src="http://img1.tbcdn.cn/L1/461/1/d956d1cc3aeeae2a6cec93616b222e9b13239078" alt="xiaoming_head"></a></td>
+<td style="text-align:left">嗯，我了解了，一个好的远程方法定义必须考虑到上边所罗列的异常场景，要求做到<code>明确的错误处理约定</code>。那请问苍老师这个接口应该如何写呢？</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">…</th>
+<th style="text-align:left">苍老师</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">先别着急，要写出健壮的接口，你还有几个概念要理解。首先我们先来看这个接口的声明。我的比你多了两个重要的信息<code>ResultDO&lt;Void&gt;</code>与<code>LogException</code>，接下来我会讲解这定义这两个类的作用</td>
+<td style="text-align:left"><a href="https://yq.aliyun.com/go/articleRenderRedirect?url=http%3A%2F%2Fimg4.tbcdn.cn%2FL1%2F461%2F1%2Feb10f02f448966babe614f9140c5b695e327bea2" target="_blank" rel="noopener"><img src="http://img4.tbcdn.cn/L1/461/1/eb10f02f448966babe614f9140c5b695e327bea2" alt="老师"></a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="代码组织"><a href="#代码组织" class="headerlink" title="代码组织"></a>代码组织</h3><p>如果你有机会重新搭建一个应用，推荐大家采用分包的策略来考虑自己的模块组织。</p>
+<p><a href="https://yq.aliyun.com/go/articleRenderRedirect?url=http%3A%2F%2Fimg2.tbcdn.cn%2FL1%2F461%2F1%2F31c5a1fd707e2ab11d37cde52460eab02ce45af4" target="_blank" rel="noopener"><img src="http://img2.tbcdn.cn/L1/461/1/31c5a1fd707e2ab11d37cde52460eab02ce45af4" alt="代码组织结构"></a></p>
+<ul>
+<li><strong>common：</strong>定义core和client所共用的内容<ul>
+<li><strong>业务接口声明</strong></li>
+<li>LogService</li>
+<li><strong>Domain对象</strong>（这里为了简单，所有的DO、TO、DTO都统一命名为DO）</li>
+<li>ResultDO<t></t></li>
+<li><strong>业务异常</strong></li>
+<li>LogException</li>
+</ul>
+</li>
+<li><strong>client：</strong>富客户端，在这一层可以组织cache、业务无关的通用校验，这一次层并非必须。<ul>
+<li><strong>服务客户端实现</strong></li>
+<li>LogServiceClient</li>
+<li>AsyncLogServiceClient</li>
+</ul>
+</li>
+<li><strong>core：</strong>业务服务的实现，这一层的代码运行在服务端。<ul>
+<li><strong>服务业务逻辑实现</strong>，同时内部按照习惯可以再次分层为(<code>Service</code>、<code>Manager</code>、<code>Dao</code>)</li>
+<li>LogServiceImpl</li>
+</ul>
+</li>
+</ul>
+<p><a href="https://yq.aliyun.com/go/articleRenderRedirect?url=http%3A%2F%2Fimg1.tbcdn.cn%2FL1%2F461%2F1%2Fb37ec8f6d761181b6b1cdb90d36880b13fb764ca" target="_blank" rel="noopener"><img src="http://img1.tbcdn.cn/L1/461/1/b37ec8f6d761181b6b1cdb90d36880b13fb764ca" alt="代码组织图"></a></p>
+<h3 id="正确处理返回值"><a href="#正确处理返回值" class="headerlink" title="正确处理返回值"></a>正确处理返回值</h3><p>这套RPC接口声明的理念在于：如何通过约定区分出系统异常与业务异常。区分的关键就在于<code>ResultDO&lt;?&gt;</code>与<code>LogException</code>上</p>
+<ul>
+<li><p>ResultDO<t></t></p>
+<p><code>info</code>方法不需要返值，但服务端需要在业务出错的时候，将错误码返回给客户端，以便友好的错误提示。所以在Result对象中有两个方法：</p>
+<ul>
+<li><code>public boolean isSuccess();</code></li>
+</ul>
+<p><code>isSuccess</code>为<code>true</code>时表明业务处理成功：当客户端获取到这个值时，表明服务端已正确经接请求到并且成功的处理了这个请求，业务完成。这是最好的情况。</p>
+<p><code>isSuccess</code>为<code>false</code>时表明业务处理失败：当客户端获取到时，表明服务端已经正确接到请求，但业务处理失败，失败原因在错误码<code>errorCode</code>中体现。</p>
+<ul>
+<li><code>public String getErrorCode();</code></li>
+</ul>
+<p>当服务端正确接到请求，但业务处理失败时，失败的原因以错误码形式返回。</p>
+</li>
+<li><p>LogException</p>
+<p>这个异常主要用于收缩和屏蔽服务层的具体错误信息，当服务端遇到无法处理的错误情况时，需要继续向客户端外抛，让客户端来择机进行重试。客户端亦可通过LogException快速判断当前业务中断的原因来自于LogService的失败。</p>
+</li>
+</ul>
+<h3 id="客户端对返回值的处理总结"><a href="#客户端对返回值的处理总结" class="headerlink" title="客户端对返回值的处理总结"></a>客户端对返回值的处理总结</h3><ul>
+<li><p>客户端处理逻辑表</p>
+<p>| 调用情况 | isSuccess | errorCode | throw LogException | throw Exception | 客户端处理 |<br>| :——- | :——– | :——– | :—————– | :————– | :——— |<br>| 框架错误 | /         | /         | /                  | true            | 重试       |<br>| 系统错误 | /         | /         | true               | /               | 重试       |<br>| 业务错误 | false     | true      | /                  | /               | 不重试     |<br>| 成功返回 | true      | true      | /                  | /               | 不重试     |</p>
+<p>所有情况也不是一层不变。比如<code>业务错误</code>返回错误码，但有时处于性能考虑（抛异常非常消耗JVM性能），可以在接口声明中约定部分错误码也必须要进入重试。但这种场景越少越好，而且一旦做出约定，出于接口向下兼容的考虑，这种需要重试的错误码自声明以来，只能减少不能增加，否则会引起兼容问题。</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">…</th>
+<th style="text-align:left">苍老师</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">老师也见过有系统在ResultDO中声明了<code>public boolean isReTry();</code>方法，这样当系统发生业务错误的时候，是否重试的判断就交由<code>isReTry()</code>来进行判断，这也是不错的选择。</td>
+<td style="text-align:left"><a href="https://yq.aliyun.com/go/articleRenderRedirect?url=http%3A%2F%2Fimg4.tbcdn.cn%2FL1%2F461%2F1%2Feb10f02f448966babe614f9140c5b695e327bea2" target="_blank" rel="noopener"><img src="http://img4.tbcdn.cn/L1/461/1/eb10f02f448966babe614f9140c5b695e327bea2" alt="老师"></a></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>增加isReTry后的客户端处理逻辑表</p>
+<p>| 调用情况 | isSuccess | isReTry | errorCode | throw LogException | throw Exception | 客户端处理 |<br>| :——- | :——– | :—— | :——– | :—————– | :————– | :——— |<br>| 框架错误 | /         | /       | /         | /                  | true            | 重试       |<br>| 系统错误 | /         | /       | /         | true               | /               | 重试       |<br>| 业务错误 | false     | true    | true      | /                  | /               | 重试       |<br>| 业务错误 | false     | false   | true      | /                  | /               | 不重试     |<br>| 成功返回 | true      | /       | true      | /                  | /               | 不重试     |</p>
+</li>
+</ul>
+<h3 id="为什么要有Client层"><a href="#为什么要有Client层" class="headerlink" title="为什么要有Client层"></a>为什么要有<code>Client</code>层</h3><p>老实说，这一层不是必须的，很多情况下客户端直接使用服务端声明的Service接口足矣。但若遇到在客户端容灾、增强的场景，则ServiceClient的优势就体现出来。</p>
+<p><a href="https://yq.aliyun.com/go/articleRenderRedirect?url=http%3A%2F%2Fimg3.tbcdn.cn%2FL1%2F461%2F1%2F8f74c86ac9e4fd64628f73abeddd5f8fdcfeae7c" target="_blank" rel="noopener"><img src="http://img3.tbcdn.cn/L1/461/1/8f74c86ac9e4fd64628f73abeddd5f8fdcfeae7c" alt="ServiceClient"></a></p>
+<h3 id="接口v0-2版"><a href="#接口v0-2版" class="headerlink" title="接口v0.2版"></a>接口v0.2版</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 日志服务</span><br><span class="line"> * @author : cangjingkong.cjk@cainiao.com</span><br><span class="line"> * @version: 0.2</span><br><span class="line"> */</span><br><span class="line">public interface LogService &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 记录INFO级别日志</span><br><span class="line">     *</span><br><span class="line">     * @param format 日志模版(同String.format())</span><br><span class="line">     * @param args   日志参数</span><br><span class="line">     * @return 记录日志是否成功</span><br><span class="line">     * @throws LogException 记录日志发生异常</span><br><span class="line">     */</span><br><span class="line">    ResultDO&lt;Void&gt; info(String format, Serializable... args)</span><br><span class="line">            throws LogException;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">小明</th>
+<th style="text-align:left">…</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="https://yq.aliyun.com/go/articleRenderRedirect?url=http%3A%2F%2Fimg1.tbcdn.cn%2FL1%2F461%2F1%2Fd956d1cc3aeeae2a6cec93616b222e9b13239078" target="_blank" rel="noopener"><img src="http://img1.tbcdn.cn/L1/461/1/d956d1cc3aeeae2a6cec93616b222e9b13239078" alt="xiaoming_head"></a></td>
+<td style="text-align:left">一个好的系统约定能减少很多不必要的错误，但毕竟不是所有系统都是新的系统，在面临各种<code>先人的智慧</code>时，如何让不符合约定的远程接口也纳入约定来？</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">…</th>
+<th style="text-align:left">苍老师</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">在面对<code>先人的智慧</code>时，改变现有被大量调用的接口声明是不可能的，在这种情况下<code>存在即合理</code>，哪怕明知接口声明或实现存在问题，你也不能去变更这个接口。接口维护原则请听下堂课《远程接口维护经验分享》。  当遇到这种不在约定的接口时，需要用<code>装饰模式</code>将不规范的接口包装成为规范的接口。</td>
+<td style="text-align:left"><a href="https://yq.aliyun.com/go/articleRenderRedirect?url=http%3A%2F%2Fimg4.tbcdn.cn%2FL1%2F461%2F1%2Feb10f02f448966babe614f9140c5b695e327bea2" target="_blank" rel="noopener"><img src="http://img4.tbcdn.cn/L1/461/1/eb10f02f448966babe614f9140c5b695e327bea2" alt="老师"></a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="接口的Wrapper"><a href="#接口的Wrapper" class="headerlink" title="接口的Wrapper"></a>接口的Wrapper</h3><p>几乎可以肯定的，在公司中你肯定不是第一个声明接口的人。所以当你定出了远程接口设计规范之后，如何面对老接口则成了一个头疼的问题。</p>
+<p><code>先人的智慧</code>是无穷的，现在我们讨论的问题，我们的前辈都已经面临并解决了（运气不好你可能还会遇到新手练手写的接口），只是解决的方法各种各样，没有形成约定。何解？</p>
+<p>此时可以考虑使用<code>装饰模式</code>将不规范的接口重新包装成符合设计规范的接口，这样做有两个好处：</p>
+<ul>
+<li><p>解决老接口不规范问题</p>
+</li>
+<li><p>减小老接口暴露到业务代码中的概率</p>
+<p>这里需要解释下。外部接口的定义不受控制，如果此时一个Service需要升级，则改动、回归、代码REVIEW范围仅限于Wrapper类即可，若将所有业务代码直接引用外部的Service/ServiceClient类，则升级的回归面将被放大。</p>
+</li>
+</ul>
+<p>所以无论对方声明的接口是否符合约定，我都会建议客户端不要直接使用Service/ServiceClient，而是Wrapper一层。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">小明</th>
+<th style="text-align:left">…</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="https://yq.aliyun.com/go/articleRenderRedirect?url=http%3A%2F%2Fimg1.tbcdn.cn%2FL1%2F461%2F1%2Fd956d1cc3aeeae2a6cec93616b222e9b13239078" target="_blank" rel="noopener"><img src="http://img1.tbcdn.cn/L1/461/1/d956d1cc3aeeae2a6cec93616b222e9b13239078" alt="xiaoming_head"></a></td>
+<td style="text-align:left">太好了，经过老师提点，我终于写出了一个健壮的远程接口，并知道如何与客户端约定重试的关系。  不过我还是想问问，这种远程的日志系统存在是否不是太合理，老师你举这个例子是不是不太恰当？</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://yq.aliyun.com/go/articleRenderRedirect?url=http%3A%2F%2Fimg1.tbcdn.cn%2FL1%2F461%2F1%2Fd024c6ab859d61976f1d4a8c7a35735ccba8392c" target="_blank" rel="noopener"><img src="http://img1.tbcdn.cn/L1/461/1/d024c6ab859d61976f1d4a8c7a35735ccba8392c" alt="滚"></a></p>
+<p><em>PS：本例子的代码可以见 Excavatore-DEMO</em></p>
+<p>转自：<a href="https://yq.aliyun.com/articles/2945" target="_blank" rel="noopener">https://yq.aliyun.com/articles/2945</a></p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://ddnd.cn/2019/11/19/rpc-interface-design/" title="远程接口设计经验分享【转载】" target="_blank" rel="external">http://ddnd.cn/2019/11/19/rpc-interface-design/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/xue8" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/img/logo.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/xue8" target="_blank"><span class="text-dark">薛8</span><small class="ml-1x">Web Developer</small></a></h3>
+        <div>个人简介。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+           
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom="">
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2019/07/28/cnsoftbei8-huayun/" title="第八届中国软件杯大赛-云监控系统设计思路"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="Catalogue" role="button">
+        <span>[&nbsp;</span><span>Catalogue</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope="" itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/xue8" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        <script type="text/javascript" src="https://s23.cnzz.com/z_stat.php?id=1275516312&web_id=1275516312"></script>
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <!-- <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"> -->
+  <script src="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: '44eba9c2a65634685dd0',
+    clientSecret: '1d846bf73efeb924ca668691ea65d61aa6b4627f',
+    repo: 'xue8.github.io',
+    owner: 'xue8',
+    admin: ['xue8'],
+    id: md5(location.pathname),
+    distractionFreeMode: true
+  })
+  gitalk.render('comments')
+  </script>
+
+      
+
+
+
+
+
+
+
+</body>
+</html>

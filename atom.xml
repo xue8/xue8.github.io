@@ -319,9 +319,9 @@
       <category term="Java编程基础" scheme="http://ddnd.cn/categories/Java-Programming/"/>
     
     
-      <category term="多线程" scheme="http://ddnd.cn/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
       <category term="CAS" scheme="http://ddnd.cn/tags/CAS/"/>
+    
+      <category term="多线程" scheme="http://ddnd.cn/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
   </entry>
   
@@ -348,11 +348,11 @@
       <category term="Java编程基础" scheme="http://ddnd.cn/categories/Java-Programming/"/>
     
     
+      <category term="多线程" scheme="http://ddnd.cn/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
       <category term="Java内存模型" scheme="http://ddnd.cn/tags/Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/"/>
     
       <category term="计算机内存模型" scheme="http://ddnd.cn/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/"/>
-    
-      <category term="多线程" scheme="http://ddnd.cn/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
   </entry>
   
